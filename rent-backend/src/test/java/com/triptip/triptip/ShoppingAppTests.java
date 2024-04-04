@@ -1,12 +1,6 @@
 package com.triptip.triptip;
 
-import com.triptip.triptip.model.Order;
-import com.triptip.triptip.model.OrderItem;
-import com.triptip.triptip.model.Product;
 import com.triptip.triptip.model.User;
-import com.triptip.triptip.repository.OrderItemRepository;
-import com.triptip.triptip.repository.OrderRepository;
-import com.triptip.triptip.repository.ProductRepository;
 import com.triptip.triptip.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

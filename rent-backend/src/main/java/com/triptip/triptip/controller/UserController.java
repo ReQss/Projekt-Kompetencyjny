@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-#szysz
+
 @RestController
 @CrossOrigin ("http://localhost:3000")
 public class UserController {
@@ -17,7 +17,6 @@ public class UserController {
     @PostMapping("/addUsesr")
     public User addUser(@RequestBody User user) {
         return userService.addUser(user);
-
     }
  /*   @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {

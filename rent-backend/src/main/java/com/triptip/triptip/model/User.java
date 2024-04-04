@@ -23,9 +23,7 @@ public class User implements UserDetails {
     private int roleId; //join
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
+
     private Integer phone=0;
     private String token; // Add this field for storing the JWT token
 
@@ -37,7 +35,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public User(int id, String login, String password, String fname, String lname, String email, int roleId, Address address, Integer phone) {
+    public User(int id, String login, String password, String fname, String lname, String email, int roleId, Integer phone) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -45,7 +43,7 @@ public class User implements UserDetails {
         this.lname = lname;
         this.email = email;
         this.roleId = roleId;
-        this.address = address;
+
         this.phone = phone;
     }
 
@@ -135,13 +133,6 @@ public class User implements UserDetails {
         this.roleId = roleId;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public Integer getPhone() {
         return phone;
@@ -169,7 +160,7 @@ public class User implements UserDetails {
                 ", lname='" + lname + '\'' +
                 ", email='" + email + '\'' +
                 ", roleId=" + roleId +
-                ", address=" + address +
+
                 ", phone=" + phone +
                 '}';
     }
