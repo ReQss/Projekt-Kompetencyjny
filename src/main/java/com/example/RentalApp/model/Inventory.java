@@ -3,6 +3,7 @@ package com.example.RentalApp.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -105,11 +106,38 @@ public class Inventory {
         this.ownerId = ownerId;
     }
 
+    public Inventory(Long id, String itemName, String description, BigDecimal sale, Long ownerId, String rentStatus, byte[] photo, String sala, Set<RentHistory> rentHistories) {
+        this.id = id;
+        this.itemName = itemName;
+        this.description = description;
+        this.sale = sale;
+        this.ownerId = ownerId;
+        this.rentStatus = rentStatus;
+        this.photo = photo;
+        this.sala = sala;
+        this.rentHistories = rentHistories;
+    }
+
     public String getRentStatus() {
         return rentStatus;
     }
 
     public void setRentStatus(String rentStatus) {
         this.rentStatus = rentStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "id=" + id +
+                ", itemName='" + itemName + '\'' +
+                ", description='" + description + '\'' +
+                ", sale=" + sale +
+                ", ownerId=" + ownerId +
+                ", rentStatus='" + rentStatus + '\'' +
+                ", photo=" + Arrays.toString(photo) +
+                ", sala='" + sala + '\'' +
+                ", rentHistories=" + rentHistories +
+                '}';
     }
 }

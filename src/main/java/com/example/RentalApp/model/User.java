@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "users")
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue
     private Integer id;
 
     @Column(name = "email")
@@ -24,12 +24,21 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Lob
-    @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    public User(){
 
-    @Column(name = "role_id", nullable = false)
-    private Integer roleId;
+    }
+
+    public User( String email, String fname, String lname, String login, String password) {
+
+        this.email = email;
+        this.fname = fname;
+        this.lname = lname;
+        this.login = login;
+        this.password = password;
+        this.role = Role.USER;
+    }
 
     public Integer getId() {
         return id;
@@ -79,20 +88,24 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                '}';
     }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
 }

@@ -29,7 +29,7 @@ public class RentHistory {
     @Column(name = "Name_Of_The_Borrower", nullable = false)
     private String nameOfTheBorrower;
 
-    @ColumnDefault("niezwrócony")
+//    @ColumnDefault("niezwrócony")
     @Column(name = "Rent_Status", nullable = false, length = 50)
     private String rentStatus;
 
