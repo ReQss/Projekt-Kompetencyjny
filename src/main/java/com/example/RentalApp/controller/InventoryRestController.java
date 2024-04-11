@@ -15,7 +15,8 @@ public class InventoryRestController {
     public InventoryRestController(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
     }
-
+    @GetMapping("/inventory/listAll")
+    public List<Inventory>listAll(){return inventoryRepository.findAll();}
     @GetMapping("/api/inventory")
     public List<Inventory> getAllInventory() {
         return inventoryRepository.findAll();
