@@ -1,0 +1,9 @@
+.items-wrapper {
+    max-height: 100%;
+    flex: 5;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 2rem 5rem;
+}
