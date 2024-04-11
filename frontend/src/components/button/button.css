@@ -6,3 +6,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.btn:hover {
+  background-color: #9e0f0f;
+}
