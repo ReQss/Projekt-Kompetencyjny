@@ -1,12 +1,13 @@
-import React from 'react'
-import './header.css'
+import React from "react";
+import "./header.css";
+import bg from "../../assets/politechnika_bg.jpg";
 
 const Header = () => {
   return (
-    <div>
-      
+    <div className="header">
+      <img src={bg} alt="" />
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
