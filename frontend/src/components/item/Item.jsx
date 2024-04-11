@@ -1,14 +1,16 @@
 import React from 'react'
 import './item.css'
-const Item = ({ src }) => {
+import Button from '../button/Button'
+
+const Item = ({ src, name, owner, building, room  }) => {
   return (
     <div className='item'>
       <img src={src} alt="item" />
-      <p>nazwa</p>
-      <p>wlasciciel</p>
-      <p>budynek</p>
-      <p>nr sali</p>
-      <button>WYPOŻYCZ</button>
+      <p>{name}</p>
+      <p>{owner}</p>
+      <p>{building}</p>
+      <p>{room}</p>
+      <Button>WYPOŻYCZ</Button>
     </div>
   )
 }

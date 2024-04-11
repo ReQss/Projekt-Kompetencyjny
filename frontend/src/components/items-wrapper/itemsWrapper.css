@@ -3,7 +3,9 @@
     flex: 5;
     background-color: aliceblue;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     padding: 2rem 5rem;
+    background-color: rgb(249, 249, 249);
+
 }
