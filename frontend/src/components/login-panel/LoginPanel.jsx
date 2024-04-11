@@ -7,7 +7,7 @@ const LoginPanel = () => {
   return (
     <div className="login_panel">
       <form>
-        <h1>Witaj</h1>
+        <h1>Logowanie</h1>
 
         <a href="#" className="logo_holder">
           <img src={logo} alt="Logo" />
