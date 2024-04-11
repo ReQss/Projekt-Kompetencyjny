@@ -4,7 +4,7 @@ import Login from "./views/login/Login";
 function App() {
   return (
     <>
-      <Login />
+    <Home/>
     </>
   );
 }
