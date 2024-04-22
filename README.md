@@ -2,7 +2,7 @@
 System zarządzania inwentarzem został zaprojektowany w celu efektywnego monitorowania i zarządzania produktami, ich kategoriami oraz procesem wypożyczeń. System pozwala na przechowywanie informacji o produktach, użytkownikach, historii wypożyczeń oraz strukturze kategorii produktów.
 
 2. Schemat Bazy Danych
-3. 
+
 Baza danych składa się z następujących tabel:
 
 users
