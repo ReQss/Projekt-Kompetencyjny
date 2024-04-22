@@ -12,52 +12,54 @@ categories
 
 3. Opis Tabel
 
-3.1 Tabela users
-
+Tabela users:
 Przechowuje informacje o użytkownikach systemu.
 
-Kolumna	Typ danych	Opis
-id	int	Unikalny identyfikator użytkownika, klucz główny
-email	varchar	Adres email użytkownika
-fname	varchar	Imię użytkownika
-lname	varchar	Nazwisko użytkownika
-login	varchar	Login użytkownika
-password	varchar	Hasło użytkownika
-role	enum	Rola użytkownika w systemie (USER, ADMIN)
+user_id (int(11)): Unikalny identyfikator użytkownika, klucz główny, autoinkrementowany.
+email (varchar(255)): Adres email użytkownika, pole opcjonalne.
+first_name (varchar(255)): Imię użytkownika, pole opcjonalne.
+last_name (varchar(255)): Nazwisko użytkownika, pole opcjonalne.
+username (varchar(255)): Nazwa użytkownika, pole nie może być puste.
+password (varchar(255)): Hasło użytkownika, pole nie może być puste.
+role (enum('USER','ADMIN')): Rola użytkownika w systemie, ograniczone do 'USER' lub 'ADMIN', pole nie może być puste.
 
-3.2 Tabela inventory
+Tabela inventory:
+Przechowuje szczegółowe informacje o przedmiotach w inwentarzu.
 
-Przechowuje informacje o przedmiotach w inwentarzu.
+inventory_id (bigint(20)): Unikalny identyfikator przedmiotu, klucz główny, autoinkrementowany.
+description (varchar(255)): Opis przedmiotu, pole opcjonalne.
+item_name (varchar(255)): Nazwa przedmiotu, pole nie może być puste.
+owner_id (bigint(20)): Identyfikator właściciela przedmiotu, pole opcjonalne.
+photo (varbinary(255)): Zdjęcie przedmiotu, pole opcjonalne.
+rent_status (varchar(255)): Status wynajmu przedmiotu, pole opcjonalne.
+room (varchar(50)): Pokój, w którym znajduje się przedmiot, pole opcjonalne.
+building (varchar(50)): Budynek, w którym znajduje się przedmiot, pole opcjonalne.
+inventory_date (date): Data dodania przedmiotu do inwentarza, domyślnie bieżąca data.
+value (decimal(20,2)): Wartość przedmiotu, pole opcjonalne.
+inventory_number (varchar(50)): Numer inwentarzowy, pole opcjonalne.
+invoice_number (varchar(50)): Numer faktury zakupu, pole opcjonalne.
+funding_source (varchar(50)): Źródło finansowania zakupu, pole opcjonalne.
+supplier_document (varchar(50)): Dokument od dostawcy, pole opcjonalne.
+invoice_position (varchar(50)): Pozycja na fakturze, pole opcjonalne.
+serial_number (varchar(50)): Numer seryjny przedmiotu, pole opcjonalne.
+category_id (int(11)): Identyfikator kategorii, do której należy przedmiot. Pole nie może być puste.
 
-Kolumna	Typ danych	Opis
-id	bigint	Unikalny identyfikator przedmiotu, klucz główny
-description	varchar	Opis przedmiotu
-item_name	varchar	Nazwa przedmiotu
-owner_id	bigint	ID właściciela z tabeli users
-photo	varbinary	Zdjęcie przedmiotu
-rent_status	varchar	Status wypożyczenia przedmiotu
-date	date	Data dodania przedmiotu do systemu
-value	decimal	Wartość przedmiotu
+Tabela rent_history:
+Zawiera informacje o historii wynajmu przedmiotów.
 
-3.3 Tabela rent_history
+rent_id (int(11)): Unikalny identyfikator wynajmu, klucz główny, autoinkrementowany.
+user_id (int(11)): Identyfikator użytkownika, który wynajął przedmiot. Pole nie może być puste.
+rent_status (varchar(50)): Aktualny status wynajmu, pole nie może być puste.
+rental_date (datetime(6)): Data i czas rozpoczęcia wynajmu, domyślnie bieżący czas.
+return_date (datetime(6)): Data i czas zakończenia wynajmu, pole opcjonalne.
+inventory_id (bigint(20)): Identyfikator wynajmowanego przedmiotu. Pole nie może być puste.
 
-Zawiera historię wypożyczeń przedmiotów.
+Tabela categories:
+Przechowuje informacje o kategoriach przedmiotów, w tym relacje hierarchiczne między kategoriami.
 
-Kolumna	Typ danych	Opis
-rent_id	int	Unikalny identyfikator wypożyczenia, klucz główny
-user_id	int	ID użytkownika z tabeli users
-item_id	bigint	ID przedmiotu z tabeli inventory
-rental_date	datetime	Data rozpoczęcia wypożyczenia
-return_date	datetime	Data zakończenia wypożyczenia
-
-3.4 Tabela categories
-
-Zarządza kategoriami przedmiotów.
-
-Kolumna	Typ danych	Opis
-id	int	Unikalny identyfikator kategorii, klucz główny
-name	varchar	Nazwa kategorii
-parent_id	int	ID kategorii nadrzędnej
+category_id (int(11)): Unikalny identyfikator kategorii, klucz główny, autoinkrementowany.
+name (varchar(255)): Nazwa kategorii, pole nie może być puste.
+parent_category_id (int(11)): Opcjonalny identyfikator kategorii nadrzędnej, umożliwiający tworzenie hierarchii kategorii. Wartość NULL oznacza kategorię najwyższego poziomu.
 
 4. Relacje między tabelami
    
