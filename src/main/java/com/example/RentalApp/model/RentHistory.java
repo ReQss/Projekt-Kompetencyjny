@@ -10,28 +10,26 @@ import java.time.Instant;
 public class RentHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Rent_ID", nullable = false)
+    @Column(name = "rent_id", nullable = false)
     private Integer id;
 
-    @Column(name = "Rental_Date", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "rent_status", nullable = false, length = 50)
+    private String rentStatus;
+
+    @ColumnDefault("current_timestamp(6)")
+    @Column(name = "rental_date", nullable = false)
     private Instant rentalDate;
 
-    @Column(name = "Return_Date", nullable = false)
+    @Column(name = "return_date")
     private Instant returnDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Item_ID", nullable = false)
-    private Inventory item;
-
-    @Column(name = "Numer_indeksu", nullable = false)
-    private Integer numerIndeksu;
-
-    @Column(name = "Name_Of_The_Borrower", nullable = false)
-    private String nameOfTheBorrower;
-
-    @ColumnDefault("niezwrócony")
-    @Column(name = "Rent_Status", nullable = false, length = 50)
-    private String rentStatus;
+    @JoinColumn(name = "inventory_id", nullable = false)
+    private Inventory inventory;
 
     public Integer getId() {
         return id;
@@ -39,6 +37,22 @@ public class RentHistory {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getRentStatus() {
+        return rentStatus;
+    }
+
+    public void setRentStatus(String rentStatus) {
+        this.rentStatus = rentStatus;
     }
 
     public Instant getRentalDate() {
@@ -57,36 +71,12 @@ public class RentHistory {
         this.returnDate = returnDate;
     }
 
-    public Inventory getItem() {
-        return item;
+    public Inventory getInventory() {
+        return inventory;
     }
 
-    public void setItem(Inventory item) {
-        this.item = item;
-    }
-
-    public Integer getNumerIndeksu() {
-        return numerIndeksu;
-    }
-
-    public void setNumerIndeksu(Integer numerIndeksu) {
-        this.numerIndeksu = numerIndeksu;
-    }
-
-    public String getNameOfTheBorrower() {
-        return nameOfTheBorrower;
-    }
-
-    public void setNameOfTheBorrower(String nameOfTheBorrower) {
-        this.nameOfTheBorrower = nameOfTheBorrower;
-    }
-
-    public String getRentStatus() {
-        return rentStatus;
-    }
-
-    public void setRentStatus(String rentStatus) {
-        this.rentStatus = rentStatus;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 }

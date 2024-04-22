@@ -56,7 +56,7 @@ CREATE TABLE `users` (
                          `email` varchar(255) DEFAULT NULL,
                          `first_name` varchar(255) DEFAULT NULL,
                          `last_name` varchar(255) DEFAULT NULL,
-                         `username` varchar(255) NOT NULL,
+                         `login` varchar(255) NOT NULL,
                          `password` varchar(255) NOT NULL,
                          `role` enum('USER','ADMIN') NOT NULL,
                          PRIMARY KEY (`user_id`)
@@ -77,7 +77,7 @@ CREATE TABLE `rent_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `username`, `password`, `role`) VALUES
+INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `login`, `password`, `role`) VALUES
                                                                                                         (1, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
                                                                                                         (2, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
                                                                                                         (52, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
