@@ -70,6 +70,33 @@ public class Inventory {
     @OneToMany(mappedBy = "inventory")
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
+
+    public Inventory(){
+
+
+    }
+
+
+
+    public Inventory(String description, String itemName, Long ownerId, String rentStatus, byte[] photo, String room, String building, LocalDate inventoryDate, BigDecimal value, String inventoryNumber, String invoiceNumber, String fundingSource, String supplierDocument, String invoicePosition, String serialNumber, Category category) {
+        this.description = description;
+        this.itemName = itemName;
+        this.ownerId = ownerId;
+        this.rentStatus = rentStatus;
+        this.photo = photo;
+        this.room = room;
+        this.building = building;
+        this.inventoryDate = inventoryDate;
+        this.value = value;
+        this.inventoryNumber = inventoryNumber;
+        this.invoiceNumber = invoiceNumber;
+        this.fundingSource = fundingSource;
+        this.supplierDocument = supplierDocument;
+        this.invoicePosition = invoicePosition;
+        this.serialNumber = serialNumber;
+        this.category = category;
+    }
+
     public Long getId() {
         return id;
     }
