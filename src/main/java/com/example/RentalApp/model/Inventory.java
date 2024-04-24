@@ -1,5 +1,7 @@
 package com.example.RentalApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -27,7 +29,7 @@ public class Inventory {
     private Long ownerId;
 
     @Column(name = "photo")
-    private byte[] photo;
+    private String photoUrl;  // Zmienione na URL zdjęcia
 
     @Column(name = "rent_status")
     private String rentStatus;
@@ -65,9 +67,12 @@ public class Inventory {
 
     @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonManagedReference
+
     private Category category;
 
     @OneToMany(mappedBy = "inventory")
+    @JsonIgnoreProperties("inventory")
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
 
@@ -78,12 +83,15 @@ public class Inventory {
 
 
 
-    public Inventory(String description, String itemName, Long ownerId, String rentStatus, byte[] photo, String room, String building, LocalDate inventoryDate, BigDecimal value, String inventoryNumber, String invoiceNumber, String fundingSource, String supplierDocument, String invoicePosition, String serialNumber, Category category) {
+    public Inventory(String description, String itemName, Long ownerId, String rentStatus, String photoUrl, String room,
+                     String building, LocalDate inventoryDate, BigDecimal value, String inventoryNumber,
+                     String invoiceNumber, String fundingSource, String supplierDocument, String invoicePosition,
+                     String serialNumber, Category category) {
         this.description = description;
         this.itemName = itemName;
         this.ownerId = ownerId;
         this.rentStatus = rentStatus;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
         this.room = room;
         this.building = building;
         this.inventoryDate = inventoryDate;
@@ -129,14 +137,13 @@ public class Inventory {
         this.ownerId = ownerId;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo.getBytes();
+    public String getPhotoUrl() {
+        return photoUrl;
     }
-
     public String getRentStatus() {
         return rentStatus;
     }
@@ -247,8 +254,7 @@ public class Inventory {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", itemName='" + itemName + '\'' +
-                ", ownerId=" + ownerId +
-                ", photo=" + Arrays.toString(photo) +
+                // Nie wyświetlaj tablicy bajtów
                 ", rentStatus='" + rentStatus + '\'' +
                 ", room='" + room + '\'' +
                 ", building='" + building + '\'' +
@@ -261,7 +267,7 @@ public class Inventory {
                 ", invoicePosition='" + invoicePosition + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", category=" + category +
-                ", rentHistories=" + rentHistories +
+                ", rentHistories size=" + rentHistories.size() +
                 '}';
     }
 

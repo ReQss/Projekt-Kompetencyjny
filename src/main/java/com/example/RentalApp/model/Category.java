@@ -1,5 +1,6 @@
 package com.example.RentalApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
@@ -16,14 +17,10 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne()
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategory;
 
-    @OneToMany(mappedBy = "parentCategory")
-    private Set<Category> categories = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "category")
+    @JsonBackReference
     private Set<Inventory> inventories = new LinkedHashSet<>();
 
     public Integer getId() {
@@ -40,22 +37,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Category getParentCategory() {
-        return parentCategory;
-    }
-
-    public void setParentCategory(Category parentCategory) {
-        this.parentCategory = parentCategory;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
     }
 
     public Set<Inventory> getInventories() {

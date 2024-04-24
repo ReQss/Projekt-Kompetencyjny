@@ -21,10 +21,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
                               `category_id` int(11) NOT NULL AUTO_INCREMENT,
                               `name` varchar(255) NOT NULL,
-                              `parent_category_id` int(11) DEFAULT NULL, -- NULL oznacza kategorię najwyższego poziomu
-                              PRIMARY KEY (`category_id`),
-                              KEY `fk_parent_category_id` (`parent_category_id`),
-                              CONSTRAINT `fk_category_parent` FOREIGN KEY (`parent_category_id`) REFERENCES `categories` (`category_id`)
+
+                              PRIMARY KEY (`category_id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `inventory` (
