@@ -65,6 +65,7 @@ CREATE TABLE `users` (
 CREATE TABLE `rent_history` (
                                 `rent_id` int(11) NOT NULL AUTO_INCREMENT,
                                 `user_id` int(11) NOT NULL,
+                                `index_number` int(6) NOT NULL,
                                 `rent_status` varchar(50) NOT NULL,
                                 `rental_date` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
                                 `return_date` datetime(6) DEFAULT NULL,

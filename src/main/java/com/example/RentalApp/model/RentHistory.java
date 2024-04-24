@@ -20,6 +20,7 @@ public class RentHistory {
     @Column(name = "rent_status", nullable = false, length = 50)
     private String rentStatus;
 
+
     @ColumnDefault("current_timestamp(6)")
     @Column(name = "rental_date", nullable = false)
     private Instant rentalDate;
@@ -30,6 +31,17 @@ public class RentHistory {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
+
+    @Column(name = "index_number", nullable = false)
+    private Integer indexNumber;
+
+    public Integer getIndexNumber() {
+        return indexNumber;
+    }
+
+    public void setIndexNumber(Integer indexNumber) {
+        this.indexNumber = indexNumber;
+    }
 
     public Integer getId() {
         return id;
