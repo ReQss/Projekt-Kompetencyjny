@@ -1,13 +1,11 @@
 package com.example.RentalApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -28,8 +26,8 @@ public class Inventory {
     @Column(name = "owner_id")
     private Long ownerId;
 
-    @Column(name = "photo")
-    private String photoUrl;  // Zmienione na URL zdjęcia
+    @Column(name = "photo_url")
+    private String photoUrl;
 
     @Column(name = "rent_status")
     private String rentStatus;
@@ -39,7 +37,6 @@ public class Inventory {
 
     @Column(name = "building", length = 50)
     private String building;
-
 
     @Column(name = "inventory_date")
     private LocalDate inventoryDate;
@@ -65,44 +62,16 @@ public class Inventory {
     @Column(name = "serial_number", length = 50)
     private String serialNumber;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     @JsonManagedReference
-
     private Category category;
 
     @OneToMany(mappedBy = "inventory")
     @JsonIgnoreProperties("inventory")
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
-
-    public Inventory(){
-
-
-    }
-
-
-
-    public Inventory(String description, String itemName, Long ownerId, String rentStatus, String photoUrl, String room,
-                     String building, LocalDate inventoryDate, BigDecimal value, String inventoryNumber,
-                     String invoiceNumber, String fundingSource, String supplierDocument, String invoicePosition,
-                     String serialNumber, Category category) {
-        this.description = description;
-        this.itemName = itemName;
-        this.ownerId = ownerId;
-        this.rentStatus = rentStatus;
-        this.photoUrl = photoUrl;
-        this.room = room;
-        this.building = building;
-        this.inventoryDate = inventoryDate;
-        this.value = value;
-        this.inventoryNumber = inventoryNumber;
-        this.invoiceNumber = invoiceNumber;
-        this.fundingSource = fundingSource;
-        this.supplierDocument = supplierDocument;
-        this.invoicePosition = invoicePosition;
-        this.serialNumber = serialNumber;
-        this.category = category;
+    public Inventory() {
     }
 
     public Long getId() {
@@ -137,13 +106,14 @@ public class Inventory {
         this.ownerId = ownerId;
     }
 
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
     public String getRentStatus() {
         return rentStatus;
     }
@@ -254,7 +224,8 @@ public class Inventory {
                 "id=" + id +
                 ", description='" + description + '\'' +
                 ", itemName='" + itemName + '\'' +
-                // Nie wyświetlaj tablicy bajtów
+                ", ownerId=" + ownerId +
+                ", photoUrl='" + photoUrl + '\'' +
                 ", rentStatus='" + rentStatus + '\'' +
                 ", room='" + room + '\'' +
                 ", building='" + building + '\'' +
@@ -270,7 +241,4 @@ public class Inventory {
                 ", rentHistories size=" + rentHistories.size() +
                 '}';
     }
-
 }
-
-

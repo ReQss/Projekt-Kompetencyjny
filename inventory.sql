@@ -35,7 +35,7 @@ CREATE TABLE `inventory` (
                              `rent_status` varchar(255) DEFAULT NULL,
                              `room` varchar(50) DEFAULT NULL,
                              `building` varchar(50) DEFAULT NULL,
-                             `inventory_date` date NOT NULL DEFAULT current_timestamp(),
+                             `inventory_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(),
                              `value` decimal(20,2) DEFAULT NULL,
                              `inventory_number` varchar(50) DEFAULT NULL,
                              `invoice_number` varchar(50) DEFAULT NULL,
@@ -52,10 +52,10 @@ CREATE TABLE `inventory` (
 
 CREATE TABLE `users` (
                          `user_id` int(11) NOT NULL AUTO_INCREMENT,
-                         `email` varchar(255) DEFAULT NULL,
+                         `email` varchar(255) UNIQUE,
                          `first_name` varchar(255) DEFAULT NULL,
                          `last_name` varchar(255) DEFAULT NULL,
-                         `login` varchar(255) NOT NULL,
+                         `login` varchar(255) UNIQUE,
                          `password` varchar(255) NOT NULL,
                          `role` enum('USER','ADMIN') NOT NULL,
                          PRIMARY KEY (`user_id`)
@@ -78,10 +78,10 @@ CREATE TABLE `rent_history` (
 
 
 INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `login`, `password`, `role`) VALUES
-                                                                                                        (1, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
-                                                                                                        (2, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
-                                                                                                        (52, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
-                                                                                                        (102, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER');
+                                                                                                     (1, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'encrypted_password', 'USER'),
+                                                                                                     (2, 'eve@example.com', 'Eve', 'Evans', 'eve', 'encrypted_password', 'USER'),
+                                                                                                     (52, 'bob@example.com', 'Bob', 'Builder', 'bob', 'encrypted_password', 'ADMIN'),
+                                                                                                     (102, 'alice@example.com', 'Alice', 'Johnson', 'alice', 'encrypted_password', 'USER');
 INSERT INTO categories (name) VALUES ('Elektronika');
 INSERT INTO inventory (item_name, description, owner_id, rent_status, room, building, inventory_date, value, inventory_number, invoice_number, funding_source, supplier_document, invoice_position, serial_number, category_id) VALUES
                                                                                                                                                                                                                                     ('iPhone 13 Pro', 'iPhone 13 Pro, 256GB', 1, 'available', '5A', 'Building X', CURRENT_DATE, 999.99, 'INV00123', 'INV2021001', 'Company budget', 'Apple Store', '1', 'SN123456789', 1),
