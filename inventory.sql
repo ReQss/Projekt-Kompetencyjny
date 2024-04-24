@@ -82,6 +82,11 @@ INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `login`, `pa
                                                                                                         (2, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
                                                                                                         (52, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER'),
                                                                                                         (102, 'adam@o2.pl', 'Adam', 'Adamowski', 'adam', 'adam', 'USER');
+INSERT INTO categories (name) VALUES ('Elektronika');
+INSERT INTO inventory (item_name, description, owner_id, rent_status, room, building, inventory_date, value, inventory_number, invoice_number, funding_source, supplier_document, invoice_position, serial_number, category_id) VALUES
+                                                                                                                                                                                                                                    ('iPhone 13 Pro', 'iPhone 13 Pro, 256GB', 1, 'available', '5A', 'Building X', CURRENT_DATE, 999.99, 'INV00123', 'INV2021001', 'Company budget', 'Apple Store', '1', 'SN123456789', 1),
+                                                                                                                                                                                                                                    ('MacBook Pro 16-inch', 'MacBook Pro 16-inch, 2021, M1 chip', 1, 'available', '5B', 'Building Y', CURRENT_DATE, 2499.99, 'INV00124', 'INV2021002', 'Research grant', 'Apple Store', '2', 'SN987654321', 1),
+                                                                                                                                                                                                                                    ('Canon EOS R5', 'Canon EOS R5, 45MP full-frame mirrorless camera', 1, 'available', '5C', 'Building Z', CURRENT_DATE, 3899.99, 'INV00125', 'INV2021003', 'Photography department funds', 'B&H', '3', 'SN123123123', 1);
 
 COMMIT;
 
