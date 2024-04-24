@@ -10,7 +10,6 @@ const Item = ({ src, name, owner, building, room  }) => {
       <p>{owner}</p>
       <p>{building}</p>
       <p>{room}</p>
-      <Button>WYPOŻYCZ</Button>
     </div>
   )
 }
