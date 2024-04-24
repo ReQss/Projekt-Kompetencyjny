@@ -38,8 +38,8 @@ public class Inventory {
     @Column(name = "building", length = 50)
     private String building;
 
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "inventory_date", nullable = false)
+
+    @Column(name = "inventory_date")
     private LocalDate inventoryDate;
 
     @Column(name = "value", precision = 20, scale = 2)
@@ -63,7 +63,7 @@ public class Inventory {
     @Column(name = "serial_number", length = 50)
     private String serialNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 

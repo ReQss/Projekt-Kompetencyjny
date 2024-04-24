@@ -13,22 +13,20 @@ public class RentHistory {
     @Column(name = "rent_id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name = "rent_status", nullable = false, length = 50)
     private String rentStatus;
 
-
-    @ColumnDefault("current_timestamp(6)")
-    @Column(name = "rental_date", nullable = false)
+    @Column(name = "rental_date")
     private Instant rentalDate;
 
     @Column(name = "return_date")
     private Instant returnDate;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne()
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 
