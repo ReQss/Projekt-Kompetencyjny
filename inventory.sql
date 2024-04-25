@@ -80,6 +80,8 @@ CREATE TABLE `rent_history`
     `user_id`         int(11)     NOT NULL,
     `index_number`    int(6)      NOT NULL,
     `rent_status`     varchar(50) NOT NULL,
+    `first_name`     varchar(50) NOT NULL,
+    `last_name`     varchar(50) NOT NULL,
     `rent_purpose_id` int(11)              DEFAULT NULL,
     `rental_date`     datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     `return_date`     datetime(6)          DEFAULT NULL,

@@ -43,6 +43,29 @@ public class RentHistory {
 
     @JoinColumn(name = "rent_purpose_id")
     private RentPurpose rentPurpose;
+
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     // Getters and setters
     public RentPurpose getRentPurpose() {
         return rentPurpose;
