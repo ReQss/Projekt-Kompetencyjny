@@ -27,8 +27,9 @@ public class Inventory {
     private Long ownerId;
 
 
-    @Column(name = "rent_status")
-    private String rentStatus;
+   // @Column(name = "rent_status")
+    @Enumerated(EnumType.STRING)
+    private RentStatus rentStatus = RentStatus.available;
 
     @Column(name = "room", length = 50)
     private String room;
@@ -113,11 +114,11 @@ public class Inventory {
     }
 
 
-    public String getRentStatus() {
+    public RentStatus getRentStatus() {
         return rentStatus;
     }
 
-    public void setRentStatus(String rentStatus) {
+    public void setRentStatus(RentStatus rentStatus) {
         this.rentStatus = rentStatus;
     }
 
