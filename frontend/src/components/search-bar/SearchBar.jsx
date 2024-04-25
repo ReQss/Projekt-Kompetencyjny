@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './searchBar.css';
 import Button from '../button/Button';
 import { Link } from 'react-router-dom';
@@ -24,11 +24,9 @@ const SearchBar = () => {
         />
       </form>
 
-      <Link to="/login">
+      <Link to="/rent-form">
         <Button> Wypożycz </Button>
       </Link>
-
-      <button>siema</button>
 
       <form className="sort-window">
         <label>Sortuj:</label>
