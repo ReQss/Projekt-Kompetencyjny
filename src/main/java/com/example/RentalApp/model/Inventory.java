@@ -29,7 +29,7 @@ public class Inventory {
 
    // @Column(name = "rent_status")
     @Enumerated(EnumType.STRING)
-    private RentStatus rentStatus = RentStatus.available;
+    private ItemStatus rentStatus = ItemStatus.available;
 
     @Column(name = "room", length = 50)
     private String room;
@@ -114,11 +114,11 @@ public class Inventory {
     }
 
 
-    public RentStatus getRentStatus() {
+    public ItemStatus getRentStatus() {
         return rentStatus;
     }
 
-    public void setRentStatus(RentStatus rentStatus) {
+    public void setRentStatus(ItemStatus rentStatus) {
         this.rentStatus = rentStatus;
     }
 
