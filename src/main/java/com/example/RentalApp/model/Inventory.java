@@ -1,6 +1,6 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "inventory")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +26,6 @@ public class Inventory {
     @Column(name = "owner_id")
     private Long ownerId;
 
-    @Column(name = "photo_url")
-    private String photoUrl;
 
     @Column(name = "rent_status")
     private String rentStatus;
@@ -61,12 +61,25 @@ public class Inventory {
     private String serialNumber;
 
     @ManyToOne
+
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "inventory")
-    @JsonManagedReference
+    @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
+
+    @Column(name = "photo")
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -99,13 +112,6 @@ public class Inventory {
         this.ownerId = ownerId;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
 
     public String getRentStatus() {
         return rentStatus;
@@ -218,7 +224,7 @@ public class Inventory {
                 ", description='" + description + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", ownerId=" + ownerId +
-                ", photoUrl='" + photoUrl + '\'' +
+                ", photo='" + photo + '\'' +
                 ", rentStatus='" + rentStatus + '\'' +
                 ", room='" + room + '\'' +
                 ", building='" + building + '\'' +

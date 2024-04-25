@@ -1,11 +1,16 @@
 package com.example.RentalApp.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Table(name = "rent_history")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+
 public class RentHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +18,7 @@ public class RentHistory {
     private Integer id;
 
     @ManyToOne()
+
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -26,13 +32,26 @@ public class RentHistory {
     private Instant returnDate;
 
     @ManyToOne()
-    @JsonBackReference
+
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 
     @Column(name = "index_number", nullable = false)
     private Integer indexNumber;
+
+    @ManyToOne()
+
+    @JoinColumn(name = "rent_purpose_id")
+    private RentPurpose rentPurpose;
     // Getters and setters
+    public RentPurpose getRentPurpose() {
+        return rentPurpose;
+    }
+
+    public void setRentPurpose(RentPurpose rentPurpose) {
+        this.rentPurpose = rentPurpose;
+    }
+
     public Integer getId() {
         return id;
     }

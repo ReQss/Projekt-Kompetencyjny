@@ -1,6 +1,6 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categories")
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,7 @@ public class Category {
 
 
     @OneToMany(mappedBy = "category")
-    @JsonBackReference
+    @JsonIgnore
     private Set<Inventory> inventories = new LinkedHashSet<>();
 
     public Integer getId() {

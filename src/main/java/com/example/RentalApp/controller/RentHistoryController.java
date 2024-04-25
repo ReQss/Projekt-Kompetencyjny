@@ -17,7 +17,7 @@ public class RentHistoryController {
 
     @PostMapping
     public ResponseEntity<RentHistory> addRentHistory(@RequestBody RentHistory rentHistory) {
-        System.out.println("Received rent history: " + rentHistory);
+
 
         rentHistory.setRentalDate(Instant.now());
         RentHistory newRentHistory = rentHistoryService.addRentHistory(rentHistory);
