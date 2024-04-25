@@ -1,7 +1,5 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
@@ -64,16 +62,12 @@ public class Inventory {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonManagedReference
     private Category category;
 
     @OneToMany(mappedBy = "inventory")
-    @JsonIgnoreProperties("inventory")
+    @JsonManagedReference
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
-
-    public Inventory() {
-    }
-
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -85,7 +79,6 @@ public class Inventory {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }

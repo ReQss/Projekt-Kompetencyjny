@@ -1,8 +1,7 @@
 package com.example.RentalApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-
 import java.time.Instant;
 
 @Entity
@@ -27,20 +26,13 @@ public class RentHistory {
     private Instant returnDate;
 
     @ManyToOne()
+    @JsonBackReference
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 
     @Column(name = "index_number", nullable = false)
     private Integer indexNumber;
-
-    public Integer getIndexNumber() {
-        return indexNumber;
-    }
-
-    public void setIndexNumber(Integer indexNumber) {
-        this.indexNumber = indexNumber;
-    }
-
+    // Getters and setters
     public Integer getId() {
         return id;
     }
@@ -89,4 +81,11 @@ public class RentHistory {
         this.inventory = inventory;
     }
 
+    public Integer getIndexNumber() {
+        return indexNumber;
+    }
+
+    public void setIndexNumber(Integer indexNumber) {
+        this.indexNumber = indexNumber;
+    }
 }
