@@ -22,8 +22,8 @@ public class RentHistory {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "rent_status", nullable = false, length = 50)
-    private String rentStatus;
+    @Enumerated(EnumType.STRING)
+    private RentStatus rentStatus ;
 
     @Column(name = "rental_date")
     private Instant rentalDate;
@@ -102,11 +102,11 @@ public class RentHistory {
         this.user = user;
     }
 
-    public String getRentStatus() {
+    public RentStatus getRentStatus() {
         return rentStatus;
     }
 
-    public void setRentStatus(String rentStatus) {
+    public void setRentStatus(RentStatus rentStatus) {
         this.rentStatus = rentStatus;
     }
 
