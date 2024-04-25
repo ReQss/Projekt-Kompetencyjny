@@ -1,6 +1,5 @@
-import React from "react";
-import "./login.css";
-import { LoginPanel } from "../../components";
+import './login.css';
+import { LoginPanel } from '../../components';
 
 const Login = () => {
   return (
