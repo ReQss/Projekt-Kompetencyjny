@@ -1,8 +1,6 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.Instant;
@@ -36,8 +34,8 @@ public class RentHistory {
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 
-    @Column(name = "index_number", nullable = false)
-    private Integer indexNumber;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @ManyToOne()
 
@@ -134,11 +132,11 @@ public class RentHistory {
         this.inventory = inventory;
     }
 
-    public Integer getIndexNumber() {
-        return indexNumber;
+    public String getEmail() {
+        return email;
     }
 
-    public void setIndexNumber(Integer indexNumber) {
-        this.indexNumber = indexNumber;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
