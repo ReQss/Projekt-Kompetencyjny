@@ -20,9 +20,9 @@ const LoginPanel = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log('siema');
     e.preventDefault();
-
+    console.log('Attempting login...');
+    
     try {
       const response = await fetch('http://localhost:9192/login', {
         method: 'POST',
@@ -31,20 +31,22 @@ const LoginPanel = () => {
         },
         body: JSON.stringify(formData),
       });
-
-      console.log(response);
+  
+      const data = await response.json();
+      console.log(data); // Logging the response data for debug
+      
       if (response.status === 202) {
-        console.log('Zalogowano pomyślnie!');
-        console.log(response);
-        localStorage.setItem('token', response.data.token);
+        console.log('Logged in successfully!');
+        localStorage.setItem('token', data.token);
         navigate('/');
-        window.location.reload();
+        // Optionally reload page if necessary
+        // window.location.reload(); 
       } else {
-        console.log('Błąd logowania. Spróbuj ponownie.');
+        console.log('Login error. Please try again.');
       }
     } catch (error) {
-      console.error('Błąd podczas wysyłania żądania:', error);
-      console.log('Wystąpił błąd podczas logowania. Spróbuj ponownie później.');
+      console.error('Error during login request:', error);
+      console.log('An error occurred during login. Please try again later.');
     }
   };
 
