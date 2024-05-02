@@ -1,5 +1,6 @@
 import React from "react";
 import "./detailsModal.css";
+import { Link } from "react-router-dom";
 
 const Modal = ({ item, img, onClose }) => {
     return (
@@ -27,6 +28,7 @@ const Modal = ({ item, img, onClose }) => {
                     </div>
                 </div>
                 <button onClick={onClose}>Close</button>
+                <Link to={`/rent-history/${item.id}`}><button>Historia wypożyczeń</button></Link>
             </div>
         </div>
     );
