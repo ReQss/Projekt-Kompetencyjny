@@ -23,7 +23,7 @@ public class RentHistory {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private RentStatus rentStatus ;
+    private RentStatus rentStatus;
 
     @Column(name = "rental_date")
     private Instant rentalDate;

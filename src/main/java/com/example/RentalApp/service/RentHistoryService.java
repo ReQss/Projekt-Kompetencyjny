@@ -5,6 +5,8 @@ import com.example.RentalApp.repository.RentHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RentHistoryService {
 
@@ -14,4 +16,11 @@ public class RentHistoryService {
     public RentHistory addRentHistory(RentHistory rentHistory) {
         return rentHistoryRepository.save(rentHistory);
     }
+
+    public List<RentHistory> findRentHistoriesByUserId(Integer userId) {
+        return rentHistoryRepository.findByUserId(userId);
+    }
 }
+
+
+
