@@ -20,6 +20,9 @@ public class RentHistoryService {
     public List<RentHistory> findRentHistoriesByUserId(Integer userId) {
         return rentHistoryRepository.findByUserId(userId);
     }
+    public List<RentHistory> findRentHistoriesByInventoryId(Integer InventoryId) {
+        return rentHistoryRepository.findByInventoryId(InventoryId);
+    }
 }
 
 

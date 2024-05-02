@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface RentHistoryRepository extends JpaRepository<RentHistory, Integer> {
     List<RentHistory> findByUserId(Integer userId);
+    List<RentHistory> findByInventoryId(Integer inventoryId);
 }

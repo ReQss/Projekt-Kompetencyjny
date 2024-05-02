@@ -31,5 +31,13 @@ public class RentHistoryController {
         }
         return ResponseEntity.ok(rentHistories);
     }
+    @GetMapping("/inventory/{inventoryId}")
+    public ResponseEntity<List<RentHistory>> getRentHistoryByInventoryId(@PathVariable Integer inventoryId) {
+        List<RentHistory> rentHistories = rentHistoryService.findRentHistoriesByInventoryId(inventoryId);
+        if (rentHistories.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(rentHistories);
+    }
 }
 
