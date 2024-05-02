@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories`
 (
     `category_id` int(11)      NOT NULL AUTO_INCREMENT,
-    `name`        varchar(255) NOT NULL,
+    `name`        varchar(50) NOT NULL,
 
     PRIMARY KEY (`category_id`)
 
@@ -31,8 +31,8 @@ CREATE TABLE `categories`
 CREATE TABLE `inventory`
 (
     `inventory_id`      bigint(20)   NOT NULL AUTO_INCREMENT,
-    `description`       varchar(255)          DEFAULT NULL,
-    `item_name`         varchar(255) NOT NULL,
+    `description`       varchar(2000)          DEFAULT NULL,
+    `item_name`         varchar(50) NOT NULL,
     `owner_id`          bigint(20)            DEFAULT NULL,
     `photo`             varchar(255)        DEFAULT NULL,
     `rent_status`       enum ('available','unavailable') NOT NULL,
@@ -57,11 +57,11 @@ CREATE TABLE `inventory`
 CREATE TABLE `users`
 (
     `user_id`    int(11)               NOT NULL AUTO_INCREMENT,
-    `email`      varchar(255) UNIQUE,
-    `first_name` varchar(255) DEFAULT NULL,
-    `last_name`  varchar(255) DEFAULT NULL,
-    `login`      varchar(255) UNIQUE,
-    `password`   varchar(255)          NOT NULL,
+    `email`      varchar(50) UNIQUE,
+    `first_name` varchar(50) DEFAULT NULL,
+    `last_name`  varchar(50) DEFAULT NULL,
+    `login`      varchar(50) UNIQUE,
+    `password`   varchar(50)          NOT NULL,
     `role`       enum ('USER','ADMIN') NOT NULL,
     PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB
@@ -78,14 +78,14 @@ CREATE TABLE `rent_history`
 (
     `rent_id`         int(11)     NOT NULL AUTO_INCREMENT,
     `user_id`         int(11)     NOT NULL,
-    `email`           varchar(255)       NOT NULL,
+    `email`           varchar(50)       NOT NULL,
     `rent_status`      enum ('rented','returned') NOT NULL,
     `first_name`      varchar(50) NOT NULL,
     `last_name`       varchar(50) NOT NULL,
     `rent_purpose_id` int(11)              DEFAULT NULL,
     `rental_date`     datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(),
     `return_date`     datetime(6)          DEFAULT NULL,
-    `rent_description`varchar(255)         DEFAULT NULL,
+    `rent_description`varchar(2000)         DEFAULT NULL,
     `inventory_id`    bigint(20)  NOT NULL,
     PRIMARY KEY (`rent_id`),
     KEY `fk_user_id` (`user_id`),
