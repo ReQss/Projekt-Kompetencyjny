@@ -17,6 +17,7 @@ const ItemsWrapper = () => {
     <div className='items-wrapper'>
       {items.map(item => (
         <Item 
+          item={item}
           key={item.id}
           src={item.photoUrl ? item.photoUrl : komputerImage} // Podstawowe zdjęcie, gdy brak photoUrl
           name={item.itemName}
