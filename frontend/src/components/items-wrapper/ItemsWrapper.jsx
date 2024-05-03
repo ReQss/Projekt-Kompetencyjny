@@ -2,9 +2,26 @@ import React, { useState, useEffect } from 'react';
 import './itemsWrapper.css';
 import Item from '../item/Item';
 import komputerImage from '../../assets/komputer.jpg';
+import { useLocation } from 'react-router-dom';
 
 const ItemsWrapper = () => {
   const [items, setItems] = useState([]);
+
+  const location = useLocation();
+  
+  // Pobierz zalogowane Id użytkownika z localStorage
+  const loggedInUserId = localStorage.getItem('userId');
+
+  // Filtruj przedmioty na podstawie ownerId
+  const filteredItems = items.filter(item => {
+    // Jeżeli użytkownik jest na podstronie "/modify", zwróć tylko te przedmioty, które należą do niego
+    if (location.pathname === '/modify') {
+      return item.ownerId === parseInt(loggedInUserId);
+    }
+    // W innych przypadkach zwróć wszystkie przedmioty
+    return true;
+  });
+
 
   useEffect(() => {
     fetch('http://localhost:9192/api/inventory')
@@ -32,7 +49,7 @@ const ItemsWrapper = () => {
   
   return (
     <div className='items-wrapper'>
-      {items.map(item => (
+      {filteredItems.map(item => (
         <Item 
           item={item}
           key={item.id}

@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./item.css";
 import Modal from "../modal/DetailsModal";
+import Button from "../button/Button";
+import { Link, useLocation } from 'react-router-dom';
+
 
 const Item = ({item, src, id, name, description, rentStatus }) => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const location = useLocation();
 
   const openModal = () => {
     setModalOpen(true);
@@ -25,10 +30,26 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
           <p>Nazwa: {name}</p>
           <p style={{ color: rentStatusColor }}>Stan wypożyczenia: {rentStatus}</p>
           
-          {localStorage.getItem('token') === null ? (
+          {/* {localStorage.getItem('token') === null ? (
             <></>
           ) : (
             <button onClick={openModal}>Details</button>
+          )} */}
+
+        {localStorage.getItem('token') === null ? (
+            <></>
+          ) : (
+            location.pathname === '/modify' ? (
+              <Link to="/modification-form">
+                <Button > Modyfikuj </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/modify">
+                  <Button onClick={openModal}> Details </Button>
+                </Link>
+            </>
+            )
           )}
         </div>
         

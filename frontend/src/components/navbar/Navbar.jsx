@@ -7,7 +7,9 @@ const Navbar = () => {
   const logoutUser = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAdmin');
-    window.location.reload();
+    localStorage.removeItem('userId');
+
+    // window.location.reload();
   };
 
   return (

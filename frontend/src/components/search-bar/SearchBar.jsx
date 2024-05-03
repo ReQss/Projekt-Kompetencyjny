@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './searchBar.css';
 import Button from '../button/Button';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
   const [showItems, setShowItems] = useState(false);
@@ -9,6 +9,9 @@ const SearchBar = () => {
   const toggleItems = () => {
     setShowItems(!showItems);
   };
+
+  const location = useLocation();
+  const token = localStorage.getItem('token');
 
   return (
     <div className="search-bar">
@@ -21,10 +24,27 @@ const SearchBar = () => {
           placeholder="Szukaj"
         />
       </form> */}
+      {localStorage.getItem('token') === null ? (
+            <></>
+          ) : (
+            location.pathname === '/modify' ? (
+              <Link to="/">
+                <Button> Wróć na stronę główną </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/modify">
+                  <Button> Modyfikuj </Button>
+                </Link>
+            </>
+            )
+          )}
+
 
       <Link to="/rent-form">
         <Button> Wypożycz </Button>
       </Link>
+
       <Link to={"/history-form/"}>
         <Button>Historia wypożyczeń</Button>
       </Link>
