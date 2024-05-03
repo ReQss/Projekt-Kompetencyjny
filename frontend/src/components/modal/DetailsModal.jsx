@@ -28,7 +28,6 @@ const Modal = ({ item, img, onClose }) => {
                     </div>
                 </div>
                 <button onClick={onClose}>Close</button>
-                <Link to={`/rent-history/${item.id}`}><button>Historia wypożyczeń</button></Link>
             </div>
         </div>
     );
