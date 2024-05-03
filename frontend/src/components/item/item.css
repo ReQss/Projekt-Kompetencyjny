@@ -1,24 +1,37 @@
 .item {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid lightgray;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem;
-    background-color: white;
-    border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid lightgray;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 0.3rem;
 }
 
 .item p {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 .item img {
-    margin: 0.5rem 0;
-    max-width: 100%;
-    max-height: 130px;
+  margin: 0.5rem 0;
+  max-width: 100%;
+  max-height: 130px;
 }
 
 .item button {
-    margin: 1rem;
-}
+    padding: 10px 20px;
+    background-color: rgba(148, 148, 148, 0.486);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+  }
+  
+  .item button:hover {
+    opacity: 0.8;
+    scale: 1.05;
+    background-color: #770000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
