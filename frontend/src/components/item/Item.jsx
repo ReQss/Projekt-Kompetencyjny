@@ -9,6 +9,8 @@ const Item = ({ src, id, name, description, rentStatus }) => {
     setModalOpen(true);
   };
 
+  console.log(item);
+  
   const closeModal = () => {
     setModalOpen(false);
   };

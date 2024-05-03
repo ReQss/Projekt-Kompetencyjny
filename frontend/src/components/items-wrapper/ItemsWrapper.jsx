@@ -10,26 +10,28 @@ const ItemsWrapper = () => {
 
   useEffect(() => {
     fetch('http://localhost:9192/api/inventory')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
+
+     .then(response => response.json())
+     .then(data => {
+        // Przetwarzanie danych po pobraniu
+        const processedData = data.map(item => {
+          // Sprawdź, czy category to obiekt
+          if (typeof item.category === 'object' && item.category!== null) {
+            // Przekształć category w nazwę kategorii
+            return {
+             ...item,
+              category: item.category.name // Użyj tylko nazwy kategorii
+            };
+          }
+          // Jeśli category to już pojedyncza wartość, zwróć go bez zmian
+          return item;
+        });
+        setItems(processedData);
       })
-      .then(data => {
-        setItems(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching items:', error);
-        setError(error.toString());
-        setLoading(false);
-      });
+     .catch(error => console.error('Error fetching items:', error));
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading items: {error}</p>;
-
+  
   return (
     <div className='items-wrapper'>
       {items.map(item => (
