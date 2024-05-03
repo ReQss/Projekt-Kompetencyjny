@@ -1,5 +1,6 @@
 import React from "react";
 import "./detailsModal.css";
+import { Link } from "react-router-dom";
 
 const Modal = ({ item, img, onClose }) => {
     return (

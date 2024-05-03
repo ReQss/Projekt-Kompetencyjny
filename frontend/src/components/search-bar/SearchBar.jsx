@@ -27,6 +27,9 @@ const SearchBar = () => {
       <Link to="/rent-form">
         <Button> Wypożycz </Button>
       </Link>
+      <Link to={"/history-form/"}>
+        <Button>Historia wypożyczeń</Button>
+      </Link>
 
       <form className="sort-window">
         <label>Sortuj:</label>

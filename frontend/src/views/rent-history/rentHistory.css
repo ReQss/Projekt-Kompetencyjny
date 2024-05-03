@@ -1,0 +1,42 @@
+.rent-history__wrapper {
+    background-color: rgb(249, 249, 249);
+    min-height: 100vh;
+}
+
+.rent-history__wrapper button {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.rent-history {
+    padding-top: 5rem;
+    padding-left: 5rem;
+    display: flex;
+    flex-direction: column;
+    /* max-width: 1000px; */
+    align-items: center;
+    padding-bottom: 5rem;
+}
+.rent-history h2 {
+    margin-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.rent-history .red {
+    color: #770000;
+}
+
+.rent-history__single-rental {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 1000px;
+    padding: 2rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    transition: filter 0.3s ease;
+}
+
+.rent-history__single-rental:hover {
+    filter: brightness(0.9);
+}
