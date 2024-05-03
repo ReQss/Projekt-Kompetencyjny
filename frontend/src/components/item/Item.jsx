@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import "./item.css";
 import Modal from "../modal/DetailsModal";
 
-const Item = ({ src, id, name, description, rentStatus }) => {
+const Item = ({item, src, id, name, description, rentStatus }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
   };
 
-  console.log(item);
   
   const closeModal = () => {
     setModalOpen(false);
@@ -32,7 +31,7 @@ const Item = ({ src, id, name, description, rentStatus }) => {
         </div>
       </div>
       {modalOpen && (
-        <Modal item={{ id, name, description, rentStatus }} onClose={closeModal}>
+        <Modal item={item} img={src}  onClose={closeModal}>
           {/* Tutaj możesz przekazać więcej informacji, jeśli modal ma wyświetlać więcej danych */}
         </Modal>
       )}

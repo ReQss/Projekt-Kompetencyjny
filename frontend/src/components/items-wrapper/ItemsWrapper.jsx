@@ -5,8 +5,6 @@ import komputerImage from '../../assets/komputer.jpg';
 
 const ItemsWrapper = () => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:9192/api/inventory')
@@ -36,6 +34,7 @@ const ItemsWrapper = () => {
     <div className='items-wrapper'>
       {items.map(item => (
         <Item 
+          item={item}
           key={item.id}
           src={item.photoUrl ? item.photoUrl : komputerImage} // Zakładając, że klucz to 'photoUrl'
           id={item.id}
