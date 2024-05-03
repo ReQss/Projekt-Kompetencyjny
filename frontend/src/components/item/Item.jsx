@@ -10,6 +10,8 @@ const Item = ({ item, src, name, owner, building, room }) => {
     setModalOpen(true);
   };
 
+  console.log(item);
+  
   const closeModal = () => {
     setModalOpen(false);
   };
