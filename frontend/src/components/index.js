@@ -6,4 +6,4 @@ export { default as LoginPanel } from "./login-panel/LoginPanel";
 export { default as Navbar } from "./navbar/Navbar";
 export { default as SearchBar } from "./search-bar/SearchBar";
 export { default as Button } from "./button/Button";
-export { default as Modal } from "./modal/Modal";
+export { default as Modal } from "./modal/DetailsModal";
