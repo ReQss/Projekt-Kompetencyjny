@@ -5,25 +5,42 @@ import komputerImage from '../../assets/komputer.jpg';
 
 const ItemsWrapper = () => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:9192/api/inventory')  // Upewnij się, że URL jest poprawny!
-      .then(response => response.json())
-      .then(data => setItems(data))
-      .catch(error => console.error('Error fetching items:', error));
+    fetch('http://localhost:9192/api/inventory')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setItems(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching items:', error);
+        setError(error.toString());
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error loading items: {error}</p>;
 
   return (
     <div className='items-wrapper'>
       {items.map(item => (
         <Item 
-          item={item}
           key={item.id}
-          src={item.photoUrl ? item.photoUrl : komputerImage} // Podstawowe zdjęcie, gdy brak photoUrl
+          src={item.photoUrl ? item.photoUrl : komputerImage} // Zakładając, że klucz to 'photoUrl'
+          id={item.id}
           name={item.itemName}
-          owner={item.ownerId} // Tutaj możesz potrzebować dodatkowego zapytania/API do przekształcenia ID właściciela na imię
-          building={item.building}
-          room={item.room}
+          description={item.description}
+          rentStatus={item.rentStatus}
+          // Przekaż dodatkowe dane potrzebne do modalu
         />
       ))}
     </div>
