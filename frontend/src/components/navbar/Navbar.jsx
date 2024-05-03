@@ -23,9 +23,11 @@ const Navbar = () => {
             </Link>
           </>
         ) : (
-          <li>
-            <button onClick={logoutUser}>Logout</button>
-          </li>
+          <>
+            <Link to="/">
+              <Button onClick={logoutUser}> Wyloguj się </Button>
+            </Link>
+          </>
         )}
       </ul>
     </div>

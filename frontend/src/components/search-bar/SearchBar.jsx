@@ -12,17 +12,15 @@ const SearchBar = () => {
 
   return (
     <div className="search-bar">
-      <form>
+      {/* <form>
         <input
           className="search-window"
           type="text"
           id="search"
           name="search"
           placeholder="Szukaj"
-          // value={searchTerm}
-          // onChange={(e) => setSearchTerm(e.target.value)}
         />
-      </form>
+      </form> */}
 
       <Link to="/rent-form">
         <Button> Wypożycz </Button>
@@ -31,7 +29,7 @@ const SearchBar = () => {
         <Button>Historia wypożyczeń</Button>
       </Link>
 
-      <form className="sort-window">
+      {/* <form className="sort-window">
         <label>Sortuj:</label>
         <button
           className="sort-window__btn sort-window__btn-first"
@@ -48,7 +46,7 @@ const SearchBar = () => {
             <button className="sort-window__btn">Element4</button>
           </div>
         )}
-      </form>
+      </form> */}
     </div>
   );
 };

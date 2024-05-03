@@ -24,8 +24,14 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
           <p>ID: {id}</p>
           <p>Nazwa: {name}</p>
           <p style={{ color: rentStatusColor }}>Stan wypożyczenia: {rentStatus}</p>
-          <button onClick={openModal}>Details</button>
+          
+          {localStorage.getItem('token') === null ? (
+            <></>
+          ) : (
+            <button onClick={openModal}>Details</button>
+          )}
         </div>
+        
         <div className="item-description">
           <p>{description}</p>
         </div>
