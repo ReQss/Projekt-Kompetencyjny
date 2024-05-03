@@ -35,5 +35,30 @@ public class InventoryRestController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/updateInventory/{id}")
+    public ResponseEntity<Inventory> updateInventory(@PathVariable Long id, @RequestBody Inventory updatedInventory) {
+        Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
+        if (existingInventory != null) {
+          
+            existingInventory.setDescription(updatedInventory.getDescription());
+            existingInventory.setItemName(updatedInventory.getItemName());
+            existingInventory.setOwnerId(updatedInventory.getOwnerId());
+
+            Inventory updated = inventoryRepository.save(existingInventory);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/deleteInventory/{id}")
+    public ResponseEntity<HttpStatus> deleteInventory(@PathVariable Long id) {
+        try {
+            inventoryRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
 
