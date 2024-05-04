@@ -6,7 +6,6 @@ import { Button } from '../../components';
 const ModificationForm = () => {
     const { itemId } = useParams();
     const [itemInfo, setItemInfo] = useState([]);
-    const itId = (null);
 
 
     useEffect(() => {
@@ -14,7 +13,6 @@ const ModificationForm = () => {
           try {
             const response = await fetch(`http://localhost:9192/api/inventoryById/${itemId}`);
             const data = await response.json();
-            console.log(data);
             setItemInfo(data);
           } catch (error) {
             console.error('Error fetching rent history:', error);
@@ -24,64 +22,47 @@ const ModificationForm = () => {
         fetchItemInfo();
       }, [itemId]);
 
-    // const handleInputChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setItemInfo((prevFormData) => ({
-    //        ...prevFormData,
-    //         [name]: value,
-    //     }));
-    // };
+      const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setItemInfo(prevState => ({
+           ...prevState,
+            [name]: value,
+        }));
+    };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    //     const item = formData;
+        const item = itemInfo;
+        console.log(JSON.stringify(item))
 
-    //     try {
-    //         const response = await fetch(`http://localhost:9192/updateInventory/${itemId}`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(item),
-    //         });
 
-    //         if (response.ok) {
-    //             console.log('działa');
-    //             setFormData({
-    //                 description: '',
-    //                 itemName: '',
-    //                 ownerId: '',
-    //                 photo: '',
-    //                 rentStatus: '',
-    //                 room: '',
-    //                 building: '',
-    //                 inventoryDate: '',
-    //                 value: '',
-    //                 inventoryNumber: '',
-    //                 invoiceNumber: '',
-    //                 fundingSource: '',
-    //                 supplierDocument: '',
-    //                 invoicePosition: '',
-    //                 serialNumber: '',
-    //                 category: '',
-    //             });
+        try {
+            const response = await fetch(`http://localhost:9192/api/updateInventory/${itemId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(item),
+            });
 
-    //             alert('Modyfikacja udana!');
-    //         } else {
-    //             const errorMessage = await response.text();
-    //             alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
-    //         }
-    //     } catch (error) {
-    //         console.error('Błąd podczas wysyłania żądania:', error);
-    //         alert('Wystąpił błąd podczas wypożyczania sprzętu.');
-    //     }
-    // };
+            if (response.ok) {
+                console.log('działa');
+                alert('Modyfikacja udana!');
+            } else {
+                const errorMessage = await response.text();
+                alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
+            }
+        } catch (error) {
+            console.error('Błąd podczas wysyłania żądania:', error);
+            alert('Wystąpił błąd podczas wypożyczania sprzętu.');
+        }
+    };
 
     return (
         <div className="form-container">
             <h2>Wypożycz sprzęt</h2>
-            <form >
+            <form onSubmit={handleSubmit}>
                 <div className="form">
                     <label htmlFor="description">Opis:</label>
                     <input
@@ -89,7 +70,7 @@ const ModificationForm = () => {
                         id="description"
                         name="description"
                         value={itemInfo.description}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -100,7 +81,7 @@ const ModificationForm = () => {
                         id="itemName"
                         name="itemName"
                         value={itemInfo.itemName}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -111,7 +92,7 @@ const ModificationForm = () => {
                         id="ownerId"
                         name="ownerId"
                         value={itemInfo.ownerId}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -122,7 +103,7 @@ const ModificationForm = () => {
                         id="rentStatus"
                         name="rentStatus"
                         value={itemInfo.rentStatus}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -133,7 +114,7 @@ const ModificationForm = () => {
                         id="room"
                         name="room"
                         value={itemInfo.room}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -144,7 +125,7 @@ const ModificationForm = () => {
                         id="building"
                         name="building"
                         value={itemInfo.building}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -155,7 +136,7 @@ const ModificationForm = () => {
                         id="building"
                         name="building"
                         value={itemInfo.building}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -166,7 +147,7 @@ const ModificationForm = () => {
                         id="inventoryDate"
                         name="inventoryDate"
                         value={itemInfo.inventoryDate}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -177,7 +158,7 @@ const ModificationForm = () => {
                         id="value"
                         name="value"
                         value={itemInfo.value}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -188,7 +169,7 @@ const ModificationForm = () => {
                         id="inventoryNumber"
                         name="inventoryNumber"
                         value={itemInfo.inventoryNumber}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -199,7 +180,7 @@ const ModificationForm = () => {
                         id="invoiceNumber"
                         name="invoiceNumber"
                         value={itemInfo.invoiceNumber}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -210,7 +191,7 @@ const ModificationForm = () => {
                         id="fundingSource"
                         name="fundingSource"
                         value={itemInfo.fundingSource}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -221,7 +202,7 @@ const ModificationForm = () => {
                         id="supplierDocument"
                         name="supplierDocument"
                         value={itemInfo.supplierDocument}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -232,7 +213,7 @@ const ModificationForm = () => {
                         id="invoicePosition"
                         name="invoicePosition"
                         value={itemInfo.invoicePosition}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -243,7 +224,7 @@ const ModificationForm = () => {
                         id="serialNumber"
                         name="serialNumber"
                         value={itemInfo.serialNumber}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
@@ -254,7 +235,7 @@ const ModificationForm = () => {
                         id="category"
                         name="category"
                         value={itemInfo.category? itemInfo.category.id : ''}
-                        // onChange={handleInputChange}
+                        onChange={handleInputChange}
                         required
                     />
                 </div>
