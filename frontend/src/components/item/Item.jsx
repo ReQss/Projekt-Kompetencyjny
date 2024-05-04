@@ -40,14 +40,12 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
             <></>
           ) : (
             location.pathname === '/modify' ? (
-              <Link to="/modification-form">
+              <Link to={`/modification-form/${id}`}>
                 <Button > Modyfikuj </Button>
               </Link>
             ) : (
               <>
-                <Link to="/modify">
-                  <Button onClick={openModal}> Details </Button>
-                </Link>
+              <Button onClick={openModal}> Details </Button>
             </>
             )
           )}
