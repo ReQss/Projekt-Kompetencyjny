@@ -40,6 +40,10 @@ const SearchBar = () => {
             )
           )}
 
+      <Link to="/deletion-form">
+        <Button> Usuń przedmiot </Button>
+      </Link>
+
 
       <Link to="/rent-form">
         <Button> Wypożycz </Button>
