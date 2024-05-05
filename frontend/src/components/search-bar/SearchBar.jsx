@@ -28,10 +28,14 @@ const SearchBar = () => {
             <></>
           ) : (
             <>
-            <Link to="/deletion-form">
+        
+          <Link to="/deletion-form">
             <Button> Usuń przedmiot </Button>
           </Link>
-
+        
+          <Link to="/add-form">
+              <Button>Dodaj przedmiot</Button>
+            </Link>
 
           <Link to="/rent-form">
             <Button> Wypożycz </Button>
@@ -60,7 +64,6 @@ const SearchBar = () => {
             )
           )}  
 
-      
 
       {/* <form className="sort-window">
         <label>Sortuj:</label>

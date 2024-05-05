@@ -1,28 +1,30 @@
 import { useState , useEffect} from 'react';
-import { useParams } from 'react-router-dom';
-import "./modificationForm.css";
 import { Button } from '../../components';
+import "./addForm.css"
 
-const ModificationForm = () => {
-    const { itemId } = useParams();
+function AddForm() {
+
     const [itemInfo, setItemInfo] = useState([]);
-
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
     useEffect(() => {
-        const fetchItemInfo = async () => {
-          try {
-            const response = await fetch(`http://localhost:9192/api/inventoryById/${itemId}`);
-            const data = await response.json();
-            setItemInfo(data);
-          } catch (error) {
-            console.error('Error fetching rent history:', error);
-          }
-        };
-    
-        fetchItemInfo();
-      }, [itemId]);
+        
 
-      const handleInputChange = (e) => {
+        const fetchCategories = async () => {
+            try {
+              const response = await fetch(`http://localhost:9192/api/category`);
+              const data = await response.json();
+              setCategories(data);
+            } catch (error) {
+              console.error('Error fetching categories:', error);
+            }
+          };
+
+        fetchCategories();
+      }, []);
+
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setItemInfo(prevState => ({
            ...prevState,
@@ -30,15 +32,26 @@ const ModificationForm = () => {
         }));
     };
 
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const item = itemInfo;
-
+        let selCategory = null;
+    
+        categories.forEach(singleCat => {
+            if(singleCat.name == selectedCategory)
+                selCategory = singleCat;
+        });
+        item.category = selCategory;
+        console.log(JSON.stringify(item))
 
         try {
-            const response = await fetch(`http://localhost:9192/api/updateInventory/${itemId}`, {
-                method: 'PUT',
+            const response = await fetch(`http://localhost:9192/api/addInventory`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -46,19 +59,19 @@ const ModificationForm = () => {
             });
 
             if (response.ok) {
-                alert('Modyfikacja udana!');
+                alert('Dodawanie powiodło się!');
             } else {
                 const errorMessage = await response.text();
-                alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
+                alert(`Błąd podczas dodawania: ${errorMessage}`);
             }
         } catch (error) {
-            alert('Wystąpił błąd podczas wypożyczania sprzętu.');
+            alert('Wystąpił błąd podczas dodawania przedmiotu.');
         }
     };
 
-    return (
-        <div className="form-container modification-form">
-            <h2>Zmodyfikuj przedmiot</h2>
+  return (
+    <div className="form-container add-item-form">
+            <h2>Dodaj przedmiot</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form">
                     <label htmlFor="description">Opis:</label>
@@ -215,24 +228,29 @@ const ModificationForm = () => {
                     />
                 </div>
                 <div className="form">
-                    <label htmlFor="category">Id ketegorii:</label>
-                    <input
-                        type="number"
+                    <label htmlFor="category">Kategoria:</label>
+                    <select
                         id="category"
                         name="category"
-                        value={itemInfo.category? itemInfo.category.id : ''}
-                        onChange={handleInputChange}
+                        value={selectedCategory}
+                        onChange={handleCategoryChange}
                         required
-                    />
+                    >
+                        <option value="">Wybierz kategorię</option>
+                        {categories.map(category => (
+                            <option key={category.category_id} value={category.category_id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
-                {/* Dodaj pozostałe pola w podobny sposób */}
                 <div className="button">
-                    <Button type="submit">Zmodyfikuj</Button>
+                    <Button type="submit">Dodaj</Button>
                 </div>
             </form>
         </div>
-    );
-};
+  )
+}
 
-export default ModificationForm;
+export default AddForm;
