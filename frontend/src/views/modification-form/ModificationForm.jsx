@@ -60,7 +60,7 @@ const ModificationForm = () => {
     };
 
     return (
-        <div className="form-container">
+        <div className="form-container modification-form">
             <h2>Wypożycz sprzęt</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form">
@@ -130,17 +130,6 @@ const ModificationForm = () => {
                     />
                 </div>
                 <div className="form">
-                    <label htmlFor="building">Budynek:</label>
-                    <input
-                        type="text"
-                        id="building"
-                        name="building"
-                        value={itemInfo.building}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div className="form">
                     <label htmlFor="inventoryDate">Data dodania:</label>
                     <input
                         type="date"
@@ -154,7 +143,7 @@ const ModificationForm = () => {
                 <div className="form">
                     <label htmlFor="value">Wartość:</label>
                     <input
-                        type="number"
+                        type="text"
                         id="value"
                         name="value"
                         value={itemInfo.value}
@@ -231,7 +220,7 @@ const ModificationForm = () => {
                 <div className="form">
                     <label htmlFor="category">Id ketegorii:</label>
                     <input
-                        type="text"
+                        type="number"
                         id="category"
                         name="category"
                         value={itemInfo.category? itemInfo.category.id : ''}
