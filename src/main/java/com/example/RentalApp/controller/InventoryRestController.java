@@ -26,6 +26,10 @@ public class InventoryRestController {
     public List<Inventory> getInventoryByOwnerId(@RequestParam Long ownerId) {
         return inventoryRepository.findByOwnerId(ownerId);
     }
+    @GetMapping("/inventoryById/{id}")
+    public Inventory getInventory(@PathVariable Long id) {
+        return inventoryRepository.findById(id).orElse(null);
+    }
     @PostMapping("/addInventory")
     public ResponseEntity<Inventory> addInventory(@RequestBody Inventory newInventory) {
         try {
@@ -39,10 +43,24 @@ public class InventoryRestController {
     public ResponseEntity<Inventory> updateInventory(@PathVariable Long id, @RequestBody Inventory updatedInventory) {
         Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
         if (existingInventory != null) {
-          
+
             existingInventory.setDescription(updatedInventory.getDescription());
             existingInventory.setItemName(updatedInventory.getItemName());
             existingInventory.setOwnerId(updatedInventory.getOwnerId());
+            existingInventory.setRentStatus(updatedInventory.getRentStatus());
+            existingInventory.setRoom(updatedInventory.getRoom());
+            existingInventory.setBuilding(updatedInventory.getBuilding());
+            existingInventory.setInventoryDate(updatedInventory.getInventoryDate());
+            existingInventory.setValue(updatedInventory.getValue());
+            existingInventory.setInventoryNumber(updatedInventory.getInventoryNumber());
+            existingInventory.setInvoiceNumber(updatedInventory.getInvoiceNumber());
+            existingInventory.setFundingSource(updatedInventory.getFundingSource());
+            existingInventory.setSupplierDocument(updatedInventory.getSupplierDocument());
+            existingInventory.setInvoicePosition(updatedInventory.getInvoicePosition());
+            existingInventory.setSerialNumber(updatedInventory.getSerialNumber());
+            existingInventory.setCategory(updatedInventory.getCategory());
+
+
 
             Inventory updated = inventoryRepository.save(existingInventory);
             return new ResponseEntity<>(updated, HttpStatus.OK);
