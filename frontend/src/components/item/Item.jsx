@@ -23,43 +23,42 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
 
   return (
     <div className="item">
-      <img src={src} alt="item" className="item-image" />
-      <div className="item-content">
-        <div className="item-header">
-          <p>ID: {id}</p>
-          <p>Nazwa: {name}</p>
-          <p style={{ color: rentStatusColor }}>Stan wypożyczenia: {rentStatus}</p>
-          
-          {/* {localStorage.getItem('token') === null ? (
-            <></>
-          ) : (
-            <button onClick={openModal}>Details</button>
-          )} */}
-
-        {localStorage.getItem('token') === null ? (
-            <></>
-          ) : (
-            location.pathname === '/modify' ? (
-              <Link to={`/modification-form/${id}`}>
-                <Button > Modyfikuj </Button>
-              </Link>
-            ) : (
-              <>
-              <Button onClick={openModal}> Details </Button>
-            </>
-            )
-          )}
+      <div className="item__content">
+        <div className="item__image">
+          <img src={src} alt="item" />
         </div>
-        
-        <div className="item-description">
-          <p>{description}</p>
+          <div className="item__text">
+            <p>ID: {id}</p>
+            <p>Nazwa: {name}</p>
+            <div className="item__description">
+              <p>{description}</p>
+            </div>
+          </div>
         </div>
-      </div>
-      {modalOpen && (
+        {modalOpen && (
         <Modal item={item} img={src}  onClose={closeModal}>
-          {/* Tutaj możesz przekazać więcej informacji, jeśli modal ma wyświetlać więcej danych */}
         </Modal>
       )}
+
+      <div className="item__btn">
+            
+        {localStorage.getItem('token') === null ? (
+          <></>
+            ) : (
+              location.pathname === '/modify' ? (
+                <Link to={`/modification-form/${id}`}>
+                  <Button > Modyfikuj </Button>
+                </Link>
+              ) : (
+                <>
+                <Button onClick={openModal}> Details </Button>
+              </>
+              )
+            )}
+            
+        <p style={{ color: rentStatusColor }}>Stan wypożyczenia: {rentStatus}</p>
+
+      </div>
     </div>
   );
 };

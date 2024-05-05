@@ -27,6 +27,30 @@ const SearchBar = () => {
       {localStorage.getItem('token') === null ? (
             <></>
           ) : (
+            <>
+        
+          <Link to="/deletion-form">
+            <Button> Usuń przedmiot </Button>
+          </Link>
+        
+          <Link to="/add-form">
+              <Button>Dodaj przedmiot</Button>
+            </Link>
+
+          <Link to="/rent-form">
+            <Button> Wypożycz </Button>
+          </Link>
+
+          <Link to={"/history-form/"}>
+            <Button>Historia wypożyczeń</Button>
+          </Link>
+            </>
+            
+          )}
+
+          {localStorage.getItem('token') === null ? (
+            <></>
+          ) : (
             location.pathname === '/modify' ? (
               <Link to="/">
                 <Button> Wróć na stronę główną </Button>
@@ -38,30 +62,8 @@ const SearchBar = () => {
                 </Link>
             </>
             )
-          )}
+          )}  
 
-
-      <Link to="/rent-form">
-        <Button> Wypożycz </Button>
-      </Link>
-
-      {/* <Link to={"/history-form/"}>
-        <Button>Historia wypożyczeń</Button>
-      </Link> */}
-
-      {localStorage.getItem('token') === null ? (
-            <>
-            </>
-          ) : (
-            <>
-            <Link to={"/history-form/"}>
-              <Button>Historia wypożyczeń</Button>
-            </Link>
-            <Link to="/add-form">
-              <Button>Dodaj przedmiot</Button>
-            </Link>
-            </>
-          )}
 
       {/* <form className="sort-window">
         <label>Sortuj:</label>
