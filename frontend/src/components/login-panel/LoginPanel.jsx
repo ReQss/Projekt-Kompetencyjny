@@ -9,6 +9,7 @@ const LoginPanel = () => {
     login: '',
     password: '',
   });
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -38,6 +39,8 @@ const LoginPanel = () => {
       if (response.status === 202) {
         console.log('Logged in successfully!');
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id); // Ustawienie ID zalogowanego użytkownika
+        setUserId(data.userId); // Ustawienie ID zalogowanego użytkownika w stanie
         navigate('/');
         // Optionally reload page if necessary
         // window.location.reload(); 

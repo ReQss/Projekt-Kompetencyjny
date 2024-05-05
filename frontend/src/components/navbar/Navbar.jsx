@@ -2,12 +2,18 @@ import './navbar.css';
 import logo from '../../assets/logo.png';
 import Button from '../button/Button';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  
+  const navigate = useNavigate();
   const logoutUser = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAdmin');
-    window.location.reload();
+    localStorage.removeItem('userId');
+
+    if(localStorage.getItem('token') === null)
+      navigate("/")
   };
 
   return (
