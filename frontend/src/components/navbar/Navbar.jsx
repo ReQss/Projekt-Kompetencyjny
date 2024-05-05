@@ -18,9 +18,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <a href="#">
-        <img src={logo} alt="Logo" />
-      </a>
+        <Link to="/">
+          <img src={logo} alt="Logo" />
+        </Link>
       <ul>
         {localStorage.getItem('token') === null ? (
           <>
