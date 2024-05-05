@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "rent_purposes")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 
 public class RentPurpose {
     @Id

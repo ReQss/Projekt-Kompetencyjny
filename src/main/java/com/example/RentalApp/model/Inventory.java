@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "inventory")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 
 public class Inventory {
     @Id

@@ -9,7 +9,7 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "rent_history")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 
 public class RentHistory {
     @Id
