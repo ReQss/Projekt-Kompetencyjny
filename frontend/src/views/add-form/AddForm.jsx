@@ -107,15 +107,18 @@ function AddForm() {
                     />
                 </div>
                 <div className="form">
-                    <label htmlFor="rentStatus">Status wypożyczenia:</label>
-                    <input
-                        type="text"
+                <label htmlFor="rentStatus">Status wypożyczenia:</label>
+                    <select
                         id="rentStatus"
                         name="rentStatus"
                         value={itemInfo.rentStatus}
                         onChange={handleInputChange}
                         required
-                    />
+                    >
+                        <option value="">Wybierz status</option>
+                        <option value="available">Dostępny</option>
+                        <option value="unavailable">Niedostępny</option>
+                    </select>
                 </div>
                 <div className="form">
                     <label htmlFor="room">Sala:</label>
