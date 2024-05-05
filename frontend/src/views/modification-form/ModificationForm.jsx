@@ -6,9 +6,25 @@ import { Button } from '../../components';
 const ModificationForm = () => {
     const { itemId } = useParams();
     const [itemInfo, setItemInfo] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
 
     useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+              const response = await fetch(`http://localhost:9192/api/category`);
+              const data = await response.json();
+              setCategories(data);
+            } catch (error) {
+              console.error('Error fetching categories:', error);
+            }
+          };
+
+        fetchCategories();
+
+
+
         const fetchItemInfo = async () => {
           try {
             const response = await fetch(`http://localhost:9192/api/inventoryById/${itemId}`);
@@ -22,18 +38,28 @@ const ModificationForm = () => {
         fetchItemInfo();
       }, [itemId]);
 
-      const handleInputChange = (e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setItemInfo(prevState => ({
-           ...prevState,
+            ...prevState,
             [name]: value,
         }));
+    };
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const item = itemInfo;
+        let selCategory = null;
+    
+        categories.forEach(singleCat => {
+            if(singleCat.name == selectedCategory)
+                selCategory = singleCat;
+        });
+        itemInfo.category = selCategory;
 
 
         try {
@@ -95,14 +121,25 @@ const ModificationForm = () => {
                 </div>
                 <div className="form">
                     <label htmlFor="rentStatus">Status wypożyczenia:</label>
-                    <input
-                        type="text"
+                    <select
                         id="rentStatus"
                         name="rentStatus"
                         value={itemInfo.rentStatus}
                         onChange={handleInputChange}
                         required
-                    />
+                    >
+                        {itemInfo.rentStatus == "available" ? (
+                            <>
+                                <option value="available">Dostępny</option>
+                                <option value="unavailable">Niedostępny</option>
+                            </>
+                        ):(
+                            <>
+                                <option value="unavailable">Niedostępny</option>
+                                <option value="available">Dostępny</option>
+                            </>
+                        )}
+                    </select>
                 </div>
                 <div className="form">
                     <label htmlFor="room">Sala:</label>
@@ -215,15 +252,28 @@ const ModificationForm = () => {
                     />
                 </div>
                 <div className="form">
-                    <label htmlFor="category">Id ketegorii:</label>
-                    <input
-                        type="number"
-                        id="category"
-                        name="category"
-                        value={itemInfo.category? itemInfo.category.id : ''}
-                        onChange={handleInputChange}
-                        required
-                    />
+                <label htmlFor="category">Kategoria:</label>
+                <select
+                    id="category"
+                    name="category"
+                    value={itemInfo.category}
+                    onChange={handleCategoryChange}
+                    required
+                >
+                    <option value={itemInfo.category ? itemInfo.category.name : ''}>{itemInfo.category ? itemInfo.category.name : ''}</option>
+                    {categories.map(category => (
+                        category.id != itemInfo.category.id ? (
+                            <>
+                                <option key={category.category_id} value={category.category_id}>
+                                    {category.name}
+                                </option>
+                            </>
+                        ):(
+                            <>
+                            </>
+                        )
+                    ))}
+                </select>
                 </div>
 
                 {/* Dodaj pozostałe pola w podobny sposób */}

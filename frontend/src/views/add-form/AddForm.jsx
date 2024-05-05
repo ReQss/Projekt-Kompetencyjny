@@ -47,7 +47,6 @@ function AddForm() {
                 selCategory = singleCat;
         });
         item.category = selCategory;
-        console.log(JSON.stringify(item))
 
         try {
             const response = await fetch(`http://localhost:9192/api/addInventory`, {
