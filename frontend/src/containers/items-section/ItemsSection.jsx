@@ -7,7 +7,7 @@ import ItemsWrapper from '../../components/items-wrapper/ItemsWrapper'
 const ItemsSection = () => {
   return (
     <div className='items-section'>
-      <Filter/>
+      {/* <Filter/> */}
       <div className='items-section__right'>
         <SearchBar/>
         <ItemsWrapper/>
