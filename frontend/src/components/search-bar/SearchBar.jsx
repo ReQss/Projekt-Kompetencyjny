@@ -45,9 +45,23 @@ const SearchBar = () => {
         <Button> Wypożycz </Button>
       </Link>
 
-      <Link to={"/history-form/"}>
+      {/* <Link to={"/history-form/"}>
         <Button>Historia wypożyczeń</Button>
-      </Link>
+      </Link> */}
+
+      {localStorage.getItem('token') === null ? (
+            <>
+            </>
+          ) : (
+            <>
+            <Link to={"/history-form/"}>
+              <Button>Historia wypożyczeń</Button>
+            </Link>
+            <Link to="/add-form">
+              <Button>Dodaj przedmiot</Button>
+            </Link>
+            </>
+          )}
 
       {/* <form className="sort-window">
         <label>Sortuj:</label>
