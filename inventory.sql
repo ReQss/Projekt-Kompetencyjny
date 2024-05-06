@@ -90,8 +90,8 @@ CREATE TABLE `rent_history`
     PRIMARY KEY (`rent_id`),
     KEY `fk_user_id` (`user_id`),
     KEY `fk_inventory_id` (`inventory_id`),
-    CONSTRAINT `fk_user_rent_history` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
-    CONSTRAINT `fk_inventory_rent_history` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`inventory_id`),
+    CONSTRAINT `fk_user_rent_history` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_inventory_rent_history` FOREIGN KEY (`inventory_id`) REFERENCES `inventory` (`inventory_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_rent_purpose` FOREIGN KEY (`rent_purpose_id`) REFERENCES `rent_purposes` (`purpose_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
