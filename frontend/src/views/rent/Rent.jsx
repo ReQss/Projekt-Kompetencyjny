@@ -148,7 +148,6 @@ const Rent = () => {
             name="rentDescription"
             value={formData.rentDescription}
             onChange={handleInputChange}
-            required
           />
         </div>
         <div className="button">
