@@ -50,6 +50,7 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
       console.error('Wystąpił błąd podczas wysyłania żądania:', error);
     } finally {
       hideDeleteConfirmation();
+      window.location.reload();
     }
   };
 
