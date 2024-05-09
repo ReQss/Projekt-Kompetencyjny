@@ -16,6 +16,7 @@ const Rent = () => {
     rentDescription: '',
   });
   const [inventoryList, setInventoryList] = useState([]);
+  const [purposesList, setPurposesList] = useState([]);
   const [returnDate, setReturnDate] = useState(new Date());
 
   useEffect(() => {
@@ -40,8 +41,27 @@ const Rent = () => {
   }, []);
 
   useEffect(() => {
-    console.log(inventoryList);
-  }, [inventoryList]);
+    const fetchPurposes = async () => {
+      try {
+        const response = await fetch('http://localhost:9192/api/rentPurposes');
+
+        if (response.ok) {
+          const data = await response.json();
+          setPurposesList(data);
+        } else {
+          console.error('Failed to fetch inventory');
+        }
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+      }
+    };
+
+    fetchPurposes();
+  }, []);
+
+  useEffect(() => {
+    console.log(purposesList);
+  }, [purposesList]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -116,7 +136,7 @@ const Rent = () => {
         <h2>Wypożycz sprzęt</h2>
         <form onSubmit={handleSubmit}>
           <div className="form">
-            <label htmlFor="inventory">Inventory:</label>
+            <label htmlFor="inventory">Część:</label>
             <select
               id="inventory"
               name="inventory"
@@ -134,18 +154,25 @@ const Rent = () => {
           </div>
 
           <div className="form">
-            <label htmlFor="rentPurpose">Rent Purpose ID:</label>
-            <input
-              type="number"
+            <label htmlFor="rentPurpose">Powód wypożyczenia:</label>
+
+            <select
               id="rentPurpose"
               name="rentPurpose"
               value={formData.rentPurpose}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="">Wybierz przyczynę</option>
+              {purposesList.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.purpose}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form">
-            <label htmlFor="returnDate">Return Date:</label>
+            <label htmlFor="returnDate">Data zwrotu:</label>
             <DatePicker
               className="date-picker"
               id="returnDate"
@@ -169,7 +196,7 @@ const Rent = () => {
             />
           </div>
           <div className="form">
-            <label htmlFor="firstName">First Name:</label>
+            <label htmlFor="firstName">Imię:</label>
             <input
               type="text"
               id="firstName"
@@ -180,7 +207,7 @@ const Rent = () => {
             />
           </div>
           <div className="form">
-            <label htmlFor="lastName">Last Name:</label>
+            <label htmlFor="lastName">Nazwisko:</label>
             <input
               type="text"
               id="lastName"
@@ -191,7 +218,7 @@ const Rent = () => {
             />
           </div>
           <div className="form">
-            <label htmlFor="rentDescription">Rent Description:</label>
+            <label htmlFor="rentDescription">Opis wypożyczenia:</label>
             <input
               type="text"
               id="rentDescription"
