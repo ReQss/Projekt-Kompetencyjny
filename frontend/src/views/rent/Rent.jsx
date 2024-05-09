@@ -1,14 +1,67 @@
-import { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import pl from 'date-fns/locale/pl';
+
+import { useState, useEffect } from 'react';
 import './rent.scss';
 import { Button } from '../../components';
 
 const Rent = () => {
   const [formData, setFormData] = useState({
-    user: '',
     inventory: '',
-    rentStatus: '',
-    indexNumber: '',
+    rentPurpose: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    rentDescription: '',
   });
+  const [inventoryList, setInventoryList] = useState([]);
+  const [purposesList, setPurposesList] = useState([]);
+  const [returnDate, setReturnDate] = useState(new Date());
+
+  useEffect(() => {
+    const fetchInventory = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:9192/api/inventoryByOwnerId?ownerId=1'
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setInventoryList(data);
+        } else {
+          console.error('Failed to fetch inventory');
+        }
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+      }
+    };
+
+    fetchInventory();
+  }, []);
+
+  useEffect(() => {
+    const fetchPurposes = async () => {
+      try {
+        const response = await fetch('http://localhost:9192/api/rentPurposes');
+
+        if (response.ok) {
+          const data = await response.json();
+          setPurposesList(data);
+        } else {
+          console.error('Failed to fetch inventory');
+        }
+      } catch (error) {
+        console.error('Error fetching inventory:', error);
+      }
+    };
+
+    fetchPurposes();
+  }, []);
+
+  useEffect(() => {
+    console.log(purposesList);
+  }, [purposesList]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,13 +74,27 @@ const Rent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { user, inventory, rentStatus, indexNumber } = formData;
+    const {
+      inventory,
+      rentPurpose,
+      email,
+      firstName,
+      lastName,
+      rentDescription,
+    } = formData;
+
+    const userId = localStorage.getItem('userId');
 
     const payload = {
-      user: { id: Number(user) },
+      user: { id: Number(userId) },
       inventory: { id: Number(inventory) },
-      rentStatus,
-      indexNumber: Number(indexNumber),
+      rentPurpose: { id: Number(rentPurpose) },
+      email,
+      firstName,
+      lastName,
+      rentDescription,
+      rentStatus: 'rented',
+      returnDate: returnDate.toISOString(),
     };
 
     try {
@@ -44,8 +111,12 @@ const Rent = () => {
         setFormData({
           user: '',
           inventory: '',
+          rentPurpose: '',
+          email: '',
+          firstName: '',
+          lastName: '',
+          rentDescription: '',
           rentStatus: '',
-          indexNumber: '',
         });
 
         alert('Wypożyczenie udane!');
@@ -60,58 +131,108 @@ const Rent = () => {
   };
 
   return (
-    <div className="form-container">
-      <h2>Wypożycz sprzęt</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form">
-          <label htmlFor="user">Twoje ID:</label>
-          <input
-            type="number"
-            id="user"
-            name="user"
-            value={formData.user}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form">
-          <label htmlFor="inventory">ID części:</label>
-          <input
-            type="number"
-            id="inventory"
-            name="inventory"
-            value={formData.inventory}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form">
-          <label htmlFor="rentStatus">Status wypożyczenia:</label>
-          <input
-            type="text"
-            id="rentStatus"
-            name="rentStatus"
-            value={formData.rentStatus}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form">
-          <label htmlFor="indexNumber">Numer indexu wypożyczającego:</label>
-          <input
-            type="number"
-            id="indexNumber"
-            name="indexNumber"
-            value={formData.indexNumber}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="button">
-          <Button type="submit">Wypożycz</Button>
-        </div>
-      </form>
-    </div>
+    <>
+      <div className="form-container">
+        <h2>Wypożycz sprzęt</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form">
+            <label htmlFor="inventory">Część:</label>
+            <select
+              id="inventory"
+              name="inventory"
+              value={formData.inventory}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Wybierz produkt</option>
+              {inventoryList.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.itemName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form">
+            <label htmlFor="rentPurpose">Powód wypożyczenia:</label>
+
+            <select
+              id="rentPurpose"
+              name="rentPurpose"
+              value={formData.rentPurpose}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Wybierz przyczynę</option>
+              {purposesList.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.purpose}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form">
+            <label htmlFor="returnDate">Data zwrotu:</label>
+            <DatePicker
+              className="date-picker"
+              id="returnDate"
+              selected={returnDate}
+              onChange={(date) => setReturnDate(date)}
+              dateFormat="dd-MM-yyyy"
+              minDate={new Date()}
+              locale={pl}
+              weekStartsOn={1}
+            />
+          </div>
+          <div className="form">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form">
+            <label htmlFor="firstName">Imię:</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form">
+            <label htmlFor="lastName">Nazwisko:</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form">
+            <label htmlFor="rentDescription">Opis wypożyczenia:</label>
+            <input
+              type="text"
+              id="rentDescription"
+              name="rentDescription"
+              value={formData.rentDescription}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="button">
+            <Button type="submit">Wypożycz</Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
