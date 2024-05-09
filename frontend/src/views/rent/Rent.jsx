@@ -1,3 +1,7 @@
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import pl from 'date-fns/locale/pl';
+
 import { useState, useEffect } from 'react';
 import './rent.scss';
 import { Button } from '../../components';
@@ -12,6 +16,7 @@ const Rent = () => {
     rentDescription: '',
   });
   const [inventoryList, setInventoryList] = useState([]);
+  const [returnDate, setReturnDate] = useState(new Date());
 
   useEffect(() => {
     const fetchInventory = async () => {
@@ -58,8 +63,6 @@ const Rent = () => {
       rentDescription,
     } = formData;
 
-    const date = new Date('2024-06-29');
-    const instantDate = date.toISOString();
     const userId = localStorage.getItem('userId');
 
     const payload = {
@@ -71,7 +74,7 @@ const Rent = () => {
       lastName,
       rentDescription,
       rentStatus: 'rented',
-      returnDate: instantDate,
+      returnDate: returnDate.toISOString(),
     };
 
     try {
@@ -139,6 +142,19 @@ const Rent = () => {
               value={formData.rentPurpose}
               onChange={handleInputChange}
               required
+            />
+          </div>
+          <div className="form">
+            <label htmlFor="returnDate">Return Date:</label>
+            <DatePicker
+              className="date-picker"
+              id="returnDate"
+              selected={returnDate}
+              onChange={(date) => setReturnDate(date)}
+              dateFormat="dd-MM-yyyy"
+              minDate={new Date()}
+              locale={pl}
+              weekStartsOn={1}
             />
           </div>
           <div className="form">
