@@ -18,12 +18,13 @@ const Rent = () => {
   const [inventoryList, setInventoryList] = useState([]);
   const [purposesList, setPurposesList] = useState([]);
   const [returnDate, setReturnDate] = useState(new Date());
+  const userId = localStorage.getItem('userId');
 
   useEffect(() => {
     const fetchInventory = async () => {
       try {
         const response = await fetch(
-          'http://localhost:9192/api/inventoryByOwnerId?ownerId=1'
+          `http://localhost:9192/api/inventoryByOwnerId?ownerId=${userId}`
         );
 
         if (response.ok) {
@@ -82,8 +83,6 @@ const Rent = () => {
       lastName,
       rentDescription,
     } = formData;
-
-    const userId = localStorage.getItem('userId');
 
     const payload = {
       user: { id: Number(userId) },
