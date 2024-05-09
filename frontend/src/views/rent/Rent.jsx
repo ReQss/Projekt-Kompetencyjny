@@ -4,7 +4,6 @@ import { Button } from '../../components';
 
 const Rent = () => {
   const [formData, setFormData] = useState({
-    user: '',
     inventory: '',
     rentPurpose: '',
     email: '',
@@ -26,7 +25,6 @@ const Rent = () => {
     e.preventDefault();
 
     const {
-      user,
       inventory,
       rentPurpose,
       email,
@@ -36,8 +34,12 @@ const Rent = () => {
       rentStatus,
     } = formData;
 
+    const date = new Date('2024-06-29');
+    const instantDate = date.toISOString();
+    const userId = localStorage.getItem('userId');
+
     const payload = {
-      user: { id: Number(user) },
+      user: { id: Number(userId) },
       inventory: { id: Number(inventory) },
       rentPurpose: { id: Number(rentPurpose) },
       email,
@@ -45,6 +47,7 @@ const Rent = () => {
       lastName,
       rentDescription,
       rentStatus,
+      returnDate: instantDate,
     };
 
     try {
@@ -84,17 +87,6 @@ const Rent = () => {
     <div className="form-container">
       <h2>Wypożycz sprzęt</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form">
-          <label htmlFor="user">User ID:</label>
-          <input
-            type="number"
-            id="user"
-            name="user"
-            value={formData.user}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
         <div className="form">
           <label htmlFor="inventory">Inventory ID:</label>
           <input
