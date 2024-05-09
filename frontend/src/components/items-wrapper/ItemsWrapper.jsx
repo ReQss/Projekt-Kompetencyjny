@@ -17,7 +17,9 @@ const ItemsWrapper = () => {
     // Jeżeli użytkownik jest na podstronie "/modify", zwróć tylko te przedmioty, które należą do niego
     if (location.pathname === '/modify') {
       return item.ownerId === parseInt(loggedInUserId);
-    }
+    } else if (location.pathname === '/delete') {
+      return item.ownerId === parseInt(loggedInUserId);
+    } 
     // W innych przypadkach zwróć wszystkie przedmioty
     return true;
   });

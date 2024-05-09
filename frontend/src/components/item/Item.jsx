@@ -7,6 +7,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Item = ({item, src, id, name, description, rentStatus }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [itemId, setItemId] = useState(null);
 
   const location = useLocation();
 
@@ -17,6 +19,38 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
   
   const closeModal = () => {
     setModalOpen(false);
+  };
+
+  const showDeleteConfirmation1 = () => {
+    setShowDeleteConfirmation(true);
+    setItemId(id);
+  };
+
+  const hideDeleteConfirmation = () => {
+    setShowDeleteConfirmation(false);
+    setItemId(null);
+  };
+
+  const handleDeleteItem = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/api/deleteInventory/${itemId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        console.log('Przedmiot o ID:', itemId, 'został pomyślnie usunięty.');
+      } else {
+        const errorMessage = await response.text();
+        console.error('Wystąpił błąd podczas usuwania przedmiotu:', errorMessage);
+      }
+    } catch (error) {
+      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
+    } finally {
+      hideDeleteConfirmation();
+    }
   };
 
   const rentStatusColor = rentStatus === "available" ? "green" : "red";
@@ -42,23 +76,41 @@ const Item = ({item, src, id, name, description, rentStatus }) => {
 
       <div className="item__btn">
             
-        {localStorage.getItem('token') === null ? (
-          <></>
-            ) : (
-              location.pathname === '/modify' ? (
-                <Link to={`/modification-form/${id}`}>
-                  <Button > Modyfikuj </Button>
-                </Link>
-              ) : (
-                <>
-                <Button onClick={openModal}> Details </Button>
-              </>
-              )
-            )}
+      {localStorage.getItem('token') === null? (
+        <></>
+      ) : (
+        location.pathname === '/modify'? (
+          <Link to={`/modification-form/${id}`}>
+            <Button>Modyfikuj</Button>
+          </Link>
+        ) : (
+          location.pathname === '/delete'? (
+            <Button onClick={showDeleteConfirmation1}>Usuń</Button>
+          ) : (
+            <>
+              <Button onClick={openModal}>Details</Button>
+            </>
+          )
+        )
+      )}
             
         <p style={{ color: rentStatusColor }}>Stan wypożyczenia: {rentStatus}</p>
 
       </div>
+      {showDeleteConfirmation && (
+        <div className="modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal__text">
+              <p>Czy napewno chcesz usunąć przedmiot?</p>
+
+            </div>
+            <div className="delete-modal__buttons">
+              <Button onClick={handleDeleteItem}>Tak</Button>
+              <Button onClick={hideDeleteConfirmation}>Nie</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

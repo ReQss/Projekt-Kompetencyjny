@@ -18,7 +18,7 @@ const DeletionForm = () => {
 
             if (response.ok) {
                 console.log('działa');
-                alert('Modyfikacja udana!');
+                alert('Usuwanie udane!');
             } else {
                 const errorMessage = await response.text();
                 alert(`Błąd podczas wypożyczenia: ${errorMessage}`);

@@ -27,11 +27,24 @@ const SearchBar = () => {
       {localStorage.getItem('token') === null ? (
             <></>
           ) : (
+            location.pathname === '/delete' ? (
+              <Link to="/">
+                <Button> Wróć na stronę główną </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/delete">
+                  <Button> Usuń przedmiot </Button>
+                </Link>
+            </>
+            )
+          )}  
+
+
+      {localStorage.getItem('token') === null ? (
+            <></>
+          ) : (
             <>
-        
-          <Link to="/deletion-form">
-            <Button> Usuń przedmiot </Button>
-          </Link>
         
           <Link to="/add-form">
               <Button>Dodaj przedmiot</Button>
@@ -60,7 +73,7 @@ const SearchBar = () => {
                 <Link to="/modify">
                   <Button> Modyfikuj </Button>
                 </Link>
-            </>
+              </>
             )
           )}  
 
