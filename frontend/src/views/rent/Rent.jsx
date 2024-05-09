@@ -10,7 +10,6 @@ const Rent = () => {
     firstName: '',
     lastName: '',
     rentDescription: '',
-    rentStatus: '',
   });
 
   const handleInputChange = (e) => {
@@ -31,7 +30,6 @@ const Rent = () => {
       firstName,
       lastName,
       rentDescription,
-      rentStatus,
     } = formData;
 
     const date = new Date('2024-06-29');
@@ -46,7 +44,7 @@ const Rent = () => {
       firstName,
       lastName,
       rentDescription,
-      rentStatus,
+      rentStatus: 'rented',
       returnDate: instantDate,
     };
 
@@ -149,17 +147,6 @@ const Rent = () => {
             id="rentDescription"
             name="rentDescription"
             value={formData.rentDescription}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <div className="form">
-          <label htmlFor="rentStatus">Rent Status:</label>
-          <input
-            type="text"
-            id="rentStatus"
-            name="rentStatus"
-            value={formData.rentStatus}
             onChange={handleInputChange}
             required
           />
