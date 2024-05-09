@@ -6,8 +6,12 @@ const Rent = () => {
   const [formData, setFormData] = useState({
     user: '',
     inventory: '',
+    rentPurpose: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    rentDescription: '',
     rentStatus: '',
-    indexNumber: '',
   });
 
   const handleInputChange = (e) => {
@@ -21,13 +25,26 @@ const Rent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { user, inventory, rentStatus, indexNumber } = formData;
+    const {
+      user,
+      inventory,
+      rentPurpose,
+      email,
+      firstName,
+      lastName,
+      rentDescription,
+      rentStatus,
+    } = formData;
 
     const payload = {
       user: { id: Number(user) },
       inventory: { id: Number(inventory) },
+      rentPurpose: { id: Number(rentPurpose) },
+      email,
+      firstName,
+      lastName,
+      rentDescription,
       rentStatus,
-      indexNumber: Number(indexNumber),
     };
 
     try {
@@ -44,8 +61,12 @@ const Rent = () => {
         setFormData({
           user: '',
           inventory: '',
+          rentPurpose: '',
+          email: '',
+          firstName: '',
+          lastName: '',
+          rentDescription: '',
           rentStatus: '',
-          indexNumber: '',
         });
 
         alert('Wypożyczenie udane!');
@@ -64,7 +85,7 @@ const Rent = () => {
       <h2>Wypożycz sprzęt</h2>
       <form onSubmit={handleSubmit}>
         <div className="form">
-          <label htmlFor="user">Twoje ID:</label>
+          <label htmlFor="user">User ID:</label>
           <input
             type="number"
             id="user"
@@ -75,7 +96,7 @@ const Rent = () => {
           />
         </div>
         <div className="form">
-          <label htmlFor="inventory">ID części:</label>
+          <label htmlFor="inventory">Inventory ID:</label>
           <input
             type="number"
             id="inventory"
@@ -86,23 +107,67 @@ const Rent = () => {
           />
         </div>
         <div className="form">
-          <label htmlFor="rentStatus">Status wypożyczenia:</label>
+          <label htmlFor="rentPurpose">Rent Purpose ID:</label>
           <input
-            type="text"
-            id="rentStatus"
-            name="rentStatus"
-            value={formData.rentStatus}
+            type="number"
+            id="rentPurpose"
+            name="rentPurpose"
+            value={formData.rentPurpose}
             onChange={handleInputChange}
             required
           />
         </div>
         <div className="form">
-          <label htmlFor="indexNumber">Numer indexu wypożyczającego:</label>
+          <label htmlFor="email">Email:</label>
           <input
-            type="number"
-            id="indexNumber"
-            name="indexNumber"
-            value={formData.indexNumber}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form">
+          <label htmlFor="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form">
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form">
+          <label htmlFor="rentDescription">Rent Description:</label>
+          <input
+            type="text"
+            id="rentDescription"
+            name="rentDescription"
+            value={formData.rentDescription}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form">
+          <label htmlFor="rentStatus">Rent Status:</label>
+          <input
+            type="text"
+            id="rentStatus"
+            name="rentStatus"
+            value={formData.rentStatus}
             onChange={handleInputChange}
             required
           />
