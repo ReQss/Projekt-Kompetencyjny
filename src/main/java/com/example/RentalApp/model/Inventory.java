@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -70,17 +71,17 @@ public class Inventory {
     @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
-    @Column(name = "photo")
-    private String photo;
 
-    public String getPhoto() {
+    @Column(name = "photo")
+    private byte[] photo;
+
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
-
     // Getters and setters
     public Long getId() {
         return id;
@@ -88,6 +89,10 @@ public class Inventory {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getPhotoBase64() {
+        return this.photo != null ? Base64.getEncoder().encodeToString(this.photo) : null;
     }
 
     public String getDescription() {
