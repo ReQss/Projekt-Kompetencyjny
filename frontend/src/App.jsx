@@ -16,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/modify" element={<Home />} />
+        <Route path="/delete" element={<Home />} />
         <Route path="/add-form" element={<AddForm />} />
         <Route path="/modification-form/:itemId" element={<ModificationForm />} />
         <Route path="/login" element={<Login />} />
