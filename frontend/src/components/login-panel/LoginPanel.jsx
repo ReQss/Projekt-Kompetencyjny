@@ -23,7 +23,7 @@ const LoginPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Attempting login...');
-    
+
     try {
       const response = await fetch('http://localhost:9192/login', {
         method: 'POST',
@@ -32,18 +32,19 @@ const LoginPanel = () => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       const data = await response.json();
-      console.log(data); // Logging the response data for debug
-      
+
       if (response.status === 202) {
         console.log('Logged in successfully!');
+        console.log(data);
         localStorage.setItem('token', data.token);
         localStorage.setItem('userId', data.user.id); // Ustawienie ID zalogowanego użytkownika
+        localStorage.setItem('email', data.user.email); // Ustawienie ID zalogowanego użytkownika
         setUserId(data.userId); // Ustawienie ID zalogowanego użytkownika w stanie
         navigate('/');
         // Optionally reload page if necessary
-        // window.location.reload(); 
+        // window.location.reload();
       } else {
         console.log('Login error. Please try again.');
       }
