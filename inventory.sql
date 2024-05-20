@@ -276,7 +276,7 @@ CREATE TABLE `users`
 --
 
 INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `login`, `password`, `role`)
-VALUES (1, '240647@edu.p.lodz.pl', 'mikolaj', 'czechowski', '240647@edu.p.lodz.pl', 'qwerty', 'ADMIN'),
+VALUES (1, 'admin@admin.pl', 'adminfirstname', 'adminlastname', 'admin', 'admin', 'ADMIN'),
        (2, '240666@edu.p.lodz.pl', 'jacob', 'kozlowski', '240666@edu.p.lodz.pl', 'qwerty123', 'USER'),
        (3, '240634@edu.p.lodz.pl', 'lukaszenko', 'ledzion', '240634@edu.p.lodz.pl', 'qwerty1234', 'USER');
 
