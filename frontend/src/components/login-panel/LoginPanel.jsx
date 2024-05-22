@@ -10,7 +10,6 @@ const LoginPanel = () => {
     password: '',
   });
   const [error, setError] = useState('');
-  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -44,7 +43,6 @@ const LoginPanel = () => {
         localStorage.setItem('userId', data.user.id);
         localStorage.setItem('email', data.user.email);
         localStorage.setItem('role', data.user.role);
-        setUserId(data.userId);
         navigate('/');
       } else if (response.status === 401) {
         console.log('Login error:', data.error);
