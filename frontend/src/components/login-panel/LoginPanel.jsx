@@ -9,7 +9,7 @@ const LoginPanel = () => {
     login: '',
     password: '',
   });
-  const [userId, setUserId] = useState(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -23,6 +23,7 @@ const LoginPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Attempting login...');
+    setError('Wprowadziłeś niepoprawne dane!');
 
     try {
       const response = await fetch('http://localhost:9192/login', {
@@ -39,18 +40,18 @@ const LoginPanel = () => {
         console.log('Logged in successfully!');
         console.log(data);
         localStorage.setItem('token', data.token);
-        localStorage.setItem('userId', data.user.id); // Ustawienie ID zalogowanego użytkownika
-        localStorage.setItem('email', data.user.email); // Ustawienie ID zalogowanego użytkownika
-        setUserId(data.userId); // Ustawienie ID zalogowanego użytkownika w stanie
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('email', data.user.email);
+        localStorage.setItem('role', data.user.role);
         navigate('/');
-        // Optionally reload page if necessary
-        // window.location.reload();
+      } else if (response.status === 401) {
+        console.log('Login error:', data.error);
       } else {
         console.log('Login error. Please try again.');
       }
     } catch (error) {
       console.error('Error during login request:', error);
-      console.log('An error occurred during login. Please try again later.');
+      setError('An error occurred during login. Please try again later.');
     }
   };
 
@@ -77,6 +78,8 @@ const LoginPanel = () => {
           onChange={handleInputChange}
           required
         />
+        {error && <div className="error">{error}</div>}{' '}
+        {/* Wyświetlanie błędu */}
         <a href="#">Zapomniałeś hasła?</a>
         <Button type="submit">Zaloguj się</Button>
       </form>
