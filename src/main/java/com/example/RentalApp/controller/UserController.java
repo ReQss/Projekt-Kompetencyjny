@@ -31,12 +31,17 @@ public class UserController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        String token = "token -" + user.getLogin();
         User loggedUser = userService.login(user.getLogin(), user.getPassword());
-        if (loggedUser == null) return  ResponseEntity.badRequest().body("Invalid login credentials");
+        if (loggedUser == null) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Invalid login credentials");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+        }
+        String token = "token -" + user.getLogin();
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
-        response.put("user", loggedUser); // Use loggedUser instead of user
+        response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
 }
