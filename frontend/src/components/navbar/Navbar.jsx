@@ -5,22 +5,22 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-  
   const navigate = useNavigate();
   const logoutUser = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('userId');
+    localStorage.removeItem('email');
+    localStorage.removeItem('role');
 
-    if(localStorage.getItem('token') === null)
-      navigate("/")
+    if (localStorage.getItem('token') === null) navigate('/');
   };
 
   return (
     <div className="navbar">
-        <Link to="/">
-          <img src={logo} alt="Logo" />
-        </Link>
+      <Link to="/">
+        <img src={logo} alt="Logo" />
+      </Link>
       <ul>
         {localStorage.getItem('token') === null ? (
           <>
