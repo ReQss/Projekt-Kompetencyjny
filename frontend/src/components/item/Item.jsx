@@ -80,17 +80,19 @@ const Item = ({ item, src }) => {
         </div>
         <div className="item__text">
           <div className="details">
-            <p>
-              Właściciel przedmiotu: {ownerName} {ownerLastName}
-            </p>
-            <div className="location">
-              <p>{building}</p>
-              <p>{room}</p>
+            <div className="owner">
+              Właściciel: {ownerName} {ownerLastName}
+            </div>
+            <p className="name">Nazwa: {itemName}</p>
+            <div className="item__description">
+              <p>Opis: {description} lorem300 </p>
             </div>
           </div>
-          <p>Nazwa: {itemName}</p>
-          <div className="item__description">
-            <p>{description}</p>
+          <div className="building">
+            <div className="location">
+              <div>Budunek: {building}</div>
+              <div>Pokój: {room}</div>
+            </div>
           </div>
         </div>
       </div>

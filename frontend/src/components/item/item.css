@@ -17,8 +17,8 @@
 }
 .item__text {
   margin-top: 1rem;
+  padding-left: 30px;
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
   width: 100%;
 }
@@ -87,6 +87,11 @@
 
 .details {
   display: flex;
+  flex-direction: column;
 }
 
-
+.location {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
