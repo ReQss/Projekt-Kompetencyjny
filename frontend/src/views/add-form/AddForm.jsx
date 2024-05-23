@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
-import { Button } from '../../components';
-import './addForm.css';
+import { useState, useEffect } from "react";
+import { Button } from "../../components";
+import "./addForm.css";
+import { Link } from "react-router-dom";
 
 function AddForm() {
-  const userRole = localStorage.getItem('role');
-  const userId = localStorage.getItem('userId');
+  const userRole = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
   const [itemInfo, setItemInfo] = useState({
-    ownerId: userRole !== 'ADMIN' ? userId : '',
+    ownerId: userRole !== "ADMIN" ? userId : "",
   });
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function AddForm() {
       const data = await response.json();
       setCategories(data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
     }
   };
 
@@ -34,7 +35,7 @@ function AddForm() {
       console.log(data);
       setUsers(data);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 
@@ -63,39 +64,32 @@ function AddForm() {
 
     try {
       const response = await fetch(`http://localhost:9192/api/addInventory`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(item),
       });
 
       if (response.ok) {
-        alert('Dodawanie powiodło się!');
+        alert("Dodawanie powiodło się!");
       } else {
         const errorMessage = await response.text();
         alert(`Błąd podczas dodawania: ${errorMessage}`);
       }
     } catch (error) {
-      alert('Wystąpił błąd podczas dodawania przedmiotu.');
+      alert("Wystąpił błąd podczas dodawania przedmiotu.");
     }
   };
 
   return (
     <div className="form-container add-item-form">
+      <Link to="/">
+        {" "}
+        <Button className={"back-btn"}>Powrót</Button>{" "}
+      </Link>
       <h2>Dodaj przedmiot</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form">
-          <label htmlFor="description">Opis:</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            value={itemInfo.description}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
         <div className="form">
           <label htmlFor="itemName">Nazwa przedmiotu:</label>
           <input
@@ -107,7 +101,7 @@ function AddForm() {
             required
           />
         </div>
-        {userRole === 'ADMIN' ? (
+        {userRole === "ADMIN" ? (
           <div className="form">
             <label htmlFor="ownerId">Właściciel:</label>
             <select
@@ -267,6 +261,17 @@ function AddForm() {
               </option>
             ))}
           </select>
+        </div>
+        <div className="form">
+          <label htmlFor="description">Opis:</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="8"
+            value={itemInfo.description}
+            onChange={handleInputChange}
+            required
+          ></textarea>
         </div>
 
         <div className="button">
