@@ -28,6 +28,7 @@ const Rent = () => {
   useEffect(() => {
     fetchUsers();
     fetchInventory(userId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = async () => {
