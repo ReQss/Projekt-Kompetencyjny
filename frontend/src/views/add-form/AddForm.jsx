@@ -28,9 +28,9 @@ function AddForm() {
       const response = await fetch(`http://localhost:9192/getUsersByRoles`);
       const data = await response.json();
       console.log(data);
-      // setUsers(data);
+      setUsers(data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error('Error fetching users:', error);
     }
   };
 
@@ -104,16 +104,23 @@ function AddForm() {
           />
         </div>
         <div className="form">
-          <label htmlFor="ownerId">Id właściciela:</label>
-          <input
-            type="number"
+          <label htmlFor="ownerId">Właściciel:</label>
+          <select
             id="ownerId"
             name="ownerId"
             value={itemInfo.ownerId}
             onChange={handleInputChange}
             required
-          />
+          >
+            <option value="">Wybierz właściciela</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.firstName} {user.lastName}
+              </option>
+            ))}
+          </select>
         </div>
+
         <div className="form">
           <label htmlFor="rentStatus">Status wypożyczenia:</label>
           <select
