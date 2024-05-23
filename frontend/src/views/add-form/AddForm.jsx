@@ -8,6 +8,8 @@ function AddForm() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [users, setUsers] = useState([]);
 
+  const userRole = localStorage.getItem('role');
+
   useEffect(() => {
     fetchCategories();
     fetchUsers();
@@ -103,23 +105,37 @@ function AddForm() {
             required
           />
         </div>
-        <div className="form">
-          <label htmlFor="ownerId">Właściciel:</label>
-          <select
-            id="ownerId"
-            name="ownerId"
-            value={itemInfo.ownerId}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">Wybierz właściciela</option>
-            {users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.firstName} {user.lastName}
-              </option>
-            ))}
-          </select>
-        </div>
+        {userRole === 'ADMIN' ? (
+          <div className="form">
+            <label htmlFor="ownerId">Właściciel:</label>
+            <select
+              id="ownerId"
+              name="ownerId"
+              value={itemInfo.ownerId}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Wybierz właściciela</option>
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.firstName} {user.lastName}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : (
+          <div className="form">
+            <label htmlFor="ownerId">Id właściciela:</label>
+            <input
+              type="number"
+              id="ownerId"
+              name="ownerId"
+              value={itemInfo.ownerId}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        )}
 
         <div className="form">
           <label htmlFor="rentStatus">Status wypożyczenia:</label>
