@@ -3,12 +3,14 @@ import { Button } from '../../components';
 import './addForm.css';
 
 function AddForm() {
-  const [itemInfo, setItemInfo] = useState([]);
+  const userRole = localStorage.getItem('role');
+  const userId = localStorage.getItem('userId');
+  const [itemInfo, setItemInfo] = useState({
+    ownerId: userRole !== 'ADMIN' ? userId : '',
+  });
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [users, setUsers] = useState([]);
-
-  const userRole = localStorage.getItem('role');
 
   useEffect(() => {
     fetchCategories();
@@ -123,19 +125,7 @@ function AddForm() {
               ))}
             </select>
           </div>
-        ) : (
-          <div className="form">
-            <label htmlFor="ownerId">Id właściciela:</label>
-            <input
-              type="number"
-              id="ownerId"
-              name="ownerId"
-              value={itemInfo.ownerId}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        )}
+        ) : null}
 
         <div className="form">
           <label htmlFor="rentStatus">Status wypożyczenia:</label>
