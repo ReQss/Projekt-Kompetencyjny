@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import './item.css';
-import Modal from '../modal/DetailsModal';
-import Button from '../button/Button';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from "react";
+import "./item.css";
+import Modal from "../modal/DetailsModal";
+import Button from "../button/Button";
+import { Link, useLocation } from "react-router-dom";
 
 const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -46,31 +46,33 @@ const Item = ({ item, src }) => {
       const response = await fetch(
         `http://localhost:9192/api/deleteInventory/${itemId}`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
 
       if (response.ok) {
-        console.log('Przedmiot o ID:', itemId, 'został pomyślnie usunięty.');
+        console.log("Przedmiot o ID:", itemId, "został pomyślnie usunięty.");
       } else {
         const errorMessage = await response.text();
         console.error(
-          'Wystąpił błąd podczas usuwania przedmiotu:',
+          "Wystąpił błąd podczas usuwania przedmiotu:",
           errorMessage
         );
       }
     } catch (error) {
-      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
+      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
     } finally {
       hideDeleteConfirmation();
       window.location.reload();
     }
   };
 
-  const rentStatusColor = rentStatus === 'available' ? 'green' : 'red';
+  const rentStatusText =
+    rentStatus === "available" ? "dostępny" : "niedostępny";
+  const rentStatusColor = rentStatus === "available" ? "green" : "red";
 
   return (
     <div className="item">
@@ -99,22 +101,22 @@ const Item = ({ item, src }) => {
       {modalOpen && <Modal item={item} img={src} onClose={closeModal}></Modal>}
 
       <div className="item__btn">
-        {localStorage.getItem('token') === null ? (
+        {localStorage.getItem("token") === null ? (
           <></>
-        ) : location.pathname === '/modify' ? (
+        ) : location.pathname === "/modify" ? (
           <Link to={`/modification-form/${id}`}>
             <Button>Modyfikuj</Button>
           </Link>
-        ) : location.pathname === '/delete' ? (
+        ) : location.pathname === "/delete" ? (
           <Button onClick={showDeleteConfirmation1}>Usuń</Button>
         ) : (
           <>
-            <Button onClick={openModal}>Details</Button>
+            <Button onClick={openModal}>Detale</Button>
           </>
         )}
 
         <p style={{ color: rentStatusColor }}>
-          Stan wypożyczenia: {rentStatus}
+          Stan wypożyczenia: {rentStatusText}
         </p>
       </div>
       {showDeleteConfirmation && (
