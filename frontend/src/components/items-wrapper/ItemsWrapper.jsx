@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './itemsWrapper.css';
 import Item from '../item/Item';
 import komputerImage from '../../assets/komputer.jpg';
