@@ -17,8 +17,8 @@
 }
 .item__text {
   margin-top: 1rem;
+  padding-left: 30px;
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
   width: 100%;
 }
@@ -48,7 +48,6 @@
 .item img {
   max-height: fit-content;
   width: 130px;
-
 }
 
 .item button {
@@ -84,4 +83,15 @@
   flex-direction: row;
   justify-content: center;
   gap: 1rem;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.location {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
 }

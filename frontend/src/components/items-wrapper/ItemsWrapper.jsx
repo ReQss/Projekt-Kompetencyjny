@@ -28,6 +28,7 @@ const ItemsWrapper = () => {
     fetch('http://localhost:9192/api/inventory')
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const processedData = data.map((item) => {
           if (typeof item.category === 'object' && item.category !== null) {
             return {
@@ -52,10 +53,6 @@ const ItemsWrapper = () => {
           src={
             item.photo ? `data:image/jpeg;base64,${item.photo}` : komputerImage
           } // Zakładając, że klucz to 'photo' i wartość to base64
-          id={item.id}
-          name={item.itemName}
-          description={item.description}
-          rentStatus={item.rentStatus}
         />
       ))}
     </div>
