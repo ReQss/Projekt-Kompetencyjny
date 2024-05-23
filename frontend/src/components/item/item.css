@@ -48,7 +48,6 @@
 .item img {
   max-height: fit-content;
   width: 130px;
-
 }
 
 .item button {
@@ -85,3 +84,9 @@
   justify-content: center;
   gap: 1rem;
 }
+
+.details {
+  display: flex;
+}
+
+
