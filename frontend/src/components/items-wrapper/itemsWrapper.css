@@ -1,7 +1,6 @@
 .items-wrapper {
   max-height: 100%;
   flex: 5;
-  background-color: aliceblue;
   display: grid;
   grid-template-columns: 1fr; /* Zmiana z repeat(5, 1fr) na 1fr */
   gap: 1rem;
