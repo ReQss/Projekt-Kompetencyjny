@@ -9,33 +9,30 @@ function AddForm() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(`http://localhost:9192/api/category`);
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
     fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(`http://localhost:9192/getUsersByRoles`);
-        const data = await response.json();
-        console.log(data);
-        // setUsers(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
     fetchUsers();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/api/category`);
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/getUsersByRoles`);
+      const data = await response.json();
+      console.log(data);
+      // setUsers(data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
