@@ -14,32 +14,48 @@ const Rent = () => {
     firstName: '',
     lastName: '',
     rentDescription: '',
+    selectedUser: '',
   });
+
   const [inventoryList, setInventoryList] = useState([]);
   const [purposesList, setPurposesList] = useState([]);
   const [returnDate, setReturnDate] = useState(new Date());
+  const [users, setUsers] = useState([]);
+
   const userId = localStorage.getItem('userId');
+  const userRole = localStorage.getItem('role');
 
   useEffect(() => {
-    const fetchInventory = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:9192/api/inventoryByOwnerId?ownerId=${userId}`
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          setInventoryList(data);
-        } else {
-          console.error('Failed to fetch inventory');
-        }
-      } catch (error) {
-        console.error('Error fetching inventory:', error);
-      }
-    };
-
-    fetchInventory();
+    fetchUsers();
+    fetchInventory(userId);
   }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/getUsersByRoles`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  const fetchInventory = async (ownerId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:9192/api/inventoryByOwnerId?ownerId=${ownerId}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setInventoryList(data);
+      } else {
+        console.error('Failed to fetch inventory');
+      }
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+    }
+  };
 
   useEffect(() => {
     const fetchPurposes = async () => {
@@ -50,19 +66,15 @@ const Rent = () => {
           const data = await response.json();
           setPurposesList(data);
         } else {
-          console.error('Failed to fetch inventory');
+          console.error('Failed to fetch purposes');
         }
       } catch (error) {
-        console.error('Error fetching inventory:', error);
+        console.error('Error fetching purposes:', error);
       }
     };
 
     fetchPurposes();
   }, []);
-
-  useEffect(() => {
-    console.log(purposesList);
-  }, [purposesList]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,6 +82,19 @@ const Rent = () => {
       ...prevFormData,
       [name]: value,
     }));
+  };
+
+  const handleUserChange = (e) => {
+    const selectedUserId = e.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      selectedUser: selectedUserId,
+    }));
+    if (selectedUserId === '') {
+      fetchInventory(userId);
+    } else {
+      fetchInventory(selectedUserId);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -82,10 +107,13 @@ const Rent = () => {
       firstName,
       lastName,
       rentDescription,
+      selectedUser,
     } = formData;
 
     const payload = {
-      user: { id: Number(userId) },
+      user: {
+        id: selectedUser === '' ? Number(userId) : Number(selectedUser),
+      },
       inventory: { id: Number(inventory) },
       rentPurpose: { id: Number(rentPurpose) },
       email,
@@ -108,14 +136,13 @@ const Rent = () => {
       if (response.ok) {
         console.log('działa');
         setFormData({
-          user: '',
           inventory: '',
           rentPurpose: '',
           email: '',
           firstName: '',
           lastName: '',
           rentDescription: '',
-          rentStatus: '',
+          selectedUser: '', // Resetowanie selectedUser
         });
 
         alert('Wypożyczenie udane!');
@@ -134,27 +161,68 @@ const Rent = () => {
       <div className="form-container">
         <h2>Wypożycz sprzęt</h2>
         <form onSubmit={handleSubmit}>
-          <div className="form">
-            <label htmlFor="inventory">Część:</label>
-            <select
-              id="inventory"
-              name="inventory"
-              value={formData.inventory}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Wybierz produkt</option>
-              {inventoryList.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.itemName}
-                </option>
-              ))}
-            </select>
-          </div>
+          {userRole === 'ADMIN' ? (
+            <>
+              <div className="form">
+                <label htmlFor="userId">Właściciel:</label>
+                <select
+                  id="userId"
+                  name="selectedUser"
+                  value={formData.selectedUser}
+                  onChange={handleUserChange}
+                  required
+                >
+                  <option value="">Wybierz właściciela</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.firstName} {user.lastName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {formData.selectedUser && (
+                <div className="form">
+                  <label htmlFor="inventory">Część:</label>
+                  <select
+                    id="inventory"
+                    name="inventory"
+                    value={formData.inventory}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Wybierz produkt</option>
+                    {inventoryList.map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.itemName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="form">
+              <label htmlFor="inventory">Część:</label>
+              <select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Wybierz produkt</option>
+                {inventoryList.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.itemName}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           <div className="form">
             <label htmlFor="rentPurpose">Powód wypożyczenia:</label>
-
             <select
               id="rentPurpose"
               name="rentPurpose"
@@ -170,6 +238,7 @@ const Rent = () => {
               ))}
             </select>
           </div>
+
           <div className="form">
             <label htmlFor="returnDate">Data zwrotu:</label>
             <DatePicker
