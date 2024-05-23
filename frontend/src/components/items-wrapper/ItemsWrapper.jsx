@@ -21,7 +21,6 @@ const ItemsWrapper = () => {
     } else if (location.pathname === '/delete') {
       return item.ownerId === parseInt(loggedInUserId);
     }
-    // W innych przypadkach zwróć wszystkie przedmioty
     return true;
   });
 
