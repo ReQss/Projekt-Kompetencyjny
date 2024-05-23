@@ -1,5 +1,6 @@
 package com.example.RentalApp.controller;
 
+import com.example.RentalApp.model.Role;
 import com.example.RentalApp.model.User;
 import com.example.RentalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,6 +45,13 @@ public class UserController {
         response.put("token", token);
         response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getUsersByRoles")
+    public ResponseEntity<List<User>> getUsersByRoles() {
+        List<Role> roles = Arrays.asList(Role.ADMIN, Role.USER);
+        List<User> users = userService.getUsersByRoles(roles);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }
