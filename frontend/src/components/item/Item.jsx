@@ -115,10 +115,16 @@ const Item = ({ item, src }) => {
               <Button>Modyfikuj</Button>
             </Link>
             <>
-              <Button onClick={openModal}>Usuń</Button>
+              <Button onClick={showDeleteConfirmation1}>Usuń</Button>
             </>
+            <Link to={`/rent-form/${id}`}>
+              <Button> Wypożycz </Button>
+            </Link>
+            <Link to={`/rent-history/${id}`}>
+              <Button>Historia wypożyczeń</Button>
+            </Link>
             <>
-              <Button onClick={openModal}>Usuń</Button>
+              <Button onClick={openModal}>Detale</Button>
             </>
           </>
         ) : (
