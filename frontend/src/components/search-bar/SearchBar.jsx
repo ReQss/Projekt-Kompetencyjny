@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import './searchBar.css';
-import Button from '../button/Button';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from "react";
+import "./searchBar.css";
+import Button from "../button/Button";
+import { Link, useLocation } from "react-router-dom";
 
 const SearchBar = () => {
   const [showItems, setShowItems] = useState(false);
@@ -11,7 +11,8 @@ const SearchBar = () => {
   };
 
   const location = useLocation();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("role");
 
   return (
     <div className="search-bar">
@@ -24,31 +25,27 @@ const SearchBar = () => {
           placeholder="Szukaj"
         />
       </form> */}
-      {localStorage.getItem('token') === null ? (
-            <></>
-          ) : (
-            location.pathname === '/delete' ? (
-              <Link to="/">
-                <Button> Wróć na stronę główną </Button>
-              </Link>
-            ) : (
-              <>
-                <Link to="/delete">
-                  <Button> Usuń przedmiot </Button>
-                </Link>
-            </>
-            )
-          )}  
+      {localStorage.getItem("token") === null ? (
+        <></>
+      ) : location.pathname === "/delete" ? (
+        <Link to="/">
+          <Button> Wróć na stronę główną </Button>
+        </Link>
+      ) : (
+        <>
+          <Link to="/delete">
+            <Button> Usuń przedmiot </Button>
+          </Link>
+        </>
+      )}
 
-
-      {localStorage.getItem('token') === null ? (
-            <></>
-          ) : (
-            <>
-        
+      {localStorage.getItem("token") === null ? (
+        <></>
+      ) : (
+        <>
           <Link to="/add-form">
-              <Button>Dodaj przedmiot</Button>
-            </Link>
+            <Button>Dodaj przedmiot</Button>
+          </Link>
 
           <Link to="/rent-form">
             <Button> Wypożycz </Button>
@@ -57,26 +54,37 @@ const SearchBar = () => {
           <Link to={"/history-form/"}>
             <Button>Historia wypożyczeń</Button>
           </Link>
-            </>
-            
-          )}
 
-          {localStorage.getItem('token') === null ? (
-            <></>
+          {userRole === "USER" && location.pathname !== "/user-items" ? (
+            <Link to="/user-items">
+              <Button> Twoje przedmioty </Button>
+            </Link>
           ) : (
-            location.pathname === '/modify' ? (
-              <Link to="/">
-                <Button> Wróć na stronę główną </Button>
-              </Link>
-            ) : (
-              <>
-                <Link to="/modify">
-                  <Button> Modyfikuj </Button>
-                </Link>
-              </>
-            )
-          )}  
+            <></>
+          )}
+          {userRole === "USER" && location.pathname === "/user-items" ? (
+            <Link to="/">
+              <Button> Wróć na stronę główną </Button>
+            </Link>
+          ) : (
+            <></>
+          )}
+        </>
+      )}
 
+      {localStorage.getItem("token") === null ? (
+        <></>
+      ) : location.pathname === "/modify" ? (
+        <Link to="/">
+          <Button> Wróć na stronę główną </Button>
+        </Link>
+      ) : (
+        <>
+          <Link to="/modify">
+            <Button> Modyfikuj </Button>
+          </Link>
+        </>
+      )}
 
       {/* <form className="sort-window">
         <label>Sortuj:</label>

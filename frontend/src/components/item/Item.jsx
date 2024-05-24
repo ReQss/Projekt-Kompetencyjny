@@ -3,7 +3,7 @@ import { useState } from "react";
 import "./item.css";
 import Modal from "../modal/DetailsModal";
 import Button from "../button/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -109,6 +109,18 @@ const Item = ({ item, src }) => {
           </Link>
         ) : location.pathname === "/delete" ? (
           <Button onClick={showDeleteConfirmation1}>Usuń</Button>
+        ) : location.pathname === "/user-items" ? (
+          <>
+            <Link to={`/modification-form/${id}`}>
+              <Button>Modyfikuj</Button>
+            </Link>
+            <>
+              <Button onClick={openModal}>Usuń</Button>
+            </>
+            <>
+              <Button onClick={openModal}>Usuń</Button>
+            </>
+          </>
         ) : (
           <>
             <Button onClick={openModal}>Detale</Button>
