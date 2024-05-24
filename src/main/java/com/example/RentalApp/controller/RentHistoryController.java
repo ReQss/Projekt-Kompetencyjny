@@ -31,6 +31,7 @@ public class RentHistoryController {
         }
         return ResponseEntity.ok(rentHistories);
     }
+
     @GetMapping("/inventory/{inventoryId}")
     public ResponseEntity<List<RentHistory>> getRentHistoryByInventoryId(@PathVariable Integer inventoryId) {
         List<RentHistory> rentHistories = rentHistoryService.findRentHistoriesByInventoryId(inventoryId);
@@ -38,6 +39,15 @@ public class RentHistoryController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(rentHistories);
+    }
+
+    @PostMapping("/return/{inventoryId}")
+    public ResponseEntity<RentHistory> returnRentedItem(@PathVariable Integer inventoryId) {
+        RentHistory updatedRentHistory = rentHistoryService.returnRentedItem(inventoryId);
+        if (updatedRentHistory == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedRentHistory);
     }
 }
 

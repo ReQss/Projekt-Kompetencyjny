@@ -148,19 +148,7 @@ VALUES (11, 'Nikon Z7, Full-Frame Mirrorless Camera, 45.7MP, 9 fps', 'Nikon Z7',
         'Companys green initiatives budget', 'Tesla Direct', '14', 'SN9090909090', 1);
 
 --
--- Wyzwalacze `inventory`
---
-DELIMITER $$
-CREATE TRIGGER `after_update_rent_status`
-    AFTER UPDATE
-    ON `inventory`
-    FOR EACH ROW IF NEW.rent_status = 'available' THEN
-    UPDATE rent_history
-    SET rent_status = 'returned'
-    WHERE inventory_id = NEW.inventory_id;
-END IF
-$$
-DELIMITER ;
+
 
 -- --------------------------------------------------------
 
@@ -230,6 +218,15 @@ END IF
 $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE TRIGGER `after_rent_update` AFTER UPDATE ON `rent_history`
+    FOR EACH ROW IF NEW.rent_status = 'returned' THEN
+    UPDATE inventory
+    SET rent_status = 'available'
+    WHERE inventory_id = NEW.inventory_id;
+END IF
+$$
+DELIMITER ;
 -- --------------------------------------------------------
 
 --
