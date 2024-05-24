@@ -1,5 +1,6 @@
 package com.example.RentalApp.controller;
 
+import com.example.RentalApp.model.Role;
 import com.example.RentalApp.model.User;
 import com.example.RentalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
     @GetMapping("/getUser/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id) {
@@ -28,6 +30,8 @@ public class UserController {
     }
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
+        user.setRole("USER");
+        System.out.println(user);
         String encodedPassword = this.passwordEncoder.encode(user.getPassword());
 
         user.setPassword(encodedPassword);
@@ -36,13 +40,14 @@ public class UserController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        String token = "token -" + user.getLogin();
-        String encodedPassword = this.passwordEncoder.encode(user.getPassword());
-        User loggedUser = userService.login(user.getLogin(), encodedPassword);
-        if (loggedUser == null) return  ResponseEntity.badRequest().body("Invalid login credentials");
+        User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
+        if (loggedUser == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
+        }
+        String token = "token-" + user.getLogin();  // Token generation logic to be updated as needed
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
-        response.put("user", loggedUser); // Use loggedUser instead of user
+        response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 }
