@@ -25,10 +25,4 @@ public class RentPurposeController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-
-
-
-
-
 }
