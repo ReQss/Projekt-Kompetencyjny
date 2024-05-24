@@ -20,16 +20,19 @@ public class InventoryRestController {
 
     @GetMapping("/inventory")
     public List<Inventory> getAllInventory() {
-        return inventoryRepository.findAll();
+        return inventoryRepository.findByDeletedFalse();
     }
+
     @GetMapping("/inventoryByOwnerId")
     public List<Inventory> getInventoryByOwnerId(@RequestParam Long ownerId) {
-        return inventoryRepository.findByOwnerId(ownerId);
+        return inventoryRepository.findByOwnerIdAndDeletedFalse(ownerId);
     }
+
     @GetMapping("/inventoryById/{id}")
     public Inventory getInventory(@PathVariable Long id) {
         return inventoryRepository.findById(id).orElse(null);
     }
+
     @PostMapping("/addInventory")
     public ResponseEntity<Inventory> addInventory(@RequestBody Inventory newInventory) {
         try {
@@ -39,11 +42,11 @@ public class InventoryRestController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/updateInventory/{id}")
     public ResponseEntity<Inventory> updateInventory(@PathVariable Long id, @RequestBody Inventory updatedInventory) {
         Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
         if (existingInventory != null) {
-
             existingInventory.setDescription(updatedInventory.getDescription());
             existingInventory.setItemName(updatedInventory.getItemName());
             existingInventory.setOwnerId(updatedInventory.getOwnerId());
@@ -60,8 +63,6 @@ public class InventoryRestController {
             existingInventory.setSerialNumber(updatedInventory.getSerialNumber());
             existingInventory.setCategory(updatedInventory.getCategory());
 
-
-
             Inventory updated = inventoryRepository.save(existingInventory);
             return new ResponseEntity<>(updated, HttpStatus.OK);
         } else {
@@ -72,11 +73,16 @@ public class InventoryRestController {
     @DeleteMapping("/deleteInventory/{id}")
     public ResponseEntity<HttpStatus> deleteInventory(@PathVariable Long id) {
         try {
-            inventoryRepository.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
+            if (existingInventory != null) {
+                existingInventory.setDeleted(true);
+                inventoryRepository.save(existingInventory);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
-

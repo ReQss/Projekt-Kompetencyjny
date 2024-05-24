@@ -2,6 +2,8 @@ package com.example.RentalApp.model;
 
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Base64;
@@ -74,6 +76,18 @@ public class Inventory {
 
     @Column(name = "photo")
     private byte[] photo;
+
+    @ColumnDefault("0")
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public byte[] getPhoto() {
         return photo;

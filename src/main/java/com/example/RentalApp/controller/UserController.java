@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Arrays;
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class UserController {
@@ -37,6 +37,12 @@ public class UserController {
         user.setPassword(encodedPassword);
         return userService.addUser(user);
 
+    }
+    @GetMapping("/getUsersByRoles")
+    public ResponseEntity<List<User>> getUsersByRoles() {
+        List<Role> roles = Arrays.asList(Role.ADMIN, Role.USER);
+        List<User> users = userService.getUsersByRoles(roles);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
