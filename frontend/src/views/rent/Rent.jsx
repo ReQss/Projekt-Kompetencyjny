@@ -28,8 +28,8 @@ const Rent = () => {
   } else {
     formData.inventory = itemId;
   }
-  
-  console.log(`id przedmiotu: `,itemId);
+
+  console.log(`id przedmiotu: `, itemId);
 
   const userId = localStorage.getItem("userId");
   const userRole = localStorage.getItem("role");
@@ -217,41 +217,40 @@ const Rent = () => {
         ) : (
           <div className="form">
             <label htmlFor="inventory">Część:</label>
-            {itemId != -1 ? 
-            (<select
-              id="inventory"
-              name="inventory"
-              value={formData.inventory}
-              onChange={handleInputChange}
-              required
-            >
-              {/* <option value="">Wybierz produkt</option> */}
-              
-              {inventoryList.map((item) => (
+            {itemId != -1 ? (
+              <select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                {inventoryList.map(
+                  (item) =>
                     item.id == itemId && (
-                    <option key={item.id} value={item.id}>
-                      {item.itemName}
-                    </option>)
-                  ))}
-            </select>
+                      <option key={item.id} value={item.id}>
+                        {item.itemName}
+                      </option>
+                    )
+                )}
+              </select>
             ) : (
-            <select
-              id="inventory"
-              name="inventory"
-              value={formData.inventory}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Wybierz produkt</option>
-              
-              {inventoryList.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.itemName}
-                </option>
-              ))}
-            </select>) 
-          }
-            
+              <select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Wybierz produkt</option>
+
+                {inventoryList.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.itemName}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         )}
 
