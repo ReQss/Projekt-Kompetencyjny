@@ -1,7 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pl from "date-fns/locale/pl";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./rent.scss";
 import { Button } from "../../components";
@@ -21,6 +21,15 @@ const Rent = () => {
   const [purposesList, setPurposesList] = useState([]);
   const [returnDate, setReturnDate] = useState(new Date());
   const [users, setUsers] = useState([]);
+  let { itemId } = useParams();
+  if (itemId === undefined) {
+    console.log(1);
+    itemId = -1;
+  } else {
+    formData.inventory = itemId;
+  }
+
+  console.log(`id przedmiotu: `, itemId);
 
   const userId = localStorage.getItem("userId");
   const userRole = localStorage.getItem("role");
@@ -208,20 +217,40 @@ const Rent = () => {
         ) : (
           <div className="form">
             <label htmlFor="inventory">Część:</label>
-            <select
-              id="inventory"
-              name="inventory"
-              value={formData.inventory}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Wybierz produkt</option>
-              {inventoryList.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.itemName}
-                </option>
-              ))}
-            </select>
+            {itemId != -1 ? (
+              <select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                {inventoryList.map(
+                  (item) =>
+                    item.id == itemId && (
+                      <option key={item.id} value={item.id}>
+                        {item.itemName}
+                      </option>
+                    )
+                )}
+              </select>
+            ) : (
+              <select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Wybierz produkt</option>
+
+                {inventoryList.map((item) => (
+                  <option key={item.id} value={item.id}>
+                    {item.itemName}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
         )}
 

@@ -8,6 +8,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
   const [itemId, setItemId] = useState(null);
 
   const {
@@ -34,6 +35,16 @@ const Item = ({ item, src }) => {
   const showDeleteConfirmation1 = () => {
     setShowDeleteConfirmation(true);
     setItemId(id);
+  };
+
+  const showGiveBackConfirmation1 = () => {
+    setShowReturnConfirmation(true);
+    setItemId(id);
+  };
+
+  const hideReturnConfirmation = () => {
+    setShowReturnConfirmation(false);
+    setItemId(null);
   };
 
   const hideDeleteConfirmation = () => {
@@ -66,6 +77,35 @@ const Item = ({ item, src }) => {
       console.error("Wystąpił błąd podczas wysyłania żądania:", error);
     } finally {
       hideDeleteConfirmation();
+      window.location.reload();
+    }
+  };
+
+  const handleReturnItem = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:9192/api/rentHistory/return/${itemId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("Przedmiot o ID:", itemId, "został pomyślnie zwrócony.");
+      } else {
+        const errorMessage = await response.text();
+        console.error(
+          "Wystąpił błąd podczas zwracania przedmiotu:",
+          errorMessage
+        );
+      }
+    } catch (error) {
+      console.error("Wystąpił błąd podczas zwracania żądania:", error);
+    } finally {
+      hideReturnConfirmation();
       window.location.reload();
     }
   };
@@ -115,10 +155,23 @@ const Item = ({ item, src }) => {
               <Button>Modyfikuj</Button>
             </Link>
             <>
-              <Button onClick={openModal}>Usuń</Button>
+              <Button onClick={showDeleteConfirmation1}>Usuń</Button>
             </>
+            {rentStatus === "unavailable" ? (
+              // do zrobienia
+              <Link to={`/user-items`}>
+                <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
+              </Link>
+            ) : (
+              <Link to={`/rent-form/${id}`}>
+                <Button> Wypożycz </Button>
+              </Link>
+            )}
+            <Link to={`/rent-history/${id}`}>
+              <Button>Historia wypożyczeń</Button>
+            </Link>
             <>
-              <Button onClick={openModal}>Usuń</Button>
+              <Button onClick={openModal}>Detale</Button>
             </>
           </>
         ) : (
@@ -140,6 +193,19 @@ const Item = ({ item, src }) => {
             <div className="delete-modal__buttons">
               <Button onClick={handleDeleteItem}>Tak</Button>
               <Button onClick={hideDeleteConfirmation}>Nie</Button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showReturnConfirmation && (
+        <div className="modal-overlay">
+          <div className="delete-modal">
+            <div className="delete-modal__text">
+              <p>Czy napewno chcesz zwrócić przedmiot?</p>
+            </div>
+            <div className="delete-modal__buttons">
+              <Button onClick={handleReturnItem}>Tak</Button>
+              <Button onClick={hideReturnConfirmation}>Nie</Button>
             </div>
           </div>
         </div>
