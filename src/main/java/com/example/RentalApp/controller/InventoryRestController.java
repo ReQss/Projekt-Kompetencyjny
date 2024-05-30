@@ -5,7 +5,9 @@ import com.example.RentalApp.repository.InventoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -34,11 +36,18 @@ public class InventoryRestController {
     }
 
     @PostMapping("/addInventory")
-    public ResponseEntity<Inventory> addInventory(@RequestBody Inventory newInventory) {
+    public ResponseEntity<Inventory> addInventory(
+            @RequestPart("inventory") Inventory newInventory,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
         try {
+            // Handle the file upload
+            if (file != null && !file.isEmpty()) {
+                newInventory.setPhoto(file.getBytes());
+            }
+
             Inventory savedInventory = inventoryRepository.save(newInventory);
             return new ResponseEntity<>(savedInventory, HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (IOException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
