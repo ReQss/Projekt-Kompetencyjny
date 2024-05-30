@@ -12,6 +12,7 @@ function AddForm() {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [users, setUsers] = useState([]);
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     fetchCategories();
@@ -51,24 +52,31 @@ function AddForm() {
     setSelectedCategory(e.target.value);
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const item = itemInfo;
+    const item = { ...itemInfo };
     let selCategory = null;
 
     categories.forEach((singleCat) => {
-      if (singleCat.name == selectedCategory) selCategory = singleCat;
+      if (singleCat.name === selectedCategory) selCategory = singleCat;
     });
     item.category = selCategory;
+
+    const formData = new FormData();
+    formData.append("inventory", new Blob([JSON.stringify(item)], { type: "application/json" }));
+    if (file) {
+      formData.append("file", file);
+    }
 
     try {
       const response = await fetch(`http://localhost:9192/api/addInventory`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(item),
+        body: formData,
       });
 
       if (response.ok) {
@@ -89,14 +97,14 @@ function AddForm() {
         <Button className={"back-btn"}>Powrót</Button>{" "}
       </Link>
       <h2>Dodaj przedmiot</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="form">
           <label htmlFor="itemName">Nazwa przedmiotu:</label>
           <input
             type="text"
             id="itemName"
             name="itemName"
-            value={itemInfo.itemName}
+            value={itemInfo.itemName || ""}
             onChange={handleInputChange}
             required
           />
@@ -126,7 +134,7 @@ function AddForm() {
           <select
             id="rentStatus"
             name="rentStatus"
-            value={itemInfo.rentStatus}
+            value={itemInfo.rentStatus || ""}
             onChange={handleInputChange}
             required
           >
@@ -141,7 +149,7 @@ function AddForm() {
             type="text"
             id="room"
             name="room"
-            value={itemInfo.room}
+            value={itemInfo.room || ""}
             onChange={handleInputChange}
             required
           />
@@ -152,7 +160,7 @@ function AddForm() {
             type="text"
             id="building"
             name="building"
-            value={itemInfo.building}
+            value={itemInfo.building || ""}
             onChange={handleInputChange}
             required
           />
@@ -163,7 +171,7 @@ function AddForm() {
             type="date"
             id="inventoryDate"
             name="inventoryDate"
-            value={itemInfo.inventoryDate}
+            value={itemInfo.inventoryDate || ""}
             onChange={handleInputChange}
             required
           />
@@ -174,7 +182,7 @@ function AddForm() {
             type="text"
             id="value"
             name="value"
-            value={itemInfo.value}
+            value={itemInfo.value || ""}
             onChange={handleInputChange}
             required
           />
@@ -185,7 +193,7 @@ function AddForm() {
             type="text"
             id="inventoryNumber"
             name="inventoryNumber"
-            value={itemInfo.inventoryNumber}
+            value={itemInfo.inventoryNumber || ""}
             onChange={handleInputChange}
             required
           />
@@ -196,7 +204,7 @@ function AddForm() {
             type="text"
             id="invoiceNumber"
             name="invoiceNumber"
-            value={itemInfo.invoiceNumber}
+            value={itemInfo.invoiceNumber || ""}
             onChange={handleInputChange}
             required
           />
@@ -207,7 +215,7 @@ function AddForm() {
             type="text"
             id="fundingSource"
             name="fundingSource"
-            value={itemInfo.fundingSource}
+            value={itemInfo.fundingSource || ""}
             onChange={handleInputChange}
             required
           />
@@ -218,7 +226,7 @@ function AddForm() {
             type="text"
             id="supplierDocument"
             name="supplierDocument"
-            value={itemInfo.supplierDocument}
+            value={itemInfo.supplierDocument || ""}
             onChange={handleInputChange}
             required
           />
@@ -229,7 +237,7 @@ function AddForm() {
             type="text"
             id="invoicePosition"
             name="invoicePosition"
-            value={itemInfo.invoicePosition}
+            value={itemInfo.invoicePosition || ""}
             onChange={handleInputChange}
             required
           />
@@ -240,7 +248,7 @@ function AddForm() {
             type="text"
             id="serialNumber"
             name="serialNumber"
-            value={itemInfo.serialNumber}
+            value={itemInfo.serialNumber || ""}
             onChange={handleInputChange}
             required
           />
@@ -268,12 +276,21 @@ function AddForm() {
             id="description"
             name="description"
             rows="8"
-            value={itemInfo.description}
+            value={itemInfo.description || ""}
             onChange={handleInputChange}
             required
           ></textarea>
         </div>
-
+        <div className="form">
+          <label htmlFor="file">Zdjęcie:</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </div>
         <div className="button">
           <Button type="submit">Dodaj</Button>
         </div>
