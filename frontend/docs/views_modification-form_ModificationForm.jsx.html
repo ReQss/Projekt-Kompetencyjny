@@ -1,4 +1,32 @@
-import { useState, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/modification-form/ModificationForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/modification-form/ModificationForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./modificationForm.css";
 import { Button } from "../../components";
@@ -109,17 +137,17 @@ const ModificationForm = () => {
   };
 
   return (
-    <>
-      <Link to="/">
+    &lt;>
+      &lt;Link to="/">
         {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
-      </Link>
-      <div className="form-container modification-form">
-        <h2>Zmodyfikuj przedmiot</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form">
-            <label htmlFor="itemName">Nazwa przedmiotu:</label>
-            <input
+        &lt;Button className={"back-btn"}>Powrót&lt;/Button>{" "}
+      &lt;/Link>
+      &lt;div className="form-container modification-form">
+        &lt;h2>Zmodyfikuj przedmiot&lt;/h2>
+        &lt;form onSubmit={handleSubmit}>
+          &lt;div className="form">
+            &lt;label htmlFor="itemName">Nazwa przedmiotu:&lt;/label>
+            &lt;input
               type="text"
               id="itemName"
               name="itemName"
@@ -127,10 +155,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="ownerId">Id właściciela:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="ownerId">Id właściciela:&lt;/label>
+            &lt;input
               type="number"
               id="ownerId"
               name="ownerId"
@@ -138,10 +166,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="rentStatus">Status wypożyczenia:</label>
-            <select
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="rentStatus">Status wypożyczenia:&lt;/label>
+            &lt;select
               id="rentStatus"
               name="rentStatus"
               value={itemInfo.rentStatus}
@@ -149,21 +177,21 @@ const ModificationForm = () => {
               required
             >
               {itemInfo.rentStatus == "available" ? (
-                <>
-                  <option value="available">Dostępny</option>
-                  <option value="unavailable">Niedostępny</option>
-                </>
+                &lt;>
+                  &lt;option value="available">Dostępny&lt;/option>
+                  &lt;option value="unavailable">Niedostępny&lt;/option>
+                &lt;/>
               ) : (
-                <>
-                  <option value="unavailable">Niedostępny</option>
-                  <option value="available">Dostępny</option>
-                </>
+                &lt;>
+                  &lt;option value="unavailable">Niedostępny&lt;/option>
+                  &lt;option value="available">Dostępny&lt;/option>
+                &lt;/>
               )}
-            </select>
-          </div>
-          <div className="form">
-            <label htmlFor="room">Sala:</label>
-            <input
+            &lt;/select>
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="room">Sala:&lt;/label>
+            &lt;input
               type="text"
               id="room"
               name="room"
@@ -171,10 +199,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="building">Budynek:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="building">Budynek:&lt;/label>
+            &lt;input
               type="text"
               id="building"
               name="building"
@@ -182,10 +210,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="inventoryDate">Data dodania:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="inventoryDate">Data dodania:&lt;/label>
+            &lt;input
               type="date"
               id="inventoryDate"
               name="inventoryDate"
@@ -193,10 +221,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="value">Wartość:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="value">Wartość:&lt;/label>
+            &lt;input
               type="text"
               id="value"
               name="value"
@@ -204,10 +232,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="inventoryNumber">Numer przedmiotu:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="inventoryNumber">Numer przedmiotu:&lt;/label>
+            &lt;input
               type="text"
               id="inventoryNumber"
               name="inventoryNumber"
@@ -215,10 +243,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="invoiceNumber">Numer faktury:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="invoiceNumber">Numer faktury:&lt;/label>
+            &lt;input
               type="text"
               id="invoiceNumber"
               name="invoiceNumber"
@@ -226,10 +254,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="fundingSource">Źródło funduszy:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="fundingSource">Źródło funduszy:&lt;/label>
+            &lt;input
               type="text"
               id="fundingSource"
               name="fundingSource"
@@ -237,10 +265,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="supplierDocument">Dokument dostawcy:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="supplierDocument">Dokument dostawcy:&lt;/label>
+            &lt;input
               type="text"
               id="supplierDocument"
               name="supplierDocument"
@@ -248,10 +276,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="invoicePosition">Pozycja faktury:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="invoicePosition">Pozycja faktury:&lt;/label>
+            &lt;input
               type="text"
               id="invoicePosition"
               name="invoicePosition"
@@ -259,10 +287,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="serialNumber">Numer seryjny:</label>
-            <input
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="serialNumber">Numer seryjny:&lt;/label>
+            &lt;input
               type="text"
               id="serialNumber"
               name="serialNumber"
@@ -270,10 +298,10 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             />
-          </div>
-          <div className="form">
-            <label htmlFor="category">Kategoria:</label>
-            <select
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="category">Kategoria:&lt;/label>
+            &lt;select
               id="category"
               name="category"
               value={selectedCategory}
@@ -281,50 +309,73 @@ const ModificationForm = () => {
               required
             >
               {itemInfo.category ? (
-                <>
-                  <option
+                &lt;>
+                  &lt;option
                     key={itemInfo.category.id}
                     value={itemInfo.category.id}
                   >
                     {itemInfo.category.name}
-                  </option>
+                  &lt;/option>
                   {categories.map((category) =>
                     category.id != itemInfo.category.id ? (
-                      <>
-                        <option key={category.id} value={category.id}>
+                      &lt;>
+                        &lt;option key={category.id} value={category.id}>
                           {category.name}
-                        </option>
-                      </>
+                        &lt;/option>
+                      &lt;/>
                     ) : (
-                      <></>
+                      &lt;>&lt;/>
                     )
                   )}
-                </>
+                &lt;/>
               ) : (
-                <></>
+                &lt;>&lt;/>
               )}
-            </select>
-          </div>
-          <div className="form">
-            <label htmlFor="description">Opis:</label>
-            <textarea
+            &lt;/select>
+          &lt;/div>
+          &lt;div className="form">
+            &lt;label htmlFor="description">Opis:&lt;/label>
+            &lt;textarea
               id="description"
               name="description"
               rows="8"
               value={itemInfo.description}
               onChange={handleInputChange}
               required
-            ></textarea>
-          </div>
+            >&lt;/textarea>
+          &lt;/div>
 
           {/* Dodaj pozostałe pola w podobny sposób */}
-          <div className="button">
-            <Button type="submit">Zmodyfikuj</Button>
-          </div>
-        </form>
-      </div>{" "}
-    </>
+          &lt;div className="button">
+            &lt;Button type="submit">Zmodyfikuj&lt;/Button>
+          &lt;/div>
+        &lt;/form>
+      &lt;/div>{" "}
+    &lt;/>
   );
 };
 
 export default ModificationForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddForm">AddForm</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#DeletionForm">DeletionForm</a></li><li><a href="global.html#HistoryForm">HistoryForm</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ModificationForm">ModificationForm</a></li><li><a href="global.html#Rent">Rent</a></li><li><a href="global.html#RentHistory">RentHistory</a></li><li><a href="global.html#fetchCategories">fetchCategories</a></li><li><a href="global.html#fetchInventory">fetchInventory</a></li><li><a href="global.html#fetchItemInfo">fetchItemInfo</a></li><li><a href="global.html#fetchPurposes">fetchPurposes</a></li><li><a href="global.html#fetchRentHistory">fetchRentHistory</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

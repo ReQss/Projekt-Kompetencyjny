@@ -9,6 +9,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Rent from "./views/rent/Rent";
 import AddForm from "./views/add-form/AddForm";
 
+/**
+ * Main application component.
+ * @returns {JSX.Element} Main application component.
+ */
 function App() {
   return (
     <Router>

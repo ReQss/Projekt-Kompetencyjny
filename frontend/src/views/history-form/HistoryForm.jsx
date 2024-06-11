@@ -3,6 +3,15 @@ import { Link } from "react-router-dom"; // Importujemy Link
 import "./historyForm.css";
 import { Button } from "../../components";
 
+/**
+ * Komponent formularza historii wypożyczeń.
+ *
+ * @component
+ * @example
+ * return (
+ *   <HistoryForm />
+ * )
+ */
 const HistoryForm = () => {
   const [formData, setFormData] = useState({
     user: "",
@@ -11,6 +20,11 @@ const HistoryForm = () => {
     indexNumber: "",
   });
 
+  /**
+   * Obsługuje zmiany w polach formularza.
+   *
+   * @param {Object} e - Obiekt zdarzenia.
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -18,6 +32,7 @@ const HistoryForm = () => {
       [name]: value,
     }));
   };
+
 
   return (
     <div className="form-container">

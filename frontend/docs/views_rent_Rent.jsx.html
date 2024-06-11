@@ -1,4 +1,32 @@
-import DatePicker from "react-datepicker";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/rent/Rent.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/rent/Rent.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pl from "date-fns/locale/pl";
 import { Link, useParams } from "react-router-dom";
@@ -192,58 +220,58 @@ const Rent = () => {
   };
 
   return (
-    <div className="form-container">
-      <Link to="/">
+    &lt;div className="form-container">
+      &lt;Link to="/">
         {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
-      </Link>
-      <h2>Wypożycz sprzęt</h2>
-      <form onSubmit={handleSubmit}>
+        &lt;Button className={"back-btn"}>Powrót&lt;/Button>{" "}
+      &lt;/Link>
+      &lt;h2>Wypożycz sprzęt&lt;/h2>
+      &lt;form onSubmit={handleSubmit}>
         {userRole === "ADMIN" ? (
-          <>
-            <div className="form">
-              <label htmlFor="userId">Właściciel:</label>
-              <select
+          &lt;>
+            &lt;div className="form">
+              &lt;label htmlFor="userId">Właściciel:&lt;/label>
+              &lt;select
                 id="userId"
                 name="selectedUser"
                 value={formData.selectedUser}
                 onChange={handleUserChange}
                 required
               >
-                <option value="">Wybierz właściciela</option>
+                &lt;option value="">Wybierz właściciela&lt;/option>
                 {users.map((user) => (
-                  <option key={user.id} value={user.id}>
+                  &lt;option key={user.id} value={user.id}>
                     {user.firstName} {user.lastName}
-                  </option>
+                  &lt;/option>
                 ))}
-              </select>
-            </div>
+              &lt;/select>
+            &lt;/div>
 
-            {formData.selectedUser && (
-              <div className="form">
-                <label htmlFor="inventory">Część:</label>
-                <select
+            {formData.selectedUser &amp;&amp; (
+              &lt;div className="form">
+                &lt;label htmlFor="inventory">Część:&lt;/label>
+                &lt;select
                   id="inventory"
                   name="inventory"
                   value={formData.inventory}
                   onChange={handleInputChange}
                   required
                 >
-                  <option value="">Wybierz produkt</option>
+                  &lt;option value="">Wybierz produkt&lt;/option>
                   {inventoryList.map((item) => (
-                    <option key={item.id} value={item.id}>
+                    &lt;option key={item.id} value={item.id}>
                       {item.itemName}
-                    </option>
+                    &lt;/option>
                   ))}
-                </select>
-              </div>
+                &lt;/select>
+              &lt;/div>
             )}
-          </>
+          &lt;/>
         ) : (
-          <div className="form">
-            <label htmlFor="inventory">Część:</label>
+          &lt;div className="form">
+            &lt;label htmlFor="inventory">Część:&lt;/label>
             {itemId != -1 ? (
-              <select
+              &lt;select
                 id="inventory"
                 name="inventory"
                 value={formData.inventory}
@@ -252,54 +280,54 @@ const Rent = () => {
               >
                 {inventoryList.map(
                   (item) =>
-                    item.id == itemId && (
-                      <option key={item.id} value={item.id}>
+                    item.id == itemId &amp;&amp; (
+                      &lt;option key={item.id} value={item.id}>
                         {item.itemName}
-                      </option>
+                      &lt;/option>
                     )
                 )}
-              </select>
+              &lt;/select>
             ) : (
-              <select
+              &lt;select
                 id="inventory"
                 name="inventory"
                 value={formData.inventory}
                 onChange={handleInputChange}
                 required
               >
-                <option value="">Wybierz produkt</option>
+                &lt;option value="">Wybierz produkt&lt;/option>
 
                 {inventoryList.map((item) => (
-                  <option key={item.id} value={item.id}>
+                  &lt;option key={item.id} value={item.id}>
                     {item.itemName}
-                  </option>
+                  &lt;/option>
                 ))}
-              </select>
+              &lt;/select>
             )}
-          </div>
+          &lt;/div>
         )}
 
-        <div className="form">
-          <label htmlFor="rentPurpose">Powód wypożyczenia:</label>
-          <select
+        &lt;div className="form">
+          &lt;label htmlFor="rentPurpose">Powód wypożyczenia:&lt;/label>
+          &lt;select
             id="rentPurpose"
             name="rentPurpose"
             value={formData.rentPurpose}
             onChange={handleInputChange}
             required
           >
-            <option value="">Wybierz przyczynę</option>
+            &lt;option value="">Wybierz przyczynę&lt;/option>
             {purposesList.map((item) => (
-              <option key={item.id} value={item.id}>
+              &lt;option key={item.id} value={item.id}>
                 {item.purpose}
-              </option>
+              &lt;/option>
             ))}
-          </select>
-        </div>
+          &lt;/select>
+        &lt;/div>
 
-        <div className="form">
-          <label htmlFor="returnDate">Data zwrotu:</label>
-          <DatePicker
+        &lt;div className="form">
+          &lt;label htmlFor="returnDate">Data zwrotu:&lt;/label>
+          &lt;DatePicker
             className="date-picker"
             id="returnDate"
             selected={returnDate}
@@ -309,10 +337,10 @@ const Rent = () => {
             locale={pl}
             weekStartsOn={1}
           />
-        </div>
-        <div className="form">
-          <label htmlFor="email">Email:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="email">Email:&lt;/label>
+          &lt;input
             type="email"
             id="email"
             name="email"
@@ -320,10 +348,10 @@ const Rent = () => {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="firstName">Imię:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="firstName">Imię:&lt;/label>
+          &lt;input
             type="text"
             id="firstName"
             name="firstName"
@@ -331,10 +359,10 @@ const Rent = () => {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="lastName">Nazwisko:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="lastName">Nazwisko:&lt;/label>
+          &lt;input
             type="text"
             id="lastName"
             name="lastName"
@@ -342,23 +370,46 @@ const Rent = () => {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="rentDescription">Opis wypożyczenia:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="rentDescription">Opis wypożyczenia:&lt;/label>
+          &lt;input
             type="text"
             id="rentDescription"
             name="rentDescription"
             value={formData.rentDescription}
             onChange={handleInputChange}
           />
-        </div>
-        <div className="button">
-          <Button type="submit">Wypożycz</Button>
-        </div>
-      </form>
-    </div>
+        &lt;/div>
+        &lt;div className="button">
+          &lt;Button type="submit">Wypożycz&lt;/Button>
+        &lt;/div>
+      &lt;/form>
+    &lt;/div>
   );
 };
 
 export default Rent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddForm">AddForm</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#DeletionForm">DeletionForm</a></li><li><a href="global.html#HistoryForm">HistoryForm</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ModificationForm">ModificationForm</a></li><li><a href="global.html#Rent">Rent</a></li><li><a href="global.html#RentHistory">RentHistory</a></li><li><a href="global.html#fetchCategories">fetchCategories</a></li><li><a href="global.html#fetchInventory">fetchInventory</a></li><li><a href="global.html#fetchItemInfo">fetchItemInfo</a></li><li><a href="global.html#fetchPurposes">fetchPurposes</a></li><li><a href="global.html#fetchRentHistory">fetchRentHistory</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

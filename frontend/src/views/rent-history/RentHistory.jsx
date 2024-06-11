@@ -4,10 +4,22 @@ import './rentHistory.css';
 import Button from "../../components/button/Button";
 import { Link } from "react-router-dom";
 
+/**
+ * Komponent RentHistory służący do wyświetlania historii wypożyczeń dla danego przedmiotu.
+ * @function RentHistory
+ * @returns {JSX.Element} Historia wypożyczeń dla danego przedmiotu
+ */
 const RentHistory = () => {
   const { itemId } = useParams();
   const [rentHistory, setRentHistory] = useState([]);
 
+
+  /**
+   * Funkcja pobierająca historię wypożyczeń dla danego przedmiotu z serwera.
+   * @async
+   * @function fetchRentHistory
+   * @returns {void}
+   */
   useEffect(() => {
     const fetchRentHistory = async () => {
       try {
