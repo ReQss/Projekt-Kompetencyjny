@@ -69,9 +69,14 @@ const SearchBar = () => {
                 <Button> Twoje przedmioty </Button>
               </Link>
             ) : (
-              <Link to="/">
-                <Button> Wróć na stronę główną </Button>
-              </Link>
+              <>
+                <Link to="/">
+                  <Button> Wróć na stronę główną </Button>
+                </Link>
+                <Link to="/add-form">
+                  <Button>Dodaj przedmiot</Button>
+                </Link>
+              </>
             ))}
         </>
       )}
