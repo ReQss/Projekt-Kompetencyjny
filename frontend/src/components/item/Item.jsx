@@ -9,7 +9,8 @@ const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
-  const [itemId, setItemId] = useState(null);
+  const [itemId, setItemId] = useState(item.id);
+  const [rentHistoryDescription, setRentHistoryDescription] = useState("");
 
   const {
     id,
@@ -37,10 +38,41 @@ const Item = ({ item, src }) => {
     setItemId(id);
   };
 
-  const showGiveBackConfirmation1 = () => {
-    setShowReturnConfirmation(true);
-    setItemId(id);
+  const showGiveBackConfirmation1 = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/api/rentHistory/currentRentingByInventoryId/${itemId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        let rentHistoryDescFromData = data.rentDescription;
+        console.log(data.rentDescription);
+        console.log(rentHistoryDescFromData);
+        setRentHistoryDescription(rentHistoryDescFromData);
+
+      } else {
+        const errorMessage = await response.json();
+        console.error(
+          "Wystąpił błąd podczas sprwadzania historii:",
+          errorMessage
+        );
+      }
+    } catch (error) {
+      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
+    } finally {
+      
+      setShowReturnConfirmation(true);
+      setItemId(id);
+    }
+
   };
+
 
   const hideReturnConfirmation = () => {
     setShowReturnConfirmation(false);
@@ -82,32 +114,64 @@ const Item = ({ item, src }) => {
   };
 
   const handleReturnItem = async () => {
+    console.log(rentHistoryDescription);
     try {
-      const response = await fetch(
-        `http://localhost:9192/api/rentHistory/return/${itemId}`,
+      const response = await fetch(`http://localhost:9192/api/rentHistory/modifyDescription/${itemId}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
+          body:
+            rentHistoryDescription
         }
       );
 
       if (response.ok) {
-        console.log("Przedmiot o ID:", itemId, "został pomyślnie zwrócony.");
+        // const data = await response.json();
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = await response.json();
         console.error(
-          "Wystąpił błąd podczas zwracania przedmiotu:",
+          "Wystąpił błąd podczas sprwadzania historii:",
           errorMessage
         );
       }
     } catch (error) {
-      console.error("Wystąpił błąd podczas zwracania żądania:", error);
+      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
     } finally {
-      hideReturnConfirmation();
-      window.location.reload();
+
+      try {
+        const response = await fetch(
+          `http://localhost:9192/api/rentHistory/return/${itemId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+  
+        if (response.ok) {
+          console.log("Przedmiot o ID:", itemId, "został pomyślnie zwrócony.");
+        } else {
+          const errorMessage = await response.text();
+          console.error(
+            "Wystąpił błąd podczas zwracania przedmiotu:",
+            errorMessage
+          );
+        }
+      } catch (error) {
+        console.error("Wystąpił błąd podczas zwracania żądania:", error);
+      } finally {
+        hideReturnConfirmation();
+        window.location.reload();
+      }
     }
+
+  };
+
+  const handleInputChange = (e) => {
+    setRentHistoryDescription(e.target.value);
   };
 
   const rentStatusText =
@@ -199,13 +263,21 @@ const Item = ({ item, src }) => {
       )}
       {showReturnConfirmation && (
         <div className="modal-overlay">
-          <div className="delete-modal">
-            <div className="delete-modal__text">
-              <p>Czy napewno chcesz zwrócić przedmiot?</p>
+          <div className="delete-modal ">
+            <div className="return-description-modal__text ">
+              <label htmlFor="description">Opis zwrotu:</label>
+              <textarea
+                id="description"
+                name="description"
+                rows="8"
+                value={rentHistoryDescription}
+                onChange={handleInputChange}
+                required
+              ></textarea>
             </div>
             <div className="delete-modal__buttons">
-              <Button onClick={handleReturnItem}>Tak</Button>
-              <Button onClick={hideReturnConfirmation}>Nie</Button>
+              <Button onClick={handleReturnItem}>Zwróć</Button>
+              <Button onClick={hideReturnConfirmation}>Anuluj</Button>
             </div>
           </div>
         </div>
