@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Arrays;
+
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class UserController {
@@ -47,6 +48,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
+
         if (loggedUser == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         }

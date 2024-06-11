@@ -6,6 +6,8 @@ import com.example.RentalApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -13,6 +15,9 @@ import java.util.List;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+
     public User getUser(String name){
         return userRepository.findByLogin(name);
     }
@@ -22,9 +27,14 @@ public class UserService {
     }
     public User login(String login, String rawPassword, PasswordEncoder passwordEncoder) {
         User user = userRepository.findByLogin(login);
+        logger.info("Raw password: {}", rawPassword);
+        logger.info("Password hash: {}", passwordEncoder.encode(rawPassword));
+        logger.info("Password in database: {}", user.getPassword());
+
         if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
             return user;
         }
+
         return null;
     }
 

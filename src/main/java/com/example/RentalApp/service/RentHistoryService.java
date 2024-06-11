@@ -37,4 +37,13 @@ public class RentHistoryService {
         }
         return null;
     }
+
+    public RentHistory getCurrentRenting(Integer inventoryId) {
+        RentHistory rentHistory = rentHistoryRepository.findFirstByInventoryIdAndRentStatusNot(inventoryId, RentStatus.returned);
+        if (rentHistory != null) {
+            return rentHistory;
+        }
+        return null;
+    }
+
 }
