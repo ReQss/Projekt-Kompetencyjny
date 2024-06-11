@@ -1,52 +1,88 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Klasa modelu reprezentująca użytkownika w systemie wypożyczalni.
+ * Mapowana na tabelę "users" w bazie danych przy użyciu JPA.
+ */
 @Entity
 @Table(name = "users")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-
 public class User {
+
+    /**
+     * Unikalny identyfikator użytkownika.
+     * Generowany automatycznie przy użyciu strategii IDENTITY.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     private Integer id;
 
+    /**
+     * Adres email użytkownika.
+     */
     @Column(name = "email")
     private String email;
 
+    /**
+     * Imię użytkownika.
+     */
     @Column(name = "first_name")
     private String firstName;
 
+    /**
+     * Nazwisko użytkownika.
+     */
     @Column(name = "last_name")
     private String lastName;
 
+    /**
+     * Login użytkownika.
+     * Kolumna nie może być pusta.
+     */
     @Column(name = "login", nullable = false)
     private String login;
 
+    /**
+     * Hasło użytkownika.
+     * Kolumna nie może być pusta.
+     */
     @Column(name = "password", nullable = false)
     private String password;
 
+    /**
+     * Rola użytkownika w systemie.
+     */
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
+    /**
+     * Historia wypożyczeń związanych z użytkownikiem.
+     * Ignorowane podczas serializacji JSON, aby zapobiec rekursywnym zależnościom.
+     */
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
+    /**
+     * Konstruktor domyślny.
+     */
     public User() {
-
     }
-    public User( String email, String firstName, String lastName, String login, String password) {
 
+    /**
+     * Konstruktor tworzący nowego użytkownika z podstawowymi danymi.
+     * @param email adres email użytkownika
+     * @param firstName imię użytkownika
+     * @param lastName nazwisko użytkownika
+     * @param login login użytkownika
+     * @param password hasło użytkownika
+     */
+    public User(String email, String firstName, String lastName, String login, String password) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,6 +90,9 @@ public class User {
         this.password = password;
         this.role = Role.USER;
     }
+
+    // Gettery i settery
+
     public Integer getId() {
         return id;
     }
@@ -118,7 +157,6 @@ public class User {
         this.rentHistories = rentHistories;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -132,6 +170,4 @@ public class User {
                 ", rentHistories=" + rentHistories +
                 '}';
     }
-
 }
-
