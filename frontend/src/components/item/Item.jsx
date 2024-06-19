@@ -1,16 +1,16 @@
-/* eslint-disable react/prop-types */
-import { useState } from "react";
-import "./item.css";
-import Modal from "../modal/DetailsModal";
-import Button from "../button/Button";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import './item.css';
+import Modal from '../modal/DetailsModal';
+import Button from '../button/Button';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showReturnConfirmation, setShowReturnConfirmation] = useState(false);
   const [itemId, setItemId] = useState(item.id);
-  const [rentHistoryDescription, setRentHistoryDescription] = useState("");
+  const [rentHistoryDescription, setRentHistoryDescription] = useState('');
+  const [owner, setOwner] = useState(null);
 
   const {
     id,
@@ -21,9 +21,37 @@ const Item = ({ item, src }) => {
     ownerLastName,
     building,
     room,
+    ownerId,
   } = item;
 
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchOwnerData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:9192/getUser/${ownerId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setOwner(data);
+        } else {
+          console.error('Błąd podczas pobierania danych użytkownika');
+        }
+      } catch (error) {
+        console.error('Wystąpił błąd podczas wysyłania żądania:', error);
+      }
+    };
+
+    fetchOwnerData();
+  }, [ownerId]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -40,11 +68,12 @@ const Item = ({ item, src }) => {
 
   const showGiveBackConfirmation1 = async () => {
     try {
-      const response = await fetch(`http://localhost:9192/api/rentHistory/currentRentingByInventoryId/${itemId}`,
+      const response = await fetch(
+        `http://localhost:9192/api/rentHistory/currentRentingByInventoryId/${itemId}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -52,27 +81,21 @@ const Item = ({ item, src }) => {
       if (response.ok) {
         const data = await response.json();
         let rentHistoryDescFromData = data.rentDescription;
-        console.log(data.rentDescription);
-        console.log(rentHistoryDescFromData);
         setRentHistoryDescription(rentHistoryDescFromData);
-
       } else {
         const errorMessage = await response.json();
         console.error(
-          "Wystąpił błąd podczas sprwadzania historii:",
+          'Wystąpił błąd podczas sprwadzania historii:',
           errorMessage
         );
       }
     } catch (error) {
-      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
+      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
     } finally {
-      
       setShowReturnConfirmation(true);
       setItemId(id);
     }
-
   };
-
 
   const hideReturnConfirmation = () => {
     setShowReturnConfirmation(false);
@@ -89,24 +112,24 @@ const Item = ({ item, src }) => {
       const response = await fetch(
         `http://localhost:9192/api/deleteInventory/${itemId}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
 
       if (response.ok) {
-        console.log("Przedmiot o ID:", itemId, "został pomyślnie usunięty.");
+        console.log('Przedmiot o ID:', itemId, 'został pomyślnie usunięty.');
       } else {
         const errorMessage = await response.text();
         console.error(
-          "Wystąpił błąd podczas usuwania przedmiotu:",
+          'Wystąpił błąd podczas usuwania przedmiotu:',
           errorMessage
         );
       }
     } catch (error) {
-      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
+      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
     } finally {
       hideDeleteConfirmation();
       window.location.reload();
@@ -114,16 +137,15 @@ const Item = ({ item, src }) => {
   };
 
   const handleReturnItem = async () => {
-    console.log(rentHistoryDescription);
     try {
-      const response = await fetch(`http://localhost:9192/api/rentHistory/modifyDescription/${itemId}`,
+      const response = await fetch(
+        `http://localhost:9192/api/rentHistory/modifyDescription/${itemId}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-          body:
-            rentHistoryDescription
+          body: rentHistoryDescription,
         }
       );
 
@@ -132,42 +154,40 @@ const Item = ({ item, src }) => {
       } else {
         const errorMessage = await response.json();
         console.error(
-          "Wystąpił błąd podczas sprwadzania historii:",
+          'Wystąpił błąd podczas sprwadzania historii:',
           errorMessage
         );
       }
     } catch (error) {
-      console.error("Wystąpił błąd podczas wysyłania żądania:", error);
+      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
     } finally {
-
       try {
         const response = await fetch(
           `http://localhost:9192/api/rentHistory/return/${itemId}`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
           }
         );
-  
+
         if (response.ok) {
-          console.log("Przedmiot o ID:", itemId, "został pomyślnie zwrócony.");
+          console.log('Przedmiot o ID:', itemId, 'został pomyślnie zwrócony.');
         } else {
           const errorMessage = await response.text();
           console.error(
-            "Wystąpił błąd podczas zwracania przedmiotu:",
+            'Wystąpił błąd podczas zwracania przedmiotu:',
             errorMessage
           );
         }
       } catch (error) {
-        console.error("Wystąpił błąd podczas zwracania żądania:", error);
+        console.error('Wystąpił błąd podczas zwracania żądania:', error);
       } finally {
         hideReturnConfirmation();
         window.location.reload();
       }
     }
-
   };
 
   const handleInputChange = (e) => {
@@ -175,8 +195,8 @@ const Item = ({ item, src }) => {
   };
 
   const rentStatusText =
-    rentStatus === "available" ? "dostępny" : "niedostępny";
-  const rentStatusColor = rentStatus === "available" ? "green" : "red";
+    rentStatus === 'available' ? 'dostępny' : 'niedostępny';
+  const rentStatusColor = rentStatus === 'available' ? 'green' : 'red';
 
   return (
     <div className="item">
@@ -187,11 +207,12 @@ const Item = ({ item, src }) => {
         <div className="item__text">
           <div className="details">
             <div className="owner">
-              Właściciel: {ownerName} {ownerLastName}
+              Właściciel:{' '}
+              {owner ? `${owner.firstName} ${owner.lastName}` : 'Ładowanie...'}
             </div>
             <p className="name">Nazwa: {itemName}</p>
             <div className="item__description">
-              <p>Opis: {description} lorem300 </p>
+              <p>Opis: {description} </p>
             </div>
           </div>
           <div className="building">
@@ -205,15 +226,15 @@ const Item = ({ item, src }) => {
       {modalOpen && <Modal item={item} img={src} onClose={closeModal}></Modal>}
 
       <div className="item__btn">
-        {localStorage.getItem("token") === null ? (
+        {localStorage.getItem('token') === null ? (
           <></>
-        ) : location.pathname === "/modify" ? (
+        ) : location.pathname === '/modify' ? (
           <Link to={`/modification-form/${id}`}>
             <Button>Modyfikuj</Button>
           </Link>
-        ) : location.pathname === "/delete" ? (
+        ) : location.pathname === '/delete' ? (
           <Button onClick={showDeleteConfirmation1}>Usuń</Button>
-        ) : location.pathname === "/user-items" ? (
+        ) : location.pathname === '/user-items' ? (
           <>
             <Link to={`/modification-form/${id}`}>
               <Button>Modyfikuj</Button>
@@ -221,8 +242,7 @@ const Item = ({ item, src }) => {
             <>
               <Button onClick={showDeleteConfirmation1}>Usuń</Button>
             </>
-            {rentStatus === "unavailable" ? (
-              // do zrobienia
+            {rentStatus === 'unavailable' ? (
               <Link to={`/user-items`}>
                 <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
               </Link>
