@@ -326,7 +326,7 @@ const Rent = () => {
             name="rentDescription"
             value={formData.rentDescription}
             onChange={handleInputChange}
-            rows={4}
+            rows={4} // mozna zmienic rozmiar, zmieniając liczbe rows
           />
         </div>
         <div className="button">
