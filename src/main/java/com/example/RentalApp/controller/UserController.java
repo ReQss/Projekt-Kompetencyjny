@@ -2,6 +2,7 @@ package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.Role;
 import com.example.RentalApp.model.User;
+import com.example.RentalApp.repository.UserRepository;
 import com.example.RentalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ import java.util.Arrays;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @GetMapping("/getUser/{id}")
@@ -55,5 +58,16 @@ public class UserController {
         response.put("token", token);
         response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+        User user = userRepository.findById(id);
+        if (user != null) {
+            user.setDeleted(true);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
