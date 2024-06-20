@@ -50,6 +50,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
+        if(loggedUser.getDeleted()==true)return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         if (loggedUser == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         }
@@ -66,6 +67,25 @@ public class UserController {
             user.setDeleted(true);
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User updatedUser) {
+        User user = userRepository.findById(id);
+        if (user != null) {
+            user.setEmail(updatedUser.getEmail());
+            user.setFirstName(updatedUser.getFirstName());
+            user.setLastName(updatedUser.getLastName());
+            user.setLogin(updatedUser.getLogin());
+            user.setPassword(passwordEncoder.encode(updatedUser.getPassword())); // Encode the password
+            user.setRole(updatedUser.getRole().toString()); // Set the role
+            user.setDeleted(updatedUser.getDeleted());
+            user.setRentHistories(updatedUser.getRentHistories()); // This might need special handling
+
+            User savedUser = userRepository.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
