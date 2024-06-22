@@ -18,9 +18,20 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      <Link to="/">
-        <img src={logo} alt="Logo" />
-      </Link>
+      <div className="img">
+        <Link to="/">
+          <img src={logo} alt="Logo" />
+        </Link>
+      </div>
+
+      <ul>
+        {localStorage.getItem('role') === 'ADMIN' ? (
+          <Link to="/users-panel">
+            <Button> Zarządzaj użytkownikami </Button>
+          </Link>
+        ) : null}
+      </ul>
+
       <ul>
         {localStorage.getItem('token') === null ? (
           <>
