@@ -47,6 +47,11 @@ public class UserController {
         List<User> users = userService.getUsersByRoles(roles);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers(){
+        List <User> users = userRepository.findAll();
+        return users;
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
@@ -79,7 +84,10 @@ public class UserController {
             user.setFirstName(updatedUser.getFirstName());
             user.setLastName(updatedUser.getLastName());
             user.setLogin(updatedUser.getLogin());
-            user.setPassword(passwordEncoder.encode(updatedUser.getPassword())); // Encode the password
+            if(!updatedUser.getPassword().equals("")) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword())); // Encode the password
+                System.out.println(user.getPassword());
+            }
             user.setRole(updatedUser.getRole().toString()); // Set the role
             user.setDeleted(updatedUser.getDeleted());
             user.setRentHistories(updatedUser.getRentHistories()); // This might need special handling
