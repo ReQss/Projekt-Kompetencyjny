@@ -27,17 +27,19 @@ export const StyledPanelContainer = styled.div`
     background-color: #f9f9f9;
     width: 250px;
     min-height: 250px;
+    overflow-wrap: break-word;
   }
 
   .user-details {
     margin-bottom: 10px;
+    word-wrap: break-word;
   }
 
   button {
     margin-bottom: 20px;
   }
 
-  .edit-button {
+  .edit-button, .delete-button {
     margin-top: auto;
   }
 `;

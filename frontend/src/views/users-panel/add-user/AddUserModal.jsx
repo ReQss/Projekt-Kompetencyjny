@@ -25,7 +25,7 @@ const AddUserModal = ({ onClose, onAddUser, user }) => {
     e.preventDefault();
     const userData = { email, firstName, lastName, login, password, role };
     if (user) {
-      userData.id = user.id; 
+      userData.id = user.id;
     }
     onAddUser(userData);
   };
