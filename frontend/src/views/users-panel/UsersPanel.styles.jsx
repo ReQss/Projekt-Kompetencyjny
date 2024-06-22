@@ -20,11 +20,13 @@ export const StyledPanelContainer = styled.div`
   .user-card {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
     width: 250px;
+    min-height: 250px;
   }
 
   .user-details {
@@ -33,5 +35,9 @@ export const StyledPanelContainer = styled.div`
 
   button {
     margin-bottom: 20px;
+  }
+
+  .edit-button {
+    margin-top: auto;
   }
 `;
