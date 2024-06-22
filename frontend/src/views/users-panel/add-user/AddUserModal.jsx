@@ -17,7 +17,7 @@ const AddUserModal = ({ onClose, onAddUser, user }) => {
       setLastName(user.lastName);
       setLogin(user.login);
       setRole(user.role);
-      setPassword(''); // Password should not be pre-filled for security reasons
+      setPassword('');
     }
   }, [user]);
 
@@ -25,7 +25,7 @@ const AddUserModal = ({ onClose, onAddUser, user }) => {
     e.preventDefault();
     const userData = { email, firstName, lastName, login, password, role };
     if (user) {
-      userData.id = user.id; // Preserve the user ID for update
+      userData.id = user.id; 
     }
     onAddUser(userData);
   };
@@ -68,7 +68,7 @@ const AddUserModal = ({ onClose, onAddUser, user }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required={!user} // Password is required only for adding a new user
+            required={!user}
           />
           <label>Role</label>
           <select
