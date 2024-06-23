@@ -8,17 +8,30 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Kontroler REST do zarządzania celami wypożyczenia (RentPurpose).
+ */
 @RestController
 @RequestMapping("/api/rentPurposes")
 public class RentPurposeController {
+
     @Autowired
     private RentPurposeService service;
 
+    /**
+     * Pobiera wszystkie cele wypożyczenia.
+     * @return Lista wszystkich celów wypożyczenia.
+     */
     @GetMapping
     public List<RentPurpose> getAllRentPurposes() {
         return service.findAll();
     }
 
+    /**
+     * Pobiera cel wypożyczenia o podanym ID.
+     * @param id ID celu wypożyczenia.
+     * @return ResponseEntity z obiektem celu wypożyczenia lub kodem odpowiedzi NOT_FOUND.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<RentPurpose> getRentPurposeById(@PathVariable Integer id) {
         return service.findById(id)
