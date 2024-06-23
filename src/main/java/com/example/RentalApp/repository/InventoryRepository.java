@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Interfejs repozytorium do zarządzania encjami Inventory.
+ */
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     List<Inventory> findAll();
-    List<Inventory>findAllByItemName(String name);
-    List<Inventory>findByOwnerId(Long id);
+    List<Inventory> findAllByItemName(String name);
+    List<Inventory> findByOwnerId(Long id);
     List<Inventory> findByDeletedFalse();
     List<Inventory> findByOwnerIdAndDeletedFalse(Long ownerId);
     List<Inventory> findByOwnerIdAndDeletedFalseAndRentStatusNot(Long ownerId, ItemStatus itemStatus);

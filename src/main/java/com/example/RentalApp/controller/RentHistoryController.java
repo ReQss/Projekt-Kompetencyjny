@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Kontroler REST do zarządzania historią wynajmu (RentHistory).
+ */
 @RestController
 @RequestMapping("/api/rentHistory")
 public class RentHistoryController {
@@ -23,6 +26,11 @@ public class RentHistoryController {
     @Autowired
     private RentHistoryRepository rentHistoryRepository;
 
+    /**
+     * Dodaje nowy wpis do historii wynajmu.
+     * @param rentHistory Nowy wpis do historii wynajmu.
+     * @return ResponseEntity z dodanym wpisem historii wynajmu.
+     */
     @PostMapping
     public ResponseEntity<RentHistory> addRentHistory(@RequestBody RentHistory rentHistory) {
         rentHistory.setRentalDate(Instant.now());
@@ -30,6 +38,11 @@ public class RentHistoryController {
         return ResponseEntity.ok(newRentHistory);
     }
 
+    /**
+     * Pobiera historię wynajmu dla danego użytkownika.
+     * @param userId ID użytkownika.
+     * @return ResponseEntity z listą wpisów historii wynajmu dla danego użytkownika.
+     */
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<RentHistory>> getRentHistoryByUserId(@PathVariable Integer userId) {
         List<RentHistory> rentHistories = rentHistoryService.findRentHistoriesByUserId(userId);
@@ -39,6 +52,11 @@ public class RentHistoryController {
         return ResponseEntity.ok(rentHistories);
     }
 
+    /**
+     * Pobiera historię wynajmu dla danego zasobu.
+     * @param inventoryId ID zasobu.
+     * @return ResponseEntity z listą wpisów historii wynajmu dla danego zasobu.
+     */
     @GetMapping("/inventory/{inventoryId}")
     public ResponseEntity<List<RentHistory>> getRentHistoryByInventoryId(@PathVariable Integer inventoryId) {
         List<RentHistory> rentHistories = rentHistoryService.findRentHistoriesByInventoryId(inventoryId);
@@ -48,6 +66,11 @@ public class RentHistoryController {
         return ResponseEntity.ok(rentHistories);
     }
 
+    /**
+     * Oznacza wypożyczony przedmiot jako zwrócony.
+     * @param inventoryId ID zasobu.
+     * @return ResponseEntity z zaktualizowanym wpisem historii wynajmu.
+     */
     @PostMapping("/return/{inventoryId}")
     public ResponseEntity<RentHistory> returnRentedItem(@PathVariable Integer inventoryId) {
         RentHistory updatedRentHistory = rentHistoryService.returnRentedItem(inventoryId);
@@ -75,4 +98,3 @@ public class RentHistoryController {
         return ResponseEntity.ok(rentHistoryLists);
     }
 }
-

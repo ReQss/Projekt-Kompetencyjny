@@ -7,11 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Interfejs repozytorium do zarządzania encjami RentHistory.
+ */
 @Repository
 public interface RentHistoryRepository extends JpaRepository<RentHistory, Integer> {
     List<RentHistory> findByUserId(Integer userId);
     List<RentHistory> findByInventoryId(Integer inventoryId);
-
     RentHistory findFirstByInventoryIdAndRentStatusNot(Integer inventoryId, RentStatus rentStatus);
 }
-
