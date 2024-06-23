@@ -7,3 +7,11 @@
   padding: 2rem 5rem;
   background-color: rgb(249, 249, 249);
 }
+
+.search-bar-input {
+  height: 2rem;
+  padding-inline: 0.5rem;
+  border-radius: 2rem;
+  margin-inline: 1rem;
+  border: 2px solid gray;
+}
