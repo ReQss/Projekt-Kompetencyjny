@@ -11,6 +11,10 @@ const Item = ({ item, src }) => {
   const [itemId, setItemId] = useState(item.id);
   const [rentHistoryDescription, setRentHistoryDescription] = useState('');
   const [owner, setOwner] = useState(null);
+  const userRole = localStorage.getItem('role');
+  const userId = localStorage.getItem('userId');
+  console.log(userId);
+  console.log(userRole);
 
   const {
     id,
@@ -40,7 +44,6 @@ const Item = ({ item, src }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setOwner(data);
         } else {
           console.error('Błąd podczas pobierania danych użytkownika');
@@ -67,12 +70,35 @@ const Item = ({ item, src }) => {
   };
 
   const showGiveBackConfirmation1 = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:9192/api/rentHistory/currentRentingByInventoryId/${itemId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    setRentHistoryDescription(description);
-    setShowReturnConfirmation(true);
-    setItemId(id);
+      if (response.ok) {
+        const data = await response.json();
+        let rentHistoryDescFromData = data.rentDescription;
+        setRentHistoryDescription(rentHistoryDescFromData);
+      } else {
+        const errorMessage = await response.json();
+        console.error(
+          'Wystąpił błąd podczas sprwadzania historii:',
+          errorMessage
+        );
+      }
+    } catch (error) {
+      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
+    } finally {
+      setShowReturnConfirmation(true);
+      setItemId(id);
+    }
   };
-
 
   const hideReturnConfirmation = () => {
     setShowReturnConfirmation(false);
@@ -116,7 +142,7 @@ const Item = ({ item, src }) => {
   const handleReturnItem = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9192/api/updateInventoryDescription/${itemId}`,
+        `http://localhost:9192/api/rentHistory/modifyDescription/${itemId}`,
         {
           method: 'PUT',
           headers: {
@@ -127,7 +153,7 @@ const Item = ({ item, src }) => {
       );
 
       if (response.ok) {
-        console.log("hehe xd")
+        // const data = await response.json();
       } else {
         const errorMessage = await response.json();
         console.error(
@@ -218,9 +244,6 @@ const Item = ({ item, src }) => {
               <Button>Modyfikuj</Button>
             </Link>
             <>
-              <Button onClick={openModal}>Detale</Button>
-            </>
-            <>
               <Button onClick={showDeleteConfirmation1}>Usuń</Button>
             </>
             {rentStatus === 'unavailable' ? (
@@ -235,14 +258,20 @@ const Item = ({ item, src }) => {
             <Link to={`/rent-history/${id}`}>
               <Button>Historia wypożyczeń</Button>
             </Link>
-            
+            <>
+              <Button onClick={openModal}>Detale</Button>
+            </>
           </>
         ) : (
           <>
             <Button onClick={openModal}>Detale</Button>
-            {rentStatus === 'unavailable' ? (
-              <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
-            ) : null}
+            {
+              (
+              rentStatus === 'unavailable' &&
+                (userRole === 'ADMIN' || ownerId == userId) && (
+                  <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
+                ))
+            }
           </>
         )}
 
