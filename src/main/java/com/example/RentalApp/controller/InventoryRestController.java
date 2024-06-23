@@ -1,6 +1,8 @@
 package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.Inventory;
+import com.example.RentalApp.model.ItemStatus;
+import com.example.RentalApp.model.RentStatus;
 import com.example.RentalApp.repository.InventoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,10 @@ public class InventoryRestController {
     @GetMapping("/inventoryByOwnerId")
     public List<Inventory> getInventoryByOwnerId(@RequestParam Long ownerId) {
         return inventoryRepository.findByOwnerIdAndDeletedFalse(ownerId);
+    }
+    @GetMapping("/inventoryByOwnerIdWithoutRented")
+    public List<Inventory> getInventoryByOwnerIdWithoutRented(@RequestParam Long ownerId) {
+        return inventoryRepository.findByOwnerIdAndDeletedFalseAndRentStatusNot(ownerId, ItemStatus.unavailable);
     }
 
     @GetMapping("/inventoryById/{id}")
