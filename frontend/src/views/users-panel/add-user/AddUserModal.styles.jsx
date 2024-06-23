@@ -20,7 +20,7 @@ export const ModalContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 500px; /* Ensure the modal doesn't grow too wide */
+  max-width: 500px; 
 
   h2 {
     margin-bottom: 20px;
@@ -41,7 +41,7 @@ export const ModalContainer = styled.div`
       border: 1px solid #ddd;
       border-radius: 4px;
       width: 100%;
-      box-sizing: border-box; /* Ensure padding doesn't increase the input width */
+      box-sizing: border-box; 
     }
 
     button {

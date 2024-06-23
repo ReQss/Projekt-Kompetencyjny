@@ -23,13 +23,10 @@ const Rent = () => {
   const [users, setUsers] = useState([]);
   let { itemId } = useParams();
   if (itemId === undefined) {
-    console.log(1);
     itemId = -1;
   } else {
     formData.inventory = itemId;
   }
-
-  console.log(`id przedmiotu: `, itemId);
 
   const userId = localStorage.getItem('userId');
   const userRole = localStorage.getItem('role');
@@ -37,7 +34,6 @@ const Rent = () => {
   useEffect(() => {
     fetchUsers();
     fetchInventory(userId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = async () => {
@@ -144,7 +140,6 @@ const Rent = () => {
       });
 
       if (response.ok) {
-        console.log('działa');
         setFormData({
           inventory: '',
           rentPurpose: '',
@@ -152,7 +147,7 @@ const Rent = () => {
           firstName: '',
           lastName: '',
           rentDescription: '',
-          selectedUser: '', // Resetowanie selectedUser
+          selectedUser: '',
         });
 
         alert('Wypożyczenie udane!');
@@ -169,8 +164,7 @@ const Rent = () => {
   return (
     <div className="form-container">
       <Link to="/">
-        {' '}
-        <Button className={'back-btn'}>Powrót</Button>{' '}
+        <Button className={'back-btn'}>Powrót</Button>
       </Link>
       <h2>Wypożycz sprzęt</h2>
       <form onSubmit={handleSubmit}>
@@ -243,7 +237,6 @@ const Rent = () => {
                 required
               >
                 <option value="">Wybierz produkt</option>
-
                 {inventoryList.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.itemName}
@@ -262,6 +255,7 @@ const Rent = () => {
             value={formData.rentPurpose}
             onChange={handleInputChange}
             required
+            disabled={!formData.selectedUser || !formData.inventory}
           >
             <option value="">Wybierz przyczynę</option>
             {purposesList.map((item) => (
@@ -283,6 +277,7 @@ const Rent = () => {
             minDate={new Date()}
             locale={pl}
             weekStartsOn={1}
+            disabled={!formData.selectedUser || !formData.inventory}
           />
         </div>
         <div className="form">
@@ -294,6 +289,7 @@ const Rent = () => {
             value={formData.email}
             onChange={handleInputChange}
             required
+            disabled={!formData.selectedUser || !formData.inventory}
           />
         </div>
         <div className="form">
@@ -305,6 +301,7 @@ const Rent = () => {
             value={formData.firstName}
             onChange={handleInputChange}
             required
+            disabled={!formData.selectedUser || !formData.inventory}
           />
         </div>
         <div className="form">
@@ -316,6 +313,7 @@ const Rent = () => {
             value={formData.lastName}
             onChange={handleInputChange}
             required
+            disabled={!formData.selectedUser || !formData.inventory}
           />
         </div>
         <div className="form">
@@ -326,11 +324,14 @@ const Rent = () => {
             name="rentDescription"
             value={formData.rentDescription}
             onChange={handleInputChange}
-            rows={4} // mozna zmienic rozmiar, zmieniając liczbe rows
+            rows={4}
+            disabled={!formData.selectedUser || !formData.inventory}
           />
         </div>
         <div className="button">
-          <Button type="submit">Wypożycz</Button>
+          <Button type="submit" disabled={!formData.selectedUser || !formData.inventory}>
+            Wypożycz
+          </Button>
         </div>
       </form>
     </div>
