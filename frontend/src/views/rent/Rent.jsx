@@ -49,12 +49,13 @@ const Rent = () => {
   const fetchInventory = async (ownerId) => {
     try {
       const response = await fetch(
-        `http://localhost:9192/api/inventoryByOwnerId?ownerId=${ownerId}`
+        `http://localhost:9192/api/inventoryByOwnerIdWithoutRented?ownerId=${ownerId}`
       );
 
       if (response.ok) {
         const data = await response.json();
         setInventoryList(data);
+        
       } else {
         console.error('Failed to fetch inventory');
       }
