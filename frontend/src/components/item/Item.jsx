@@ -241,6 +241,9 @@ const Item = ({ item, src }) => {
               <Button>Modyfikuj</Button>
             </Link>
             <>
+              <Button onClick={openModal}>Detale</Button>
+            </>
+            <>
               <Button onClick={showDeleteConfirmation1}>Usuń</Button>
             </>
             {rentStatus === 'unavailable' ? (
@@ -255,9 +258,7 @@ const Item = ({ item, src }) => {
             <Link to={`/rent-history/${id}`}>
               <Button>Historia wypożyczeń</Button>
             </Link>
-            <>
-              <Button onClick={openModal}>Detale</Button>
-            </>
+            
           </>
         ) : (
           <>
