@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Klasa modelu reprezentująca cel wypożyczenia w systemie wypożyczalni.
+ * Klasa modelu reprezentująca cel wypożyczenia.
  * Mapowana na tabelę "rent_purposes" w bazie danych przy użyciu JPA.
  */
 @Entity

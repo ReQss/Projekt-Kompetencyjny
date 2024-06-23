@@ -61,6 +61,11 @@ public class RentHistoryService {
         return null;
     }
 
+    /**
+     * Pobiera listę unikalnych ID przedmiotów z historii wypożyczeń.
+     *
+     * @return Lista unikalnych ID przedmiotów.
+     */
     public List<Integer> getAllInventoryIds() {
         return rentHistoryRepository.findAll()
                 .stream()

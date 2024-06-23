@@ -27,6 +27,7 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -69,13 +70,17 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    /**
+     * Pobiera wszystkich użytkowników.
+     * @return Lista wszystkich użytkowników.
+     */
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers(){
         List <User> users = userRepository.findAll();
         return users;
     }
-  
-     /**
+
+    /**
      * Loguje użytkownika.
      * @param user Użytkownik do zalogowania.
      * @return ResponseEntity z tokenem dostępu i danymi użytkownika lub kodem odpowiedzi BAD_REQUEST.
@@ -83,16 +88,24 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
-        if(loggedUser.getDeleted()==true)return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
+        if (loggedUser.getDeleted()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
+        }
         if (loggedUser == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         }
-        String token = "token-" + user.getLogin();  // Logika generowania tokena do zaktualizowania
+        String token = "token-" + user.getLogin();
         Map<String, Object> response = new HashMap<>();
         response.put("token", token);
         response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+
+    /**
+     * Usuwa użytkownika (ustawia flagę deleted na true).
+     * @param id ID użytkownika do usunięcia.
+     * @return ResponseEntity z odpowiednią wartością statusu HTTP.
+     */
     @PutMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         User user = userRepository.findById(id);
@@ -104,6 +117,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    /**
+     * Aktualizuje istniejącego użytkownika.
+     * @param id ID użytkownika.
+     * @param updatedUser Zaktualizowany użytkownik.
+     * @return ResponseEntity z zaktualizowanym użytkownikiem lub kodem odpowiedzi NOT_FOUND.
+     */
     @PutMapping("/updateUser/{id}")
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User updatedUser) {
         User user = userRepository.findById(id);
@@ -112,13 +132,12 @@ public class UserController {
             user.setFirstName(updatedUser.getFirstName());
             user.setLastName(updatedUser.getLastName());
             user.setLogin(updatedUser.getLogin());
-            if(!updatedUser.getPassword().equals("")) {
-                user.setPassword(passwordEncoder.encode(updatedUser.getPassword())); // Encode the password
-                System.out.println(user.getPassword());
+            if (!updatedUser.getPassword().equals("")) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }
-            user.setRole(updatedUser.getRole().toString()); // Set the role
+            user.setRole(updatedUser.getRole().toString());
             user.setDeleted(updatedUser.getDeleted());
-            user.setRentHistories(updatedUser.getRentHistories()); // This might need special handling
+            user.setRentHistories(updatedUser.getRentHistories());
 
             User savedUser = userRepository.save(user);
             return new ResponseEntity<>(savedUser, HttpStatus.OK);

@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 /**
- * Klasa modelu reprezentująca historię wypożyczeń w systemie wypożyczalni.
+ * Klasa modelu reprezentująca historię wypożyczeń.
  * Mapowana na tabelę "rent_history" w bazie danych przy użyciu JPA.
  */
 @Entity
