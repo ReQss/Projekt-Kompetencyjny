@@ -123,7 +123,7 @@ INSERT INTO `rent_history` (`rent_id`, `user_id`, `email`, `rent_status`, `first
                                                                                                                                                                                               (5, 1, '240666@edu.p.lodz.pl', 'returned', 'Jacob', 'kozlowski', 1, '2023-04-01 10:00:00', '2023-04-30 11:00:00', 'Badania terenowe', 5),
                                                                                                                                                                                               (6, 3, '240666@edu.p.lodz.pl', 'returned', 'Jacob', 'kozlowski', 2, '2023-02-20 14:00:00', '2023-02-27 14:00:00', 'Projekt NCBR', 6),
                                                                                                                                                                                               (7, 2, '240647@edu.p.lodz.pl', 'returned', 'Mikolaj', 'Czechowski', 3, '2023-03-20 09:00:00', '2023-03-01 14:00:00', 'Rozwój nowych technologii VR', 7),
-                                                                                                                                                                                              (8, 1, '240666@edu.p.lodz.pl', 'returned', 'lukaszenko', 'ledzion', 4, '2023-02-25 10:00:00', '2023-03-03 11:00:00', 'Seminarium z technologii informacyjnych', 8),
+                                                                                                                                                                                        (8, 1, '240666@edu.p.lodz.pl', 'returned', 'lukaszenko', 'ledzion', 4, '2023-02-25 10:00:00', '2023-03-03 11:00:00', 'Seminarium z technologii informacyjnych', 8),
                                                                                                                                                                                               (9, 3, '240647@edu.p.lodz.pl', 'returned', 'Mikolaj', 'Czechowski', 1, '2022-12-05 15:30:00', '2023-01-05 16:30:00', 'Badania w dziedzinie AI', 9),
                                                                                                                                                                                               (10, 3, '240647@edu.p.lodz.pl', 'returned', 'Mikolaj', 'Czechowski', 2, '2023-04-20 08:00:00', '2023-03-01 14:00:00', 'Prace projektowe', 10),
                                                                                                                                                                                               (11, 1, '240666@edu.p.lodz.pl', 'returned', 'lukaszenko', 'ledzion', 4, '2023-02-01 13:00:00', '2023-03-01 14:00:00', 'Materiały do kursu online', 11),
@@ -132,6 +132,15 @@ INSERT INTO `rent_history` (`rent_id`, `user_id`, `email`, `rent_status`, `first
 --
 -- Wyzwalacze `rent_history`
 --
+DELIMITER $$
+CREATE TRIGGER `before_inventory_update` BEFORE Update ON `inventory` FOR EACH ROW
+BEGIN
+    IF new.deleted = true AND old.rent_status = 'unavailable' THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot delete item with rent_status set to unavailable';
+    END IF;
+END$$
+DELIMITER ;
+
 DELIMITER $$
 CREATE TRIGGER `after_rent_insert` AFTER INSERT ON `rent_history` FOR EACH ROW IF NEW.rent_status = 'rented' THEN
     UPDATE inventory
