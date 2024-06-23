@@ -206,10 +206,7 @@ const Item = ({ item, src }) => {
         </div>
         <div className="item__text">
           <div className="details">
-          <div className="owner">
-               ID:{' '}
-              {owner ? `${id} ` : 'Ładowanie...'}
-            </div>
+            <div className="owner">ID: {owner ? `${id} ` : 'Ładowanie...'}</div>
             <div className="owner">
               Właściciel:{' '}
               {owner ? `${owner.firstName} ${owner.lastName}` : 'Ładowanie...'}
@@ -265,6 +262,9 @@ const Item = ({ item, src }) => {
         ) : (
           <>
             <Button onClick={openModal}>Detale</Button>
+            {rentStatus === 'unavailable' ? (
+              <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
+            ) : null}
           </>
         )}
 
