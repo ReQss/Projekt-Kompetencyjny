@@ -1,16 +1,19 @@
 package com.example.RentalApp.model;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Base64;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "inventory")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +29,10 @@ public class Inventory {
     @Column(name = "owner_id")
     private Long ownerId;
 
-    @Column(name = "photo")
-    private byte[] photo;
 
-    @Column(name = "rent_status")
-    private String rentStatus;
+   // @Column(name = "rent_status")
+    @Enumerated(EnumType.STRING)
+    private ItemStatus rentStatus = ItemStatus.available;
 
     @Column(name = "room", length = 50)
     private String room;
@@ -38,8 +40,7 @@ public class Inventory {
     @Column(name = "building", length = 50)
     private String building;
 
-    @ColumnDefault("current_timestamp()")
-    @Column(name = "inventory_date", nullable = false)
+    @Column(name = "inventory_date")
     private LocalDate inventoryDate;
 
     @Column(name = "value", precision = 20, scale = 2)
@@ -63,13 +64,39 @@ public class Inventory {
     @Column(name = "serial_number", length = 50)
     private String serialNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
+
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "inventory")
+    @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
+
+    @Column(name = "photo")
+    private byte[] photo;
+
+    @ColumnDefault("0")
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+    // Getters and setters
     public Long getId() {
         return id;
     }
@@ -78,10 +105,13 @@ public class Inventory {
         this.id = id;
     }
 
+    public String getPhotoBase64() {
+        return this.photo != null ? Base64.getEncoder().encodeToString(this.photo) : null;
+    }
+
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -102,19 +132,12 @@ public class Inventory {
         this.ownerId = ownerId;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
 
-    public void setPhoto(String photo) {
-        this.photo = photo.getBytes();
-    }
-
-    public String getRentStatus() {
+    public ItemStatus getRentStatus() {
         return rentStatus;
     }
 
-    public void setRentStatus(String rentStatus) {
+    public void setRentStatus(ItemStatus rentStatus) {
         this.rentStatus = rentStatus;
     }
 
@@ -221,7 +244,7 @@ public class Inventory {
                 ", description='" + description + '\'' +
                 ", itemName='" + itemName + '\'' +
                 ", ownerId=" + ownerId +
-                ", photo=" + Arrays.toString(photo) +
+                ", photo='" + photo + '\'' +
                 ", rentStatus='" + rentStatus + '\'' +
                 ", room='" + room + '\'' +
                 ", building='" + building + '\'' +
@@ -234,10 +257,7 @@ public class Inventory {
                 ", invoicePosition='" + invoicePosition + '\'' +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", category=" + category +
-                ", rentHistories=" + rentHistories +
+                ", rentHistories size=" + rentHistories.size() +
                 '}';
     }
-
 }
-
-
