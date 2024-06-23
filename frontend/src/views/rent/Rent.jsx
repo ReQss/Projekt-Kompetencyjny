@@ -255,7 +255,7 @@ const Rent = () => {
             value={formData.rentPurpose}
             onChange={handleInputChange}
             required
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           >
             <option value="">Wybierz przyczynę</option>
             {purposesList.map((item) => (
@@ -277,7 +277,7 @@ const Rent = () => {
             minDate={new Date()}
             locale={pl}
             weekStartsOn={1}
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -289,7 +289,7 @@ const Rent = () => {
             value={formData.email}
             onChange={handleInputChange}
             required
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -301,7 +301,7 @@ const Rent = () => {
             value={formData.firstName}
             onChange={handleInputChange}
             required
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -313,7 +313,7 @@ const Rent = () => {
             value={formData.lastName}
             onChange={handleInputChange}
             required
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -325,11 +325,11 @@ const Rent = () => {
             value={formData.rentDescription}
             onChange={handleInputChange}
             rows={4}
-            disabled={!formData.selectedUser || !formData.inventory}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="button">
-          <Button type="submit" disabled={!formData.selectedUser || !formData.inventory}>
+          <Button type="submit" disabled={!formData.inventory}>
             Wypożycz
           </Button>
         </div>
