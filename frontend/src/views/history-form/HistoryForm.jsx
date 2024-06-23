@@ -116,7 +116,7 @@ const HistoryForm = () => {
               {rentHistory.map((historyItem, index) => (
                 <div className="rent-history__single-rental" key={index}>
                   <p>
-                    <strong>Właściciel:</strong> {historyItem.user.id}
+                  <strong>Właściciel:</strong> {historyItem.user.firstName} {historyItem.user.lastName}
                   </p>
                   <p>
                     <strong>Użytkownik:</strong> {historyItem.firstName}{" "}
