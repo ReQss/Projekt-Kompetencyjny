@@ -2,6 +2,7 @@ package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.Role;
 import com.example.RentalApp.model.User;
+import com.example.RentalApp.repository.UserRepository;
 import com.example.RentalApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -66,7 +69,13 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    /**
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers(){
+        List <User> users = userRepository.findAll();
+        return users;
+    }
+  
+     /**
      * Loguje użytkownika.
      * @param user Użytkownik do zalogowania.
      * @return ResponseEntity z tokenem dostępu i danymi użytkownika lub kodem odpowiedzi BAD_REQUEST.
@@ -74,6 +83,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
         User loggedUser = userService.login(user.getLogin(), user.getPassword(), passwordEncoder);
+        if(loggedUser.getDeleted()==true)return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         if (loggedUser == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid login credentials");
         }
@@ -82,5 +92,38 @@ public class UserController {
         response.put("token", token);
         response.put("user", loggedUser);
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/deleteUser/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable int id) {
+        User user = userRepository.findById(id);
+        if (user != null) {
+            user.setDeleted(true);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User updatedUser) {
+        User user = userRepository.findById(id);
+        if (user != null) {
+            user.setEmail(updatedUser.getEmail());
+            user.setFirstName(updatedUser.getFirstName());
+            user.setLastName(updatedUser.getLastName());
+            user.setLogin(updatedUser.getLogin());
+            if(!updatedUser.getPassword().equals("")) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword())); // Encode the password
+                System.out.println(user.getPassword());
+            }
+            user.setRole(updatedUser.getRole().toString()); // Set the role
+            user.setDeleted(updatedUser.getDeleted());
+            user.setRentHistories(updatedUser.getRentHistories()); // This might need special handling
+
+            User savedUser = userRepository.save(user);
+            return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

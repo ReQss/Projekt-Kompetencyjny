@@ -1,6 +1,8 @@
 package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.Inventory;
+import com.example.RentalApp.model.ItemStatus;
+import com.example.RentalApp.model.RentStatus;
 import com.example.RentalApp.repository.InventoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,21 @@ public class InventoryRestController {
         return inventoryRepository.findByDeletedFalse();
     }
 
+
+    @GetMapping("/inventoryByOwnerId")
+    public List<Inventory> getInventoryByOwnerId(@RequestParam Long ownerId) {
+        return inventoryRepository.findByOwnerIdAndDeletedFalse(ownerId);
+    }
+    @GetMapping("/inventoryByOwnerIdWithoutRented")
+    public List<Inventory> getInventoryByOwnerIdWithoutRented(@RequestParam Long ownerId) {
+        return inventoryRepository.findByOwnerIdAndDeletedFalseAndRentStatusNot(ownerId, ItemStatus.unavailable);
+    }
+
+    @GetMapping("/inventoryById/{id}")
+    public Inventory getInventory(@PathVariable Long id) {
+        return inventoryRepository.findById(id).orElse(null);
+    }
+  
     /**
      * Dodaje nowy element zasobu.
      * @param newInventory Nowy element zasobu.
@@ -77,7 +94,19 @@ public class InventoryRestController {
         }
     }
 
-    /**
+    @PutMapping("/updateInventoryDescription/{id}")
+    public ResponseEntity<Inventory> updateInventoryDescription(@PathVariable Long id, @RequestBody String inventoryDescription) {
+        Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
+        if (existingInventory != null) {
+            existingInventory.setDescription(inventoryDescription);
+            Inventory updated = inventoryRepository.save(existingInventory);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+  
+     /**
      * Usuwa element zasobu.
      * @param id ID elementu zasobu do usunięcia.
      * @return ResponseEntity z odpowiednią wartością statusu HTTP.

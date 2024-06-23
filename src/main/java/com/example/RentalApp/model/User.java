@@ -2,6 +2,8 @@ package com.example.RentalApp.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -68,7 +70,19 @@ public class User {
     @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
-    /**
+    @ColumnDefault("0")
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted = false;
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+     /**
      * Konstruktor domyślny.
      */
     public User() {

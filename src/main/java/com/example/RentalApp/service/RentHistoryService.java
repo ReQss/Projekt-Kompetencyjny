@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Klasa serwisowa do zarządzania encjami RentHistory.
@@ -58,5 +59,13 @@ public class RentHistoryService {
             return rentHistoryRepository.save(rentHistory);
         }
         return null;
+    }
+
+    public List<Integer> getAllInventoryIds() {
+        return rentHistoryRepository.findAll()
+                .stream()
+                .map(RentHistory::getId)
+                .distinct()
+                .collect(Collectors.toList());
     }
 }

@@ -46,7 +46,11 @@ public class UserService {
      */
     public User login(String login, String rawPassword, PasswordEncoder passwordEncoder) {
         User user = userRepository.findByLogin(login);
-        if (user!= null && passwordEncoder.matches(rawPassword, user.getPassword())) {
+        if(user.getDeleted())
+        {
+            return null;
+        }
+        if (user != null && passwordEncoder.matches(rawPassword, user.getPassword())) {
             return user;
         }
         return null;

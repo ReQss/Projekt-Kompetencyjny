@@ -16,7 +16,7 @@ class RentalAppTests {
     @Test
     void contextLoads() {
 
-        String encodedPassword = passwordEncoder.encode("qwerty123");
+        String encodedPassword = passwordEncoder.encode("admin");
         System.out.println(encodedPassword);
     }
 
