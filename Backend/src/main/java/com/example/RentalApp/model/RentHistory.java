@@ -7,51 +7,87 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.time.Instant;
 
+/**
+ * Klasa modelu reprezentująca historię wypożyczeń.
+ * Mapowana na tabelę "rent_history" w bazie danych przy użyciu JPA.
+ */
 @Entity
 @Table(name = "rent_history")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-
 public class RentHistory {
+
+    /**
+     * Unikalny identyfikator historii wypożyczenia.
+     * Generowany automatycznie przy użyciu strategii IDENTITY.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rent_id", nullable = false)
     private Integer id;
 
-    @ManyToOne()
-
+    /**
+     * Użytkownik wypożyczający element.
+     */
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    /**
+     * Status wypożyczenia.
+     */
     @Enumerated(EnumType.STRING)
     private RentStatus rentStatus;
 
+    /**
+     * Data wypożyczenia.
+     */
     @Column(name = "rental_date")
     private Instant rentalDate;
 
+    /**
+     * Data zwrotu.
+     */
     @Column(name = "return_date")
     private Instant returnDate;
 
-    @ManyToOne()
-
+    /**
+     * Wypożyczany element inwentarza.
+     */
+    @ManyToOne
     @JoinColumn(name = "inventory_id", nullable = false)
     private Inventory inventory;
 
+    /**
+     * Email użytkownika.
+     */
     @Column(name = "email", nullable = false)
     private String email;
 
-    @ManyToOne()
-
+    /**
+     * Cel wypożyczenia.
+     */
+    @ManyToOne
     @JoinColumn(name = "rent_purpose_id")
     private RentPurpose rentPurpose;
 
+    /**
+     * Imię użytkownika.
+     */
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
+    /**
+     * Nazwisko użytkownika.
+     */
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
+    /**
+     * Opis wypożyczenia.
+     */
     @Column(name = "rent_description")
     private String rentDescription;
+
+    // Gettery i settery
 
     public String getRentDescription() {
         return rentDescription;
@@ -77,7 +113,6 @@ public class RentHistory {
         this.firstName = firstName;
     }
 
-    // Getters and setters
     public RentPurpose getRentPurpose() {
         return rentPurpose;
     }
