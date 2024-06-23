@@ -56,10 +56,10 @@ const ItemsWrapper = () => {
     <div className="items-wrapper">
       <input
         type="text"
-        placeholder="Search by name, description or category..."
+        placeholder="Szukaj po nazwie, opisie lub kategorii..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar"
+        className="search-bar-input"
       />
       {filteredItems.map((item) => (
         <Item
@@ -67,7 +67,7 @@ const ItemsWrapper = () => {
           key={item.id}
           src={
             item.photo ? `data:image/jpeg;base64,${item.photo}` : komputerImage
-          } // Assuming the key is 'photo' and the value is base64
+          }
         />
       ))}
     </div>
