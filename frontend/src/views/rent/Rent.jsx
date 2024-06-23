@@ -1,20 +1,20 @@
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import pl from "date-fns/locale/pl";
-import { Link, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-import "./rent.scss";
-import { Button } from "../../components";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import pl from 'date-fns/locale/pl';
+import { Link, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import './rent.scss';
+import { Button } from '../../components';
 
 const Rent = () => {
   const [formData, setFormData] = useState({
-    inventory: "",
-    rentPurpose: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    rentDescription: "",
-    selectedUser: "",
+    inventory: '',
+    rentPurpose: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    rentDescription: '',
+    selectedUser: '',
   });
 
   const [inventoryList, setInventoryList] = useState([]);
@@ -23,21 +23,17 @@ const Rent = () => {
   const [users, setUsers] = useState([]);
   let { itemId } = useParams();
   if (itemId === undefined) {
-    console.log(1);
     itemId = -1;
   } else {
     formData.inventory = itemId;
   }
 
-  console.log(`id przedmiotu: `, itemId);
-
-  const userId = localStorage.getItem("userId");
-  const userRole = localStorage.getItem("role");
+  const userId = localStorage.getItem('userId');
+  const userRole = localStorage.getItem('role');
 
   useEffect(() => {
     fetchUsers();
     fetchInventory(userId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = async () => {
@@ -46,40 +42,41 @@ const Rent = () => {
       const data = await response.json();
       setUsers(data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
   };
 
   const fetchInventory = async (ownerId) => {
     try {
       const response = await fetch(
-        `http://localhost:9192/api/inventoryByOwnerId?ownerId=${ownerId}`
+        `http://localhost:9192/api/inventoryByOwnerIdWithoutRented?ownerId=${ownerId}`
       );
 
       if (response.ok) {
         const data = await response.json();
         setInventoryList(data);
+        
       } else {
-        console.error("Failed to fetch inventory");
+        console.error('Failed to fetch inventory');
       }
     } catch (error) {
-      console.error("Error fetching inventory:", error);
+      console.error('Error fetching inventory:', error);
     }
   };
 
   useEffect(() => {
     const fetchPurposes = async () => {
       try {
-        const response = await fetch("http://localhost:9192/api/rentPurposes");
+        const response = await fetch('http://localhost:9192/api/rentPurposes');
 
         if (response.ok) {
           const data = await response.json();
           setPurposesList(data);
         } else {
-          console.error("Failed to fetch purposes");
+          console.error('Failed to fetch purposes');
         }
       } catch (error) {
-        console.error("Error fetching purposes:", error);
+        console.error('Error fetching purposes:', error);
       }
     };
 
@@ -100,7 +97,7 @@ const Rent = () => {
       ...prevFormData,
       selectedUser: selectedUserId,
     }));
-    if (selectedUserId === "") {
+    if (selectedUserId === '') {
       fetchInventory(userId);
     } else {
       fetchInventory(selectedUserId);
@@ -122,7 +119,7 @@ const Rent = () => {
 
     const payload = {
       user: {
-        id: selectedUser === "" ? Number(userId) : Number(selectedUser),
+        id: selectedUser === '' ? Number(userId) : Number(selectedUser),
       },
       inventory: { id: Number(inventory) },
       rentPurpose: { id: Number(rentPurpose) },
@@ -130,51 +127,49 @@ const Rent = () => {
       firstName,
       lastName,
       rentDescription,
-      rentStatus: "rented",
+      rentStatus: 'rented',
       returnDate: returnDate.toISOString(),
     };
 
     try {
-      const response = await fetch("http://localhost:9192/api/rentHistory", {
-        method: "POST",
+      const response = await fetch('http://localhost:9192/api/rentHistory', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
-        console.log("działa");
         setFormData({
-          inventory: "",
-          rentPurpose: "",
-          email: "",
-          firstName: "",
-          lastName: "",
-          rentDescription: "",
-          selectedUser: "", // Resetowanie selectedUser
+          inventory: '',
+          rentPurpose: '',
+          email: '',
+          firstName: '',
+          lastName: '',
+          rentDescription: '',
+          selectedUser: '',
         });
 
-        alert("Wypożyczenie udane!");
+        alert('Wypożyczenie udane!');
       } else {
         const errorMessage = await response.text();
         alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
       }
     } catch (error) {
-      console.error("Błąd podczas wysyłania żądania:", error);
-      alert("Wystąpił błąd podczas wypożyczania sprzętu.");
+      console.error('Błąd podczas wysyłania żądania:', error);
+      alert('Wystąpił błąd podczas wypożyczania sprzętu.');
     }
   };
 
   return (
     <div className="form-container">
       <Link to="/">
-        {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
+        <Button className={'back-btn'}>Powrót</Button>
       </Link>
       <h2>Wypożycz sprzęt</h2>
       <form onSubmit={handleSubmit}>
-        {userRole === "ADMIN" ? (
+        {userRole === 'ADMIN' ? (
           <>
             <div className="form">
               <label htmlFor="userId">Właściciel:</label>
@@ -243,7 +238,6 @@ const Rent = () => {
                 required
               >
                 <option value="">Wybierz produkt</option>
-
                 {inventoryList.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.itemName}
@@ -262,6 +256,7 @@ const Rent = () => {
             value={formData.rentPurpose}
             onChange={handleInputChange}
             required
+            disabled={!formData.inventory}
           >
             <option value="">Wybierz przyczynę</option>
             {purposesList.map((item) => (
@@ -283,6 +278,7 @@ const Rent = () => {
             minDate={new Date()}
             locale={pl}
             weekStartsOn={1}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -294,6 +290,7 @@ const Rent = () => {
             value={formData.email}
             onChange={handleInputChange}
             required
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -305,6 +302,7 @@ const Rent = () => {
             value={formData.firstName}
             onChange={handleInputChange}
             required
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
@@ -316,20 +314,25 @@ const Rent = () => {
             value={formData.lastName}
             onChange={handleInputChange}
             required
+            disabled={!formData.inventory}
           />
         </div>
         <div className="form">
           <label htmlFor="rentDescription">Opis wypożyczenia:</label>
-          <input
+          <textarea
             type="text"
             id="rentDescription"
             name="rentDescription"
             value={formData.rentDescription}
             onChange={handleInputChange}
+            rows={4}
+            disabled={!formData.inventory}
           />
         </div>
         <div className="button">
-          <Button type="submit">Wypożycz</Button>
+          <Button type="submit" disabled={!formData.inventory}>
+            Wypożycz
+          </Button>
         </div>
       </form>
     </div>
