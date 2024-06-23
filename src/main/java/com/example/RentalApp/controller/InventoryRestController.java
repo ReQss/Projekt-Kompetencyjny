@@ -79,6 +79,18 @@ public class InventoryRestController {
         }
     }
 
+    @PutMapping("/updateInventoryDescription/{id}")
+    public ResponseEntity<Inventory> updateInventoryDescription(@PathVariable Long id, @RequestBody String inventoryDescription) {
+        Inventory existingInventory = inventoryRepository.findById(id).orElse(null);
+        if (existingInventory != null) {
+            existingInventory.setDescription(inventoryDescription);
+            Inventory updated = inventoryRepository.save(existingInventory);
+            return new ResponseEntity<>(updated, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/deleteInventory/{id}")
     public ResponseEntity<HttpStatus> deleteInventory(@PathVariable Long id) {
         try {
