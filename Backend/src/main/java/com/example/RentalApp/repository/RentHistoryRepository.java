@@ -15,6 +15,7 @@ public interface RentHistoryRepository extends JpaRepository<RentHistory, Intege
 
     /**
      * Znajduje wszystkie rekordy RentHistory dla danego użytkownika.
+     *
      * @param userId identyfikator użytkownika.
      * @return lista obiektów RentHistory powiązanych z użytkownikiem o podanym ID.
      */
@@ -22,6 +23,7 @@ public interface RentHistoryRepository extends JpaRepository<RentHistory, Intege
 
     /**
      * Znajduje wszystkie rekordy RentHistory dla danego przedmiotu inwentarza.
+     *
      * @param inventoryId identyfikator przedmiotu inwentarza.
      * @return lista obiektów RentHistory powiązanych z przedmiotem inwentarza o podanym ID.
      */
@@ -30,10 +32,11 @@ public interface RentHistoryRepository extends JpaRepository<RentHistory, Intege
     /**
      * Znajduje pierwszy rekord RentHistory dla danego przedmiotu inwentarza,
      * który ma inny status wypożyczenia niż podany.
+     *
      * @param inventoryId identyfikator przedmiotu inwentarza.
-     * @param rentStatus status wypożyczenia, który ma być wykluczony.
+     * @param rentStatus  status wypożyczenia, który ma być wykluczony.
      * @return pierwszy obiekt RentHistory powiązany z przedmiotem inwentarza o podanym ID,
-     *         który ma inny status wypożyczenia niż podany.
+     * który ma inny status wypożyczenia niż podany.
      */
     RentHistory findFirstByInventoryIdAndRentStatusNot(Integer inventoryId, RentStatus rentStatus);
 }

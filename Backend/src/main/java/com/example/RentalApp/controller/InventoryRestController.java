@@ -2,7 +2,6 @@ package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.Inventory;
 import com.example.RentalApp.model.ItemStatus;
-import com.example.RentalApp.model.RentStatus;
 import com.example.RentalApp.repository.InventoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ public class InventoryRestController {
 
     /**
      * Konstruktor kontrolera przedmiotów inwentarza.
+     *
      * @param inventoryRepository Repozytorium przedmiotów inwentarza.
      */
     public InventoryRestController(InventoryRepository inventoryRepository) {
@@ -31,6 +31,7 @@ public class InventoryRestController {
 
     /**
      * Pobiera wszystkie przedmioty inwentarza.
+     *
      * @return Lista wszystkich przedmiotów inwentarza.
      */
     @GetMapping("/inventory")
@@ -40,6 +41,7 @@ public class InventoryRestController {
 
     /**
      * Pobiera przedmioty inwentarza według identyfikatora właściciela.
+     *
      * @param ownerId ID właściciela.
      * @return Lista przedmiotów inwentarza danego właściciela.
      */
@@ -50,6 +52,7 @@ public class InventoryRestController {
 
     /**
      * Pobiera przedmioty inwentarza według identyfikatora właściciela, które nie są wypożyczone.
+     *
      * @param ownerId ID właściciela.
      * @return Lista przedmiotów inwentarza danego właściciela, które nie są wypożyczone.
      */
@@ -60,6 +63,7 @@ public class InventoryRestController {
 
     /**
      * Pobiera przedmiot inwentarza według identyfikatora przedmiotu.
+     *
      * @param id ID przedmiotu inwentarza.
      * @return Przedmiot inwentarza o podanym identyfikatorze.
      */
@@ -70,8 +74,9 @@ public class InventoryRestController {
 
     /**
      * Dodaje nowy przedmiot inwentarza.
+     *
      * @param newInventory Nowy przedmiot inwentarza.
-     * @param file Plik zdjęcia (opcjonalny).
+     * @param file         Plik zdjęcia (opcjonalny).
      * @return ResponseEntity z dodanym przedmiotem inwentarza.
      */
     @PostMapping("/addInventory")
@@ -93,7 +98,8 @@ public class InventoryRestController {
 
     /**
      * Aktualizuje istniejący przedmiot inwentarza.
-     * @param id ID przedmiotu inwentarza.
+     *
+     * @param id               ID przedmiotu inwentarza.
      * @param updatedInventory Zaktualizowany przedmiot inwentarza.
      * @return ResponseEntity z zaktualizowanym przedmiotem inwentarza.
      */
@@ -115,7 +121,8 @@ public class InventoryRestController {
 
     /**
      * Aktualizuje opis istniejącego przedmiotu inwentarza.
-     * @param id ID przedmiotu inwentarza.
+     *
+     * @param id                   ID przedmiotu inwentarza.
      * @param inventoryDescription Nowy opis przedmiotu inwentarza.
      * @return ResponseEntity z zaktualizowanym przedmiotem inwentarza.
      */
@@ -133,6 +140,7 @@ public class InventoryRestController {
 
     /**
      * Usuwa przedmiot inwentarza.
+     *
      * @param id ID przedmiotu inwentarza do usunięcia.
      * @return ResponseEntity z odpowiednią wartością statusu HTTP.
      */

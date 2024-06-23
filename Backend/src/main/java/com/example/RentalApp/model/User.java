@@ -79,22 +79,6 @@ public class User {
     private Boolean deleted = false;
 
     /**
-     * Zwraca status usunięcia użytkownika.
-     * @return true jeśli użytkownik jest oznaczony jako usunięty, false w przeciwnym razie.
-     */
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    /**
-     * Ustawia status usunięcia użytkownika.
-     * @param deleted true jeśli użytkownik ma być oznaczony jako usunięty, false w przeciwnym razie.
-     */
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    /**
      * Konstruktor domyślny.
      */
     public User() {
@@ -102,11 +86,12 @@ public class User {
 
     /**
      * Konstruktor tworzący nowego użytkownika z podstawowymi danymi.
-     * @param email adres email użytkownika
+     *
+     * @param email     adres email użytkownika
      * @param firstName imię użytkownika
-     * @param lastName nazwisko użytkownika
-     * @param login login użytkownika
-     * @param password hasło użytkownika
+     * @param lastName  nazwisko użytkownika
+     * @param login     login użytkownika
+     * @param password  hasło użytkownika
      */
     public User(String email, String firstName, String lastName, String login, String password) {
         this.email = email;
@@ -115,6 +100,24 @@ public class User {
         this.login = login;
         this.password = password;
         this.role = Role.USER;
+    }
+
+    /**
+     * Zwraca status usunięcia użytkownika.
+     *
+     * @return true jeśli użytkownik jest oznaczony jako usunięty, false w przeciwnym razie.
+     */
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Ustawia status usunięcia użytkownika.
+     *
+     * @param deleted true jeśli użytkownik ma być oznaczony jako usunięty, false w przeciwnym razie.
+     */
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     // Gettery i settery

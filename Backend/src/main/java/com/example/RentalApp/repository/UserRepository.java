@@ -12,6 +12,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * Znajduje użytkownika na podstawie jego loginu.
+     *
      * @param login login użytkownika.
      * @return obiekt użytkownika pasujący do podanego loginu.
      */
@@ -19,6 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * Znajduje użytkownika na podstawie jego identyfikatora.
+     *
      * @param id identyfikator użytkownika.
      * @return obiekt użytkownika pasujący do podanego identyfikatora.
      */
@@ -26,6 +28,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
      * Znajduje wszystkich użytkowników.
+     *
      * @return lista wszystkich użytkowników.
      */
     List<User> findAllBy();

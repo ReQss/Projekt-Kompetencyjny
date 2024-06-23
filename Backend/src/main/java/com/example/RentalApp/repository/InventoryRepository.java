@@ -2,7 +2,6 @@ package com.example.RentalApp.repository;
 
 import com.example.RentalApp.model.Inventory;
 import com.example.RentalApp.model.ItemStatus;
-import com.example.RentalApp.model.RentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +15,14 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     /**
      * Znajduje wszystkie rekordy Inventory.
+     *
      * @return lista wszystkich obiektów Inventory.
      */
     List<Inventory> findAll();
 
     /**
      * Znajduje wszystkie rekordy Inventory z określoną nazwą przedmiotu.
+     *
      * @param name nazwa przedmiotu.
      * @return lista obiektów Inventory o podanej nazwie przedmiotu.
      */
@@ -29,6 +30,7 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     /**
      * Znajduje wszystkie rekordy Inventory dla danego właściciela.
+     *
      * @param id identyfikator właściciela.
      * @return lista obiektów Inventory należących do właściciela o podanym ID.
      */
@@ -36,12 +38,14 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     /**
      * Znajduje wszystkie rekordy Inventory, które nie są oznaczone jako usunięte.
+     *
      * @return lista obiektów Inventory, które nie są usunięte.
      */
     List<Inventory> findByDeletedFalse();
 
     /**
      * Znajduje wszystkie rekordy Inventory dla danego właściciela, które nie są oznaczone jako usunięte.
+     *
      * @param ownerId identyfikator właściciela.
      * @return lista obiektów Inventory należących do właściciela o podanym ID, które nie są usunięte.
      */
@@ -49,7 +53,8 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
     /**
      * Znajduje wszystkie rekordy Inventory dla danego właściciela, które nie są oznaczone jako usunięte i mają inny status wypożyczenia niż podany.
-     * @param ownerId identyfikator właściciela.
+     *
+     * @param ownerId    identyfikator właściciela.
      * @param itemStatus status przedmiotu, który ma być wykluczony.
      * @return lista obiektów Inventory należących do właściciela o podanym ID, które nie są usunięte i mają inny status wypożyczenia niż podany.
      */

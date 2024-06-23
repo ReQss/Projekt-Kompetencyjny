@@ -19,6 +19,7 @@ public class CategoryController {
 
     /**
      * Konstruktor kontrolera kategorii.
+     *
      * @param categoryRepository Repozytorium kategorii.
      */
     public CategoryController(CategoryRepository categoryRepository) {
@@ -27,6 +28,7 @@ public class CategoryController {
 
     /**
      * Pobierz wszystkie kategorie.
+     *
      * @return Lista wszystkich kategorii.
      */
     @GetMapping("/category")

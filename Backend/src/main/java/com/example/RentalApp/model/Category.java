@@ -1,6 +1,6 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
@@ -40,6 +40,7 @@ public class Category {
 
     /**
      * Zwraca unikalny identyfikator kategorii.
+     *
      * @return id kategorii
      */
     public Integer getId() {
@@ -48,6 +49,7 @@ public class Category {
 
     /**
      * Ustawia unikalny identyfikator kategorii.
+     *
      * @param id nowy identyfikator kategorii
      */
     public void setId(Integer id) {
@@ -56,6 +58,7 @@ public class Category {
 
     /**
      * Zwraca nazwę kategorii.
+     *
      * @return nazwa kategorii
      */
     public String getName() {
@@ -64,6 +67,7 @@ public class Category {
 
     /**
      * Ustawia nazwę kategorii.
+     *
      * @param name nowa nazwa kategorii
      */
     public void setName(String name) {
@@ -72,6 +76,7 @@ public class Category {
 
     /**
      * Zwraca zbiór inwentarzy przypisanych do kategorii.
+     *
      * @return zbiór inwentarzy
      */
     public Set<Inventory> getInventories() {
@@ -80,6 +85,7 @@ public class Category {
 
     /**
      * Ustawia zbiór inwentarzy przypisanych do kategorii.
+     *
      * @param inventories nowy zbiór inwentarzy
      */
     public void setInventories(Set<Inventory> inventories) {

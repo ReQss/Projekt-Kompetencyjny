@@ -1,7 +1,8 @@
 package com.example.RentalApp.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 

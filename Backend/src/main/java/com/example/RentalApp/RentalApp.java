@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class RentalApp {
     /**
      * Metoda główna aplikacji.
+     *
      * @param args Argumenty wiersza poleceń.
      */
     public static void main(String[] args) {

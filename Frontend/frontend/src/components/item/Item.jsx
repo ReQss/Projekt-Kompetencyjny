@@ -70,34 +70,10 @@ const Item = ({ item, src }) => {
   };
 
   const showGiveBackConfirmation1 = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:9192/api/rentHistory/currentRentingByInventoryId/${itemId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        let rentHistoryDescFromData = data.rentDescription;
-        setRentHistoryDescription(rentHistoryDescFromData);
-      } else {
-        const errorMessage = await response.json();
-        console.error(
-          'Wystąpił błąd podczas sprwadzania historii:',
-          errorMessage
-        );
-      }
-    } catch (error) {
-      console.error('Wystąpił błąd podczas wysyłania żądania:', error);
-    } finally {
+      setRentHistoryDescription(description);
       setShowReturnConfirmation(true);
       setItemId(id);
-    }
+    
   };
 
   const hideReturnConfirmation = () => {
@@ -142,7 +118,7 @@ const Item = ({ item, src }) => {
   const handleReturnItem = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9192/api/rentHistory/modifyDescription/${itemId}`,
+        `http://localhost:9192/api/updateInventoryDescription/${itemId}`,
         {
           method: 'PUT',
           headers: {

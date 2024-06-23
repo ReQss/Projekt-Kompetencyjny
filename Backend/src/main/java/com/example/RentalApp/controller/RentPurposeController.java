@@ -4,7 +4,10 @@ import com.example.RentalApp.model.RentPurpose;
 import com.example.RentalApp.service.RentPurposeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -20,6 +23,7 @@ public class RentPurposeController {
 
     /**
      * Pobiera wszystkie cele wypożyczenia.
+     *
      * @return Lista wszystkich celów wypożyczenia.
      */
     @GetMapping
@@ -29,6 +33,7 @@ public class RentPurposeController {
 
     /**
      * Pobiera cel wypożyczenia o podanym ID.
+     *
      * @param id ID celu wypożyczenia.
      * @return ResponseEntity z obiektem celu wypożyczenia lub kodem odpowiedzi NOT_FOUND.
      */

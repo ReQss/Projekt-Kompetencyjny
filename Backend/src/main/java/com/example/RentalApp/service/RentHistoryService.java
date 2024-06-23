@@ -21,6 +21,7 @@ public class RentHistoryService {
 
     /**
      * Dodaj nową wpis historii wypożyczeń.
+     *
      * @param rentHistory Obiekt historii wypożyczeń do dodania.
      * @return Zapisany obiekt historii wypożyczeń.
      */
@@ -30,6 +31,7 @@ public class RentHistoryService {
 
     /**
      * Znajdź wszystkie historie wypożyczeń według ID użytkownika.
+     *
      * @param userId ID użytkownika.
      * @return Lista historii wypożyczeń związanych z użytkownikiem.
      */
@@ -39,6 +41,7 @@ public class RentHistoryService {
 
     /**
      * Znajdź wszystkie historie wypożyczeń według ID przedmiotu.
+     *
      * @param inventoryId ID przedmiotu.
      * @return Lista historii wypożyczeń związanych z przedmiotem.
      */
@@ -48,12 +51,13 @@ public class RentHistoryService {
 
     /**
      * Oznacz przedmiot jako zwrócony w historii wypożyczeń.
+     *
      * @param inventoryId ID przedmiotu.
      * @return Zaktualizowany obiekt historii wypożyczeń, jeśli znaleziono i zaktualizowano, w przeciwnym razie null.
      */
     public RentHistory returnRentedItem(Integer inventoryId) {
         RentHistory rentHistory = rentHistoryRepository.findFirstByInventoryIdAndRentStatusNot(inventoryId, RentStatus.returned);
-        if (rentHistory!= null) {
+        if (rentHistory != null) {
             rentHistory.setRentStatus(RentStatus.returned);
             rentHistory.setReturnDate(Instant.now());
             return rentHistoryRepository.save(rentHistory);

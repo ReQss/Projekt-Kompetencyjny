@@ -1,7 +1,6 @@
 package com.example.RentalApp.controller;
 
 import com.example.RentalApp.model.RentHistory;
-import com.example.RentalApp.repository.RentHistoryRepository;
 import com.example.RentalApp.service.RentHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Kontroler REST do zarządzania historią wypożyczeń (RentHistory).
@@ -26,6 +22,7 @@ public class RentHistoryController {
 
     /**
      * Dodaje nowy wpis do historii wypożyczeń.
+     *
      * @param rentHistory Nowy wpis do historii wypożyczeń.
      * @return ResponseEntity z dodanym wpisem historii wypożyczeń.
      */
@@ -38,6 +35,7 @@ public class RentHistoryController {
 
     /**
      * Pobiera historię wypożyczeń dla danego użytkownika.
+     *
      * @param userId ID użytkownika.
      * @return ResponseEntity z listą wpisów historii wypożyczeń dla danego użytkownika.
      */
@@ -52,6 +50,7 @@ public class RentHistoryController {
 
     /**
      * Pobiera historię wypożyczeń dla danego zasobu.
+     *
      * @param inventoryId ID zasobu.
      * @return ResponseEntity z listą wpisów historii wypożyczeń dla danego zasobu.
      */
@@ -66,6 +65,7 @@ public class RentHistoryController {
 
     /**
      * Oznacza wypożyczony przedmiot jako zwrócony.
+     *
      * @param inventoryId ID zasobu.
      * @return ResponseEntity z zaktualizowanym wpisem historii wypożyczeń.
      */
@@ -81,6 +81,7 @@ public class RentHistoryController {
 
     /**
      * Pobiera historię wypożyczeń dla wszystkich zasobów, z podziałem na zasoby.
+     *
      * @return ResponseEntity z listą list historii wynajmu, gdzie każda lista zawiera historię dla danego zasobu.
      */
     @GetMapping("/getAll")

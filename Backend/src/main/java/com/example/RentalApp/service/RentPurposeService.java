@@ -18,6 +18,7 @@ public class RentPurposeService {
 
     /**
      * Pobierz wszystkie cele wypożyczeń.
+     *
      * @return Lista wszystkich celów wypożyczeń.
      */
     public List<RentPurpose> findAll() {
@@ -26,6 +27,7 @@ public class RentPurposeService {
 
     /**
      * Pobierz cel wypożyczenia według jego ID.
+     *
      * @param id ID celu wypożyczenia.
      * @return Optional zawierający cel wypożyczenia, jeśli znaleziono, w przeciwnym razie puste.
      */

@@ -10,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Kontroler REST do zarządzania użytkownikami (User).
@@ -33,6 +33,7 @@ public class UserController {
 
     /**
      * Pobiera użytkownika o podanym ID.
+     *
      * @param id ID użytkownika.
      * @return ResponseEntity z obiektem użytkownika lub kodem odpowiedzi NOT_FOUND.
      */
@@ -48,6 +49,7 @@ public class UserController {
 
     /**
      * Dodaje nowego użytkownika.
+     *
      * @param user Nowy użytkownik.
      * @return Dodany użytkownik.
      */
@@ -61,6 +63,7 @@ public class UserController {
 
     /**
      * Pobiera użytkowników według ich ról.
+     *
      * @return ResponseEntity z listą użytkowników lub kodem odpowiedzi NOT_FOUND.
      */
     @GetMapping("/getUsersByRoles")
@@ -72,16 +75,18 @@ public class UserController {
 
     /**
      * Pobiera wszystkich użytkowników.
+     *
      * @return Lista wszystkich użytkowników.
      */
     @GetMapping("/getAllUsers")
-    public List<User> getAllUsers(){
-        List <User> users = userRepository.findAll();
+    public List<User> getAllUsers() {
+        List<User> users = userRepository.findAll();
         return users;
     }
 
     /**
      * Loguje użytkownika.
+     *
      * @param user Użytkownik do zalogowania.
      * @return ResponseEntity z tokenem dostępu i danymi użytkownika lub kodem odpowiedzi BAD_REQUEST.
      */
@@ -103,6 +108,7 @@ public class UserController {
 
     /**
      * Usuwa użytkownika (ustawia flagę deleted na true).
+     *
      * @param id ID użytkownika do usunięcia.
      * @return ResponseEntity z odpowiednią wartością statusu HTTP.
      */
@@ -120,7 +126,8 @@ public class UserController {
 
     /**
      * Aktualizuje istniejącego użytkownika.
-     * @param id ID użytkownika.
+     *
+     * @param id          ID użytkownika.
      * @param updatedUser Zaktualizowany użytkownik.
      * @return ResponseEntity z zaktualizowanym użytkownikiem lub kodem odpowiedzi NOT_FOUND.
      */
