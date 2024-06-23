@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Kontroler REST do zarządzania celami wynajmu (RentPurpose).
+ * Kontroler REST do zarządzania celami wypożyczenia (RentPurpose).
  */
 @RestController
 @RequestMapping("/api/rentPurposes")
@@ -19,8 +19,8 @@ public class RentPurposeController {
     private RentPurposeService service;
 
     /**
-     * Pobiera wszystkie cele wynajmu.
-     * @return Lista wszystkich celów wynajmu.
+     * Pobiera wszystkie cele wypożyczenia.
+     * @return Lista wszystkich celów wypożyczenia.
      */
     @GetMapping
     public List<RentPurpose> getAllRentPurposes() {
@@ -28,9 +28,9 @@ public class RentPurposeController {
     }
 
     /**
-     * Pobiera cel wynajmu o podanym ID.
-     * @param id ID celu wynajmu.
-     * @return ResponseEntity z obiektem celu wynajmu lub kodem odpowiedzi NOT_FOUND.
+     * Pobiera cel wypożyczenia o podanym ID.
+     * @param id ID celu wypożyczenia.
+     * @return ResponseEntity z obiektem celu wypożyczenia lub kodem odpowiedzi NOT_FOUND.
      */
     @GetMapping("/{id}")
     public ResponseEntity<RentPurpose> getRentPurposeById(@PathVariable Integer id) {

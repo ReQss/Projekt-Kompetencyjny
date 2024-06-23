@@ -17,6 +17,10 @@ public class CategoryController {
 
     private final CategoryRepository categoryRepository;
 
+    /**
+     * Konstruktor kontrolera kategorii.
+     * @param categoryRepository Repozytorium kategorii.
+     */
     public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }

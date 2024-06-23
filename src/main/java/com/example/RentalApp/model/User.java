@@ -8,7 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Klasa modelu reprezentująca użytkownika w systemie wypożyczalni.
+ * Klasa modelu reprezentująca użytkownika.
  * Mapowana na tabelę "users" w bazie danych przy użyciu JPA.
  */
 @Entity
@@ -70,19 +70,31 @@ public class User {
     @JsonIgnore
     private Set<RentHistory> rentHistories = new LinkedHashSet<>();
 
+    /**
+     * Status usunięcia użytkownika.
+     * Domyślnie ustawiony na false, co oznacza, że użytkownik nie jest usunięty (przydatne w poźniejszym celu archiwizowania użytkowników).
+     */
     @ColumnDefault("0")
     @Column(name = "deleted", nullable = false)
     private Boolean deleted = false;
 
+    /**
+     * Zwraca status usunięcia użytkownika.
+     * @return true jeśli użytkownik jest oznaczony jako usunięty, false w przeciwnym razie.
+     */
     public Boolean getDeleted() {
         return deleted;
     }
 
+    /**
+     * Ustawia status usunięcia użytkownika.
+     * @param deleted true jeśli użytkownik ma być oznaczony jako usunięty, false w przeciwnym razie.
+     */
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 
-     /**
+    /**
      * Konstruktor domyślny.
      */
     public User() {

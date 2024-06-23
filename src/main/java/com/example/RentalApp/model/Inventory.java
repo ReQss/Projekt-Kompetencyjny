@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Klasa modelu reprezentująca inwentarz w systemie wypożyczalni.
+ * Klasa modelu reprezentująca przedmiot inwentarza.
  * Mapowana na tabelę "inventory" w bazie danych przy użyciu JPA.
  */
 @Entity
@@ -19,7 +19,7 @@ import java.util.Set;
 public class Inventory {
 
     /**
-     * Unikalny identyfikator inwentarza.
+     * Unikalny identyfikator przedmiotu inwentarza.
      * Generowany automatycznie przy użyciu strategii IDENTITY.
      */
     @Id
@@ -28,7 +28,7 @@ public class Inventory {
     private Long id;
 
     /**
-     * Opis inwentarza.
+     * Opis przedmiotu inwentarza.
      */
     @Column(name = "description")
     private String description;
@@ -41,7 +41,7 @@ public class Inventory {
     private String itemName;
 
     /**
-     * Identyfikator właściciela inwentarza.
+     * Identyfikator właściciela przedmiotu inwentarza.
      */
     @Column(name = "owner_id")
     private Long ownerId;

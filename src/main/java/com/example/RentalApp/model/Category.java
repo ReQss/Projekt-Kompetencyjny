@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Klasa modelu reprezentująca kategorię w systemie wypożyczalni.
+ * Klasa modelu reprezentująca kategorie.
  * Mapowana na tabelę "categories" w bazie danych przy użyciu JPA.
  */
 @Entity
