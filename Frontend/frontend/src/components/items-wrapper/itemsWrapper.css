@@ -1,0 +1,17 @@
+.items-wrapper {
+  max-height: 100%;
+  flex: 5;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 2rem 5rem;
+  background-color: rgb(249, 249, 249);
+}
+
+.search-bar-input {
+  height: 2rem;
+  padding-inline: 0.5rem;
+  border-radius: 2rem;
+  margin-inline: 1rem;
+  border: 2px solid gray;
+}
