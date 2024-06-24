@@ -3,9 +3,18 @@ import "./searchBar.css";
 import Button from "../button/Button";
 import { Link, useLocation } from "react-router-dom";
 
+/**
+ * Komponent SearchBar - pasek wyszukiwania z dodatkowymi przyciskami nawigacyjnymi.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const SearchBar = () => {
   const [showItems, setShowItems] = useState(false);
 
+  /**
+   * Funkcja do przełączania widoczności elementów.
+   */
   const toggleItems = () => {
     setShowItems(!showItems);
   };
