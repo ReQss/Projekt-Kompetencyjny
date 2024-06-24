@@ -1,4 +1,32 @@
-import { useState, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/add-form/AddForm.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/add-form/AddForm.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect } from "react";
 import { Button } from "../../components";
 import "./addForm.css";
 import { Link } from "react-router-dom";
@@ -101,16 +129,16 @@ function AddForm() {
   };
 
   return (
-    <div className="form-container add-item-form">
-      <Link to="/">
+    &lt;div className="form-container add-item-form">
+      &lt;Link to="/">
         {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
-      </Link>
-      <h2>Dodaj przedmiot</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="form">
-          <label htmlFor="itemName">Nazwa przedmiotu:</label>
-          <input
+        &lt;Button className={"back-btn"}>Powrót&lt;/Button>{" "}
+      &lt;/Link>
+      &lt;h2>Dodaj przedmiot&lt;/h2>
+      &lt;form onSubmit={handleSubmit} encType="multipart/form-data">
+        &lt;div className="form">
+          &lt;label htmlFor="itemName">Nazwa przedmiotu:&lt;/label>
+          &lt;input
             type="text"
             id="itemName"
             name="itemName"
@@ -118,44 +146,44 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
+        &lt;/div>
         {userRole === "ADMIN" ? (
-          <div className="form">
-            <label htmlFor="ownerId">Właściciel:</label>
-            <select
+          &lt;div className="form">
+            &lt;label htmlFor="ownerId">Właściciel:&lt;/label>
+            &lt;select
               id="ownerId"
               name="ownerId"
               value={itemInfo.ownerId}
               onChange={handleInputChange}
               required
             >
-              <option value="">Wybierz właściciela</option>
+              &lt;option value="">Wybierz właściciela&lt;/option>
               {users.map((user) => (
-                <option key={user.id} value={user.id}>
+                &lt;option key={user.id} value={user.id}>
                   {user.firstName} {user.lastName}
-                </option>
+                &lt;/option>
               ))}
-            </select>
-          </div>
+            &lt;/select>
+          &lt;/div>
         ) : null}
 
-        <div className="form">
-          <label htmlFor="rentStatus">Status wypożyczenia:</label>
-          <select
+        &lt;div className="form">
+          &lt;label htmlFor="rentStatus">Status wypożyczenia:&lt;/label>
+          &lt;select
             id="rentStatus"
             name="rentStatus"
             value={itemInfo.rentStatus || ""}
             onChange={handleInputChange}
             required
           >
-            <option value="">Wybierz status</option>
-            <option value="available">Dostępny</option>
-            <option value="unavailable">Niedostępny</option>
-          </select>
-        </div>
-        <div className="form">
-          <label htmlFor="room">Sala:</label>
-          <input
+            &lt;option value="">Wybierz status&lt;/option>
+            &lt;option value="available">Dostępny&lt;/option>
+            &lt;option value="unavailable">Niedostępny&lt;/option>
+          &lt;/select>
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="room">Sala:&lt;/label>
+          &lt;input
             type="text"
             id="room"
             name="room"
@@ -163,10 +191,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="building">Budynek:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="building">Budynek:&lt;/label>
+          &lt;input
             type="text"
             id="building"
             name="building"
@@ -174,10 +202,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="inventoryDate">Data dodania:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="inventoryDate">Data dodania:&lt;/label>
+          &lt;input
             type="date"
             id="inventoryDate"
             name="inventoryDate"
@@ -185,10 +213,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="value">Wartość:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="value">Wartość:&lt;/label>
+          &lt;input
             type="text"
             id="value"
             name="value"
@@ -196,10 +224,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="inventoryNumber">Numer przedmiotu:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="inventoryNumber">Numer przedmiotu:&lt;/label>
+          &lt;input
             type="text"
             id="inventoryNumber"
             name="inventoryNumber"
@@ -207,10 +235,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="invoiceNumber">Numer faktury:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="invoiceNumber">Numer faktury:&lt;/label>
+          &lt;input
             type="text"
             id="invoiceNumber"
             name="invoiceNumber"
@@ -218,10 +246,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="fundingSource">Źródło funduszy:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="fundingSource">Źródło funduszy:&lt;/label>
+          &lt;input
             type="text"
             id="fundingSource"
             name="fundingSource"
@@ -229,10 +257,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="supplierDocument">Dokument dostawcy:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="supplierDocument">Dokument dostawcy:&lt;/label>
+          &lt;input
             type="text"
             id="supplierDocument"
             name="supplierDocument"
@@ -240,10 +268,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="invoicePosition">Pozycja faktury:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="invoicePosition">Pozycja faktury:&lt;/label>
+          &lt;input
             type="text"
             id="invoicePosition"
             name="invoicePosition"
@@ -251,10 +279,10 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="serialNumber">Numer seryjny:</label>
-          <input
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="serialNumber">Numer seryjny:&lt;/label>
+          &lt;input
             type="text"
             id="serialNumber"
             name="serialNumber"
@@ -262,51 +290,74 @@ function AddForm() {
             onChange={handleInputChange}
             required
           />
-        </div>
-        <div className="form">
-          <label htmlFor="category">Kategoria:</label>
-          <select
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="category">Kategoria:&lt;/label>
+          &lt;select
             id="category"
             name="category"
             value={selectedCategory}
             onChange={handleCategoryChange}
             required
           >
-            <option value="">Wybierz kategorię</option>
+            &lt;option value="">Wybierz kategorię&lt;/option>
             {categories.map((category) => (
-              <option key={category.category_id} value={category.category_id}>
+              &lt;option key={category.category_id} value={category.category_id}>
                 {category.name}
-              </option>
+              &lt;/option>
             ))}
-          </select>
-        </div>
-        <div className="form">
-          <label htmlFor="description">Opis:</label>
-          <textarea
+          &lt;/select>
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="description">Opis:&lt;/label>
+          &lt;textarea
             id="description"
             name="description"
             rows="8"
             value={itemInfo.description || ""}
             onChange={handleInputChange}
             required
-          ></textarea>
-        </div>
-        <div className="form">
-          <label htmlFor="file">Zdjęcie:</label>
-          <input
+          >&lt;/textarea>
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="file">Zdjęcie:&lt;/label>
+          &lt;input
             type="file"
             id="file"
             name="file"
             accept="image/*"
             onChange={handleFileChange}
           />
-        </div>
-        <div className="button">
-          <Button type="submit">Dodaj</Button>
-        </div>
-      </form>
-    </div>
+        &lt;/div>
+        &lt;div className="button">
+          &lt;Button type="submit">Dodaj&lt;/Button>
+        &lt;/div>
+      &lt;/form>
+    &lt;/div>
   );
 }
 
 export default AddForm;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddForm">AddForm</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#DeletionForm">DeletionForm</a></li><li><a href="global.html#HistoryForm">HistoryForm</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ModificationForm">ModificationForm</a></li><li><a href="global.html#Rent">Rent</a></li><li><a href="global.html#RentHistory">RentHistory</a></li><li><a href="global.html#fetchCategories">fetchCategories</a></li><li><a href="global.html#fetchInventory">fetchInventory</a></li><li><a href="global.html#fetchItemInfo">fetchItemInfo</a></li><li><a href="global.html#fetchPurposes">fetchPurposes</a></li><li><a href="global.html#fetchRentHistory">fetchRentHistory</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/rent/Rent.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/rent/Rent.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pl from "date-fns/locale/pl";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./rent.scss";
+import { Button } from "../../components";
+
+/**
+ * Komponent Rent służący do wypożyczania przedmiotów.
+ * @function Rent
+ * @returns {JSX.Element} Formularz wypożyczania przedmiotu
+ */
+const Rent = () => {
+  const [formData, setFormData] = useState({
+    inventory: "",
+    rentPurpose: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    rentDescription: "",
+    selectedUser: "",
+  });
+
+  const [inventoryList, setInventoryList] = useState([]);
+  const [purposesList, setPurposesList] = useState([]);
+  const [returnDate, setReturnDate] = useState(new Date());
+  const [users, setUsers] = useState([]);
+  let { itemId } = useParams();
+  if (itemId === undefined) {
+    console.log(1);
+    itemId = -1;
+  } else {
+    formData.inventory = itemId;
+  }
+
+  console.log(`id przedmiotu: `, itemId);
+
+  const userId = localStorage.getItem("userId");
+  const userRole = localStorage.getItem("role");
+
+  useEffect(() => {
+    fetchUsers();
+    fetchInventory(userId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  /**
+   * Funkcja pobierająca użytkowników z serwera na podstawie ich ról.
+   * @async
+   * @function fetchUsers
+   * @returns {void}
+   */
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`http://localhost:9192/getUsersByRoles`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+
+  /**
+   * Funkcja pobierająca listę przedmiotów użytkownika z serwera.
+   * @async
+   * @function fetchInventory
+   * @param {string} ownerId - ID właściciela przedmiotu
+   * @returns {void}
+   */
+  const fetchInventory = async (ownerId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:9192/api/inventoryByOwnerId?ownerId=${ownerId}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setInventoryList(data);
+      } else {
+        console.error("Failed to fetch inventory");
+      }
+    } catch (error) {
+      console.error("Error fetching inventory:", error);
+    }
+  };
+
+  useEffect(() => {
+    /**
+     * Funkcja pobierająca listę dostępnych celów wypożyczenia z serwera.
+     * @async
+     * @function fetchPurposes
+     * @returns {void}
+     */
+    const fetchPurposes = async () => {
+      try {
+        const response = await fetch("http://localhost:9192/api/rentPurposes");
+
+        if (response.ok) {
+          const data = await response.json();
+          setPurposesList(data);
+        } else {
+          console.error("Failed to fetch purposes");
+        }
+      } catch (error) {
+        console.error("Error fetching purposes:", error);
+      }
+    };
+
+    fetchPurposes();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleUserChange = (e) => {
+    const selectedUserId = e.target.value;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      selectedUser: selectedUserId,
+    }));
+    if (selectedUserId === "") {
+      fetchInventory(userId);
+    } else {
+      fetchInventory(selectedUserId);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const {
+      inventory,
+      rentPurpose,
+      email,
+      firstName,
+      lastName,
+      rentDescription,
+      selectedUser,
+    } = formData;
+
+    const payload = {
+      user: {
+        id: selectedUser === "" ? Number(userId) : Number(selectedUser),
+      },
+      inventory: { id: Number(inventory) },
+      rentPurpose: { id: Number(rentPurpose) },
+      email,
+      firstName,
+      lastName,
+      rentDescription,
+      rentStatus: "rented",
+      returnDate: returnDate.toISOString(),
+    };
+
+    try {
+      const response = await fetch("http://localhost:9192/api/rentHistory", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        console.log("działa");
+        setFormData({
+          inventory: "",
+          rentPurpose: "",
+          email: "",
+          firstName: "",
+          lastName: "",
+          rentDescription: "",
+          selectedUser: "", // Resetowanie selectedUser
+        });
+
+        alert("Wypożyczenie udane!");
+      } else {
+        const errorMessage = await response.text();
+        alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Błąd podczas wysyłania żądania:", error);
+      alert("Wystąpił błąd podczas wypożyczania sprzętu.");
+    }
+  };
+
+  return (
+    &lt;div className="form-container">
+      &lt;Link to="/">
+        {" "}
+        &lt;Button className={"back-btn"}>Powrót&lt;/Button>{" "}
+      &lt;/Link>
+      &lt;h2>Wypożycz sprzęt&lt;/h2>
+      &lt;form onSubmit={handleSubmit}>
+        {userRole === "ADMIN" ? (
+          &lt;>
+            &lt;div className="form">
+              &lt;label htmlFor="userId">Właściciel:&lt;/label>
+              &lt;select
+                id="userId"
+                name="selectedUser"
+                value={formData.selectedUser}
+                onChange={handleUserChange}
+                required
+              >
+                &lt;option value="">Wybierz właściciela&lt;/option>
+                {users.map((user) => (
+                  &lt;option key={user.id} value={user.id}>
+                    {user.firstName} {user.lastName}
+                  &lt;/option>
+                ))}
+              &lt;/select>
+            &lt;/div>
+
+            {formData.selectedUser &amp;&amp; (
+              &lt;div className="form">
+                &lt;label htmlFor="inventory">Część:&lt;/label>
+                &lt;select
+                  id="inventory"
+                  name="inventory"
+                  value={formData.inventory}
+                  onChange={handleInputChange}
+                  required
+                >
+                  &lt;option value="">Wybierz produkt&lt;/option>
+                  {inventoryList.map((item) => (
+                    &lt;option key={item.id} value={item.id}>
+                      {item.itemName}
+                    &lt;/option>
+                  ))}
+                &lt;/select>
+              &lt;/div>
+            )}
+          &lt;/>
+        ) : (
+          &lt;div className="form">
+            &lt;label htmlFor="inventory">Część:&lt;/label>
+            {itemId != -1 ? (
+              &lt;select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                {inventoryList.map(
+                  (item) =>
+                    item.id == itemId &amp;&amp; (
+                      &lt;option key={item.id} value={item.id}>
+                        {item.itemName}
+                      &lt;/option>
+                    )
+                )}
+              &lt;/select>
+            ) : (
+              &lt;select
+                id="inventory"
+                name="inventory"
+                value={formData.inventory}
+                onChange={handleInputChange}
+                required
+              >
+                &lt;option value="">Wybierz produkt&lt;/option>
+
+                {inventoryList.map((item) => (
+                  &lt;option key={item.id} value={item.id}>
+                    {item.itemName}
+                  &lt;/option>
+                ))}
+              &lt;/select>
+            )}
+          &lt;/div>
+        )}
+
+        &lt;div className="form">
+          &lt;label htmlFor="rentPurpose">Powód wypożyczenia:&lt;/label>
+          &lt;select
+            id="rentPurpose"
+            name="rentPurpose"
+            value={formData.rentPurpose}
+            onChange={handleInputChange}
+            required
+          >
+            &lt;option value="">Wybierz przyczynę&lt;/option>
+            {purposesList.map((item) => (
+              &lt;option key={item.id} value={item.id}>
+                {item.purpose}
+              &lt;/option>
+            ))}
+          &lt;/select>
+        &lt;/div>
+
+        &lt;div className="form">
+          &lt;label htmlFor="returnDate">Data zwrotu:&lt;/label>
+          &lt;DatePicker
+            className="date-picker"
+            id="returnDate"
+            selected={returnDate}
+            onChange={(date) => setReturnDate(date)}
+            dateFormat="dd-MM-yyyy"
+            minDate={new Date()}
+            locale={pl}
+            weekStartsOn={1}
+          />
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="email">Email:&lt;/label>
+          &lt;input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="firstName">Imię:&lt;/label>
+          &lt;input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            required
+          />
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="lastName">Nazwisko:&lt;/label>
+          &lt;input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+        &lt;/div>
+        &lt;div className="form">
+          &lt;label htmlFor="rentDescription">Opis wypożyczenia:&lt;/label>
+          &lt;input
+            type="text"
+            id="rentDescription"
+            name="rentDescription"
+            value={formData.rentDescription}
+            onChange={handleInputChange}
+          />
+        &lt;/div>
+        &lt;div className="button">
+          &lt;Button type="submit">Wypożycz&lt;/Button>
+        &lt;/div>
+      &lt;/form>
+    &lt;/div>
+  );
+};
+
+export default Rent;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AddForm">AddForm</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#DeletionForm">DeletionForm</a></li><li><a href="global.html#HistoryForm">HistoryForm</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#ModificationForm">ModificationForm</a></li><li><a href="global.html#Rent">Rent</a></li><li><a href="global.html#RentHistory">RentHistory</a></li><li><a href="global.html#fetchCategories">fetchCategories</a></li><li><a href="global.html#fetchInventory">fetchInventory</a></li><li><a href="global.html#fetchItemInfo">fetchItemInfo</a></li><li><a href="global.html#fetchPurposes">fetchPurposes</a></li><li><a href="global.html#fetchRentHistory">fetchRentHistory</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

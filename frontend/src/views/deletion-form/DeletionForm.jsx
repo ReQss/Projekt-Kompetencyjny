@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import { Button } from '../../components';
 
+/**
+ * Komponent DeletionForm służy do usuwania przedmiotów z systemu.
+ * @returns {JSX.Element} Komponent usuwania przedmiotów.
+ */
+
 const DeletionForm = () => {
     const [formData, setFormData] = useState({ item: '' });
 
+    /**
+     * Funkcja obsługująca przesłanie formularza.
+     * @param {Event} e - Obiekt zdarzenia.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -28,7 +37,10 @@ const DeletionForm = () => {
             alert('Wystąpił błąd podczas usuwania sprzętu.');
         }
     };
-
+    /**
+     * Funkcja obsługująca zmianę wartości inputa.
+     * @param {Event} e - Obiekt zdarzenia zmiany.
+     */
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
