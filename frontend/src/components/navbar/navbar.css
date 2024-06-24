@@ -2,12 +2,20 @@
   position: fixed;
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 10px 20px;
   background-color: #ffffff;
 }
 
+.img {
+  flex: 1;
+}
+
 .navbar img {
   height: 50px;
+}
+
+ul {
+  padding: 10px;
 }
