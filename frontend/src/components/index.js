@@ -1,4 +1,3 @@
-export { default as Filter } from "./filter/Filter";
 export { default as Header } from "./header/Header";
 export { default as Item } from "./item/Item";
 export { default as ItemsWrapper } from "./items-wrapper/ItemsWrapper";
