@@ -3,6 +3,15 @@ import { Link } from "react-router-dom";
 import "./historyForm.css";
 import { Button } from "../../components";
 
+/**
+ * Komponent formularza historii wypożyczeń.
+ *
+ * @component
+ * @example
+ * return (
+ *   <HistoryForm />
+ * )
+ */
 const HistoryForm = () => {
   const [formData, setFormData] = useState({
     user: "",
@@ -13,6 +22,11 @@ const HistoryForm = () => {
   const [fullRentHistory, setFullRentHistory] = useState([]);
   const [filter, setFilter] = useState("all");
 
+  /**
+   * Obsługuje zmiany w polach formularza.
+   *
+   * @param {Object} e - Obiekt zdarzenia.
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -38,12 +52,11 @@ const HistoryForm = () => {
     fetchRentHistory();
   }, []);
 
-  const filteredRentHistory = fullRentHistory.map((rentHistory) =>
-    rentHistory.filter((historyItem) => {
-      if (filter === "all") return true;
-      return historyItem.rentStatus === filter;
-    })
-  );
+  const filteredRentHistory = fullRentHistory.filter((historyItem) => {
+    if (filter === "all") return true;
+    return historyItem[historyItem.length - 1].rentStatus === filter;
+  });
+  console.log(filteredRentHistory);
 
   return (
     <>
@@ -106,50 +119,56 @@ const HistoryForm = () => {
             Zwrócone
           </button>
         </div>
-        {filteredRentHistory.map((rentHistory, index) => (
-          rentHistory.length > 0 && (
-            <div key={index} className="rent-history">
-              <h3>
-                Historia wypożyczeń dla:{" "}
-                <span className="red">{rentHistory[0].inventory.itemName}</span>
-              </h3>
-              {rentHistory.map((historyItem, index) => (
-                <div className="rent-history__single-rental" key={index}>
-                  <p>
-                  <strong>Właściciel:</strong> {historyItem.user.firstName} {historyItem.user.lastName}
-                  </p>
-                  <p>
-                    <strong>Użytkownik:</strong> {historyItem.firstName}{" "}
-                    {historyItem.lastName}
-                  </p>
-                  <p>
-                    <strong>Email użytkownika:</strong> {historyItem.email}
-                  </p>
-                  <p>
-                    <strong>Data wypożyczenia:</strong>{" "}
-                    {new Date(historyItem.rentalDate).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <strong>Data zwrotu:</strong>{" "}
-                    {historyItem.returnDate
-                      ? new Date(historyItem.returnDate).toLocaleDateString()
-                      : "Nie zwrócony"}
-                  </p>
-                  <p>
-                    <strong>Status wypożyczenia:</strong>{" "}
-                    {historyItem.rentStatus === "rented"
-                      ? "Wypożyczony"
-                      : "Zwrócony"}
-                  </p>
-                  <p>
-                    <strong>Opis wypożyczenia:</strong>{" "}
-                    {historyItem.rentDescription}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )
-        ))}
+        {filteredRentHistory.map(
+          (rentHistory, index) =>
+            rentHistory &&
+            rentHistory.length > 0 && (
+              <div key={index} className="rent-history">
+                {rentHistory && rentHistory.length > 0 && (
+                  <h3>
+                    Historia wypożyczeń dla:{" "}
+                    <span className="red">
+                      {rentHistory[0].inventory.itemName}
+                    </span>
+                  </h3>
+                )}
+                {rentHistory.map((historyItem, index) => (
+                  <div className="rent-history__single-rental" key={index}>
+                    <p>
+                      <strong>Właściciel:</strong> {historyItem.user.id}
+                    </p>
+                    <p>
+                      <strong>Użytkownik:</strong> {historyItem.firstName}{" "}
+                      {historyItem.lastName}
+                    </p>
+                    <p>
+                      <strong>Email użytkownika:</strong> {historyItem.email}
+                    </p>
+                    <p>
+                      <strong>Data wypożyczenia:</strong>{" "}
+                      {new Date(historyItem.rentalDate).toLocaleDateString()}
+                    </p>
+                    <p>
+                      <strong>Data zwrotu:</strong>{" "}
+                      {historyItem.returnDate
+                        ? new Date(historyItem.returnDate).toLocaleDateString()
+                        : "Nie zwrócony"}
+                    </p>
+                    <p>
+                      <strong>Status wypożyczenia:</strong>{" "}
+                      {historyItem.rentStatus === "rented"
+                        ? "Wypożyczony"
+                        : "Zwrócony"}
+                    </p>
+                    <p>
+                      <strong>Opis wypożyczenia:</strong>{" "}
+                      {historyItem.rentDescription}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )
+        )}
       </div>
     </>
   );

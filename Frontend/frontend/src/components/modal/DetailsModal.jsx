@@ -2,6 +2,16 @@ import React from "react";
 import "./detailsModal.css";
 import { Link } from "react-router-dom";
 
+/**
+ * Komponent Modal - wyświetla szczegóły przedmiotu w okienku modalnym.
+ *
+ * @component
+ * @param {Object} props - Właściwości przekazane do komponentu.
+ * @param {Object} props.item - Szczegóły przedmiotu.
+ * @param {string} props.img - URL obrazka przedmiotu.
+ * @param {Function} props.onClose - Funkcja zamykająca modal.
+ * @returns {JSX.Element}
+ */
 const Modal = ({ item, img, onClose }) => {
   const rentStatusText =
     item.rentStatus === "available" ? "dostępny" : "niedostępny";

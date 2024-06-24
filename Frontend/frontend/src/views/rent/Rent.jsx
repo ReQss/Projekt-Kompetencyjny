@@ -6,6 +6,11 @@ import { useState, useEffect } from 'react';
 import './rent.scss';
 import { Button } from '../../components';
 
+/**
+ * Komponent Rent służący do wypożyczania przedmiotów.
+ * @function Rent
+ * @returns {JSX.Element} Formularz wypożyczania przedmiotu
+ */
 const Rent = () => {
   const [formData, setFormData] = useState({
     inventory: '',
@@ -36,6 +41,12 @@ const Rent = () => {
     fetchInventory(userId);
   }, []);
 
+  /**
+   * Funkcja pobierająca użytkowników z serwera na podstawie ich ról.
+   * @async
+   * @function fetchUsers
+   * @returns {void}
+   */
   const fetchUsers = async () => {
     try {
       const response = await fetch(`http://localhost:9192/getUsersByRoles`);
@@ -46,6 +57,14 @@ const Rent = () => {
     }
   };
 
+
+  /**
+   * Funkcja pobierająca listę przedmiotów użytkownika z serwera.
+   * @async
+   * @function fetchInventory
+   * @param {string} ownerId - ID właściciela przedmiotu
+   * @returns {void}
+   */
   const fetchInventory = async (ownerId) => {
     try {
       const response = await fetch(
@@ -65,6 +84,12 @@ const Rent = () => {
   };
 
   useEffect(() => {
+    /**
+     * Funkcja pobierająca listę dostępnych celów wypożyczenia z serwera.
+     * @async
+     * @function fetchPurposes
+     * @returns {void}
+     */
     const fetchPurposes = async () => {
       try {
         const response = await fetch('http://localhost:9192/api/rentPurposes');

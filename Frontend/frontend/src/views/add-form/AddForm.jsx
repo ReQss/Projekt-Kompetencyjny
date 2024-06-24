@@ -3,6 +3,10 @@ import { Button } from "../../components";
 import "./addForm.css";
 import { Link } from "react-router-dom";
 
+/**
+ * Komponent AddForm służy do dodawania przedmiotów do systemu.
+ * @returns {JSX.Element} Komponent dodawania przedmiotów.
+ */
 function AddForm() {
   const userRole = localStorage.getItem("role");
   const userId = localStorage.getItem("userId");
@@ -19,6 +23,9 @@ function AddForm() {
     fetchUsers();
   }, []);
 
+  /**
+ * Funkcja pobierająca kategorie z serwera.
+ */
   const fetchCategories = async () => {
     try {
       const response = await fetch(`http://localhost:9192/api/category`);
@@ -29,6 +36,9 @@ function AddForm() {
     }
   };
 
+  /**
+ * Funkcja pobierająca użytkowników z serwera.
+ */
   const fetchUsers = async () => {
     try {
       const response = await fetch(`http://localhost:9192/getUsersByRoles`);

@@ -10,6 +10,10 @@ import Rent from './views/rent/Rent';
 import AddForm from './views/add-form/AddForm';
 import UsersPanel from './views/users-panel/UsersPanel';
 
+/**
+ * Main application component.
+ * @returns {JSX.Element} Main application component.
+ */
 function App() {
   return (
     <Router>

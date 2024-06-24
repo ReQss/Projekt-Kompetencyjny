@@ -4,6 +4,11 @@ import "./modificationForm.css";
 import { Button } from "../../components";
 import { Link } from "react-router-dom";
 
+/**
+ * Komponent ModificationForm służący do modyfikacji informacji o przedmiocie.
+ * @function ModificationForm
+ * @returns {JSX.Element} Formularz modyfikacji przedmiotu
+ */
 const ModificationForm = () => {
   const { itemId } = useParams();
   const [itemInfo, setItemInfo] = useState([]);
@@ -11,6 +16,12 @@ const ModificationForm = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
+    /**
+     * Funkcja pobierająca kategorie przedmiotów z serwera.
+     * @async
+     * @function fetchCategories
+     * @returns {void}
+     */
     const fetchCategories = async () => {
       try {
         const response = await fetch(`http://localhost:9192/api/category`);
@@ -23,6 +34,13 @@ const ModificationForm = () => {
 
     fetchCategories();
 
+    /**
+     * Funkcja pobierająca informacje o konkretnym przedmiocie z serwera.
+     * Ustawia również stan przedmiotu oraz wybraną kategorię jeśli istnieje.
+     * @async
+     * @function fetchItemInfo
+     * @returns {void}
+     */
     const fetchItemInfo = async () => {
       try {
         const response = await fetch(

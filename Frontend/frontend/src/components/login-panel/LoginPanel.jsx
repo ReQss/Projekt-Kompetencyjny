@@ -4,6 +4,12 @@ import logo from "../../assets/logo.png";
 import Button from "../button/Button";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Komponent LoginPanel - formularz logowania dla użytkowników.
+ *
+ * @component
+ * @returns {JSX.Element}
+ */
 const LoginPanel = () => {
   const [formData, setFormData] = useState({
     login: "",
@@ -12,6 +18,11 @@ const LoginPanel = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  /**
+   * Obsługuje zmianę wartości pól formularza.
+   *
+   * @param {Event} e - Event zmiany wartości.
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -20,6 +31,11 @@ const LoginPanel = () => {
     }));
   };
 
+  /**
+   * Obsługuje wysłanie formularza logowania.
+   *
+   * @param {Event} e - Event wysłania formularza.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Attempting login...");
@@ -78,9 +94,7 @@ const LoginPanel = () => {
           onChange={handleInputChange}
           required
         />
-        {error && <div className="error">{error}</div>}{" "}
-        {/* Wyświetlanie błędu
-        <a href="#">Zapomniałeś hasła?</a> */}
+        {error && <div className="error">{error}</div>}
         <Button type="submit">Zaloguj się</Button>
       </form>
     </div>
