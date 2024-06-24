@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { Button } from "../../components";
-import "./addForm.css";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { Button } from '../../components';
+import './addForm.css';
+import { Link } from 'react-router-dom';
 
 function AddForm() {
-  const userRole = localStorage.getItem("role");
-  const userId = localStorage.getItem("userId");
+  const userRole = localStorage.getItem('role');
+  const userId = localStorage.getItem('userId');
   const [itemInfo, setItemInfo] = useState({
-    ownerId: userRole !== "ADMIN" ? userId : "",
+    ownerId: userRole !== 'ADMIN' ? userId : '',
   });
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [users, setUsers] = useState([]);
   const [file, setFile] = useState(null);
 
@@ -25,7 +25,7 @@ function AddForm() {
       const data = await response.json();
       setCategories(data);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error('Error fetching categories:', error);
     }
   };
 
@@ -36,7 +36,7 @@ function AddForm() {
       console.log(data);
       setUsers(data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
   };
 
@@ -68,33 +68,36 @@ function AddForm() {
     item.category = selCategory;
 
     const formData = new FormData();
-    formData.append("inventory", new Blob([JSON.stringify(item)], { type: "application/json" }));
+    formData.append(
+      'inventory',
+      new Blob([JSON.stringify(item)], { type: 'application/json' })
+    );
     if (file) {
-      formData.append("file", file);
+      formData.append('file', file);
     }
 
     try {
       const response = await fetch(`http://localhost:9192/api/addInventory`, {
-        method: "POST",
+        method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        alert("Dodawanie powiodło się!");
+        alert('Dodawanie powiodło się!');
       } else {
         const errorMessage = await response.text();
         alert(`Błąd podczas dodawania: ${errorMessage}`);
       }
     } catch (error) {
-      alert("Wystąpił błąd podczas dodawania przedmiotu.");
+      alert('Wystąpił błąd podczas dodawania przedmiotu.');
     }
   };
 
   return (
     <div className="form-container add-item-form">
       <Link to="/">
-        {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
+        {' '}
+        <Button className={'back-btn'}>Powrót</Button>{' '}
       </Link>
       <h2>Dodaj przedmiot</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -104,12 +107,12 @@ function AddForm() {
             type="text"
             id="itemName"
             name="itemName"
-            value={itemInfo.itemName || ""}
+            value={itemInfo.itemName || ''}
             onChange={handleInputChange}
             required
           />
         </div>
-        {userRole === "ADMIN" ? (
+        {userRole === 'ADMIN' ? (
           <div className="form">
             <label htmlFor="ownerId">Właściciel:</label>
             <select
@@ -134,7 +137,7 @@ function AddForm() {
           <select
             id="rentStatus"
             name="rentStatus"
-            value={itemInfo.rentStatus || ""}
+            value={itemInfo.rentStatus || ''}
             onChange={handleInputChange}
             required
           >
@@ -149,7 +152,7 @@ function AddForm() {
             type="text"
             id="room"
             name="room"
-            value={itemInfo.room || ""}
+            value={itemInfo.room || ''}
             onChange={handleInputChange}
             required
           />
@@ -160,7 +163,7 @@ function AddForm() {
             type="text"
             id="building"
             name="building"
-            value={itemInfo.building || ""}
+            value={itemInfo.building || ''}
             onChange={handleInputChange}
             required
           />
@@ -171,7 +174,7 @@ function AddForm() {
             type="date"
             id="inventoryDate"
             name="inventoryDate"
-            value={itemInfo.inventoryDate || ""}
+            value={itemInfo.inventoryDate || ''}
             onChange={handleInputChange}
             required
           />
@@ -182,7 +185,7 @@ function AddForm() {
             type="text"
             id="value"
             name="value"
-            value={itemInfo.value || ""}
+            value={itemInfo.value || ''}
             onChange={handleInputChange}
             required
           />
@@ -193,7 +196,7 @@ function AddForm() {
             type="text"
             id="inventoryNumber"
             name="inventoryNumber"
-            value={itemInfo.inventoryNumber || ""}
+            value={itemInfo.inventoryNumber || ''}
             onChange={handleInputChange}
             required
           />
@@ -204,7 +207,7 @@ function AddForm() {
             type="text"
             id="invoiceNumber"
             name="invoiceNumber"
-            value={itemInfo.invoiceNumber || ""}
+            value={itemInfo.invoiceNumber || ''}
             onChange={handleInputChange}
             required
           />
@@ -215,7 +218,7 @@ function AddForm() {
             type="text"
             id="fundingSource"
             name="fundingSource"
-            value={itemInfo.fundingSource || ""}
+            value={itemInfo.fundingSource || ''}
             onChange={handleInputChange}
             required
           />
@@ -226,7 +229,7 @@ function AddForm() {
             type="text"
             id="supplierDocument"
             name="supplierDocument"
-            value={itemInfo.supplierDocument || ""}
+            value={itemInfo.supplierDocument || ''}
             onChange={handleInputChange}
             required
           />
@@ -237,7 +240,7 @@ function AddForm() {
             type="text"
             id="invoicePosition"
             name="invoicePosition"
-            value={itemInfo.invoicePosition || ""}
+            value={itemInfo.invoicePosition || ''}
             onChange={handleInputChange}
             required
           />
@@ -248,7 +251,7 @@ function AddForm() {
             type="text"
             id="serialNumber"
             name="serialNumber"
-            value={itemInfo.serialNumber || ""}
+            value={itemInfo.serialNumber || ''}
             onChange={handleInputChange}
             required
           />
@@ -276,7 +279,7 @@ function AddForm() {
             id="description"
             name="description"
             rows="8"
-            value={itemInfo.description || ""}
+            value={itemInfo.description || ''}
             onChange={handleInputChange}
             required
           ></textarea>

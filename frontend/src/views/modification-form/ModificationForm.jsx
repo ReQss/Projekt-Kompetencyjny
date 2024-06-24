@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import "./modificationForm.css";
-import { Button } from "../../components";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import './modificationForm.css';
+import { Button } from '../../components';
+import { Link } from 'react-router-dom';
 
 const ModificationForm = () => {
   const { itemId } = useParams();
   const [itemInfo, setItemInfo] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -17,7 +17,7 @@ const ModificationForm = () => {
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error('Error fetching categories:', error);
       }
     };
 
@@ -37,7 +37,7 @@ const ModificationForm = () => {
           }
         }
       } catch (error) {
-        console.error("Error fetching rent history:", error);
+        console.error('Error fetching rent history:', error);
       }
     };
 
@@ -71,30 +71,30 @@ const ModificationForm = () => {
       const response = await fetch(
         `http://localhost:9192/api/updateInventory/${itemId}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(item),
         }
       );
 
       if (response.ok) {
-        alert("Modyfikacja udana!");
+        alert('Modyfikacja udana!');
       } else {
         const errorMessage = await response.text();
         alert(`Błąd podczas wypożyczenia: ${errorMessage}`);
       }
     } catch (error) {
-      alert("Wystąpił błąd podczas wypożyczania sprzętu.");
+      alert('Wystąpił błąd podczas wypożyczania sprzętu.');
     }
   };
 
   return (
     <>
       <Link to="/">
-        {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
+        {' '}
+        <Button className={'back-btn'}>Powrót</Button>{' '}
       </Link>
       <div className="form-container modification-form">
         <h2>Zmodyfikuj przedmiot</h2>
@@ -130,7 +130,7 @@ const ModificationForm = () => {
               onChange={handleInputChange}
               required
             >
-              {itemInfo.rentStatus == "available" ? (
+              {itemInfo.rentStatus == 'available' ? (
                 <>
                   <option value="available">Dostępny</option>
                   <option value="unavailable">Niedostępny</option>
@@ -304,7 +304,7 @@ const ModificationForm = () => {
             <Button type="submit">Zmodyfikuj</Button>
           </div>
         </form>
-      </div>{" "}
+      </div>{' '}
     </>
   );
 };

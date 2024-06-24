@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import "./rentHistory.css";
-import Button from "../../components/button/Button";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import './rentHistory.css';
+import Button from '../../components/button/Button';
+import { Link } from 'react-router-dom';
 
 const RentHistory = () => {
   const { itemId } = useParams();
@@ -18,7 +18,7 @@ const RentHistory = () => {
         setRentHistory(data);
         console.log(data);
       } catch (error) {
-        console.error("Error fetching rent history:", error);
+        console.error('Error fetching rent history:', error);
       }
     };
 
@@ -28,13 +28,13 @@ const RentHistory = () => {
   return (
     <div className="rent-history__wrapper">
       <Link to="/">
-        {" "}
-        <Button>Powrót</Button>{" "}
+        {' '}
+        <Button>Powrót</Button>{' '}
       </Link>
       <div className="rent-history">
         {rentHistory.length > 0 ? (
           <h2>
-            Historia wypożyczeń dla:{" "}
+            Historia wypożyczeń dla:{' '}
             <span className="red">{rentHistory[0].inventory.itemName}</span>
           </h2>
         ) : (
@@ -46,29 +46,29 @@ const RentHistory = () => {
               <strong>Email Właściciela:</strong> {historyItem.user.email}
             </p>
             <p>
-              <strong>Użytkownik:</strong> {historyItem.firstName}{" "}
+              <strong>Użytkownik:</strong> {historyItem.firstName}{' '}
               {historyItem.lastName}
             </p>
             <p>
               <strong>Email użytkownika:</strong> {historyItem.email}
             </p>
             <p>
-              <strong>Powód wypożyczenia:</strong>{" "}
+              <strong>Powód wypożyczenia:</strong>{' '}
               {historyItem.rentPurpose.purpose}
             </p>
             <p>
-              <strong>Data wypożyczenia:</strong>{" "}
+              <strong>Data wypożyczenia:</strong>{' '}
               {new Date(historyItem.rentalDate).toLocaleDateString()}
             </p>
             <p>
-              <strong>Data zwrotu:</strong>{" "}
+              <strong>Data zwrotu:</strong>{' '}
               {historyItem.returnDate
                 ? new Date(historyItem.returnDate).toLocaleDateString()
-                : "Nie zwrócony"}
+                : 'Nie zwrócony'}
             </p>
             <p>
-              <strong>Status wypożyczenia:</strong>{" "}
-              {historyItem.rentStatus === "rented" ? "Wypożyczony" : "Zwrócony"}
+              <strong>Status wypożyczenia:</strong>{' '}
+              {historyItem.rentStatus === 'rented' ? 'Wypożyczony' : 'Zwrócony'}
             </p>
             <p>
               <strong>Opis wypożyczenia:</strong> {historyItem.rentDescription}

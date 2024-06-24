@@ -67,7 +67,7 @@ const ItemsWrapper = () => {
           key={item.id}
           src={
             item.photo ? `data:image/jpeg;base64,${item.photo}` : komputerImage
-          } // Assuming the key is 'photo' and the value is base64
+          }
         />
       ))}
     </div>

@@ -1,71 +1,68 @@
 .search-bar {
-    flex:1;
-    min-height: 80px;
-    border-bottom: 1px solid lightgray;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-
+  flex: 1;
+  min-height: 80px;
+  border-bottom: 1px solid lightgray;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .search-window {
-    padding: 0.4rem 0.8rem;
-    border-radius: 1rem;
-    min-width: 300px;
-    border: 2px solid var(--border-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  min-width: 300px;
+  border: 2px solid var(--border-color);
 }
 
 .search-window:focus {
-    border: 2px solid var(--dark-border-color);
-    outline: 0px solid white;
+  border: 2px solid var(--dark-border-color);
+  outline: 0px solid white;
 }
 
 .sort-window {
-    display: flex;
-    gap: 1rem;
-    position: relative;
-    align-items: center;
+  display: flex;
+  gap: 1rem;
+  position: relative;
+  align-items: center;
 }
-
 
 .sort-window__btn {
-    cursor: pointer;
-    background-color: white;
-    width: 210px;
-    border: none;
-    min-height: 3rem;
-    font-size: 15px;
-    color: #181818;
+  cursor: pointer;
+  background-color: white;
+  width: 210px;
+  border: none;
+  min-height: 3rem;
+  font-size: 15px;
+  color: #181818;
 }
 
-.sort-window__btn-first{
-    border-radius: 0.3rem;
+.sort-window__btn-first {
+  border-radius: 0.3rem;
 }
 
 .sort-window__btn:hover {
-    background-color: #8b0002;
-    color: white;
+  background-color: #8b0002;
+  color: white;
 }
 
-
 .sort-window__options {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    transform: translateY(63%) translateX(65px);
-    width: 210px;
-    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.08);
-    background-color: transparent;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(63%) translateX(65px);
+  width: 210px;
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.08);
+  background-color: transparent;
 }
 
 .sort-window__options :first-of-type {
-    border-top-left-radius: 0.3rem;
-    border-top-right-radius: 0.3rem;
-   }
-   
-   .sort-window__options :last-of-type {
-    border-bottom-left-radius: 0.3rem;
-    border-bottom-right-radius: 0.3rem;
-   }
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+.sort-window__options :last-of-type {
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+}

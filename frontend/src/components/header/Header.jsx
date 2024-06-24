@@ -1,6 +1,5 @@
-import React from "react";
-import "./header.css";
-import bg from "../../assets/politechnika_bg.jpg";
+import './header.css';
+import bg from '../../assets/politechnika_bg.jpg';
 
 const Header = () => {
   return (

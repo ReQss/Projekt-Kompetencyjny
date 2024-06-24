@@ -39,7 +39,8 @@ export const StyledPanelContainer = styled.div`
     margin-bottom: 20px;
   }
 
-  .edit-button, .delete-button {
+  .edit-button,
+  .delete-button {
     margin-top: auto;
   }
 `;

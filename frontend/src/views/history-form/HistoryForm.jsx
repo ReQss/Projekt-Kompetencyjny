@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Importujemy Link
-import "./historyForm.css";
-import { Button } from "../../components";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './historyForm.css';
+import { Button } from '../../components';
 
 const HistoryForm = () => {
   const [formData, setFormData] = useState({
-    user: "",
-    inventory: "",
-    rentStatus: "",
-    indexNumber: "",
+    user: '',
+    inventory: '',
+    rentStatus: '',
+    indexNumber: '',
   });
 
   const handleInputChange = (e) => {
@@ -22,8 +22,8 @@ const HistoryForm = () => {
   return (
     <div className="form-container">
       <Link to="/">
-        {" "}
-        <Button className={"back-btn"}>Powrót</Button>{" "}
+        {' '}
+        <Button className={'back-btn'}>Powrót</Button>{' '}
       </Link>
       <h2>Historia wypożyczeń</h2>
       <form>
@@ -39,7 +39,6 @@ const HistoryForm = () => {
           />
         </div>
         <div className="button">
-          {/* Tutaj używamy Link do nawigacji */}
           <Link to={`/rent-history/${formData.user}`}>
             <Button>Przejdź do historii</Button>
           </Link>

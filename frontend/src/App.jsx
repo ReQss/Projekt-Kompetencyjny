@@ -15,7 +15,6 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* <Route path="/home" element={<Home />} /> */}
         <Route path="/modify" element={<Home />} />
         <Route path="/delete" element={<Home />} />
         <Route path="/user-items" element={<Home />} />

@@ -1,18 +1,14 @@
-import { useState } from "react";
-import "./searchBar.css";
-import Button from "../button/Button";
-import { Link, useLocation } from "react-router-dom";
+import { useState } from 'react';
+import './searchBar.css';
+import Button from '../button/Button';
+import { Link, useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
   const [showItems, setShowItems] = useState(false);
 
-  const toggleItems = () => {
-    setShowItems(!showItems);
-  };
-
   const location = useLocation();
-  const token = localStorage.getItem("token");
-  const userRole = localStorage.getItem("role");
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('role');
 
   return (
     <div className="search-bar">
@@ -20,7 +16,7 @@ const SearchBar = () => {
         <></>
       ) : (
         <>
-          {userRole === "ADMIN" ? (
+          {userRole === 'ADMIN' ? (
             <>
               <Link to="/add-form">
                 <Button>Dodaj przedmiot</Button>
@@ -30,10 +26,10 @@ const SearchBar = () => {
                 <Button> Wypożycz </Button>
               </Link>
 
-              <Link to={"/history-form/"}>
+              <Link to={'/history-form/'}>
                 <Button>Historia wypożyczeń</Button>
               </Link>
-              {location.pathname === "/delete" ? (
+              {location.pathname === '/delete' ? (
                 <Link to="/">
                   <Button> Wróć na stronę główną </Button>
                 </Link>
@@ -47,7 +43,7 @@ const SearchBar = () => {
 
               {token === null ? (
                 <></>
-              ) : location.pathname === "/modify" ? (
+              ) : location.pathname === '/modify' ? (
                 <Link to="/">
                   <Button> Wróć na stronę główną </Button>
                 </Link>
@@ -63,8 +59,8 @@ const SearchBar = () => {
             <></>
           )}
 
-          {userRole === "USER" &&
-            (location.pathname !== "/user-items" ? (
+          {userRole === 'USER' &&
+            (location.pathname !== '/user-items' ? (
               <Link to="/user-items">
                 <Button> Twoje przedmioty </Button>
               </Link>

@@ -1,15 +1,15 @@
-import { useState } from "react";
-import "./loginPanel.css";
-import logo from "../../assets/logo.png";
-import Button from "../button/Button";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import './loginPanel.css';
+import logo from '../../assets/logo.png';
+import Button from '../button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPanel = () => {
   const [formData, setFormData] = useState({
-    login: "",
-    password: "",
+    login: '',
+    password: '',
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -22,14 +22,14 @@ const LoginPanel = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Attempting login...");
-    setError("Wprowadziłeś niepoprawne dane!");
+    console.log('Attempting login...');
+    setError('Wprowadziłeś niepoprawne dane!');
 
     try {
-      const response = await fetch("http://localhost:9192/login", {
-        method: "POST",
+      const response = await fetch('http://localhost:9192/login', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -37,21 +37,21 @@ const LoginPanel = () => {
       const data = await response.json();
 
       if (response.status === 202) {
-        console.log("Logged in successfully!");
+        console.log('Logged in successfully!');
         console.log(data);
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", data.user.id);
-        localStorage.setItem("email", data.user.email);
-        localStorage.setItem("role", data.user.role);
-        navigate("/");
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('email', data.user.email);
+        localStorage.setItem('role', data.user.role);
+        navigate('/');
       } else if (response.status === 401) {
-        console.log("Login error:", data.error);
+        console.log('Login error:', data.error);
       } else {
-        console.log("Login error. Please try again.");
+        console.log('Login error. Please try again.');
       }
     } catch (error) {
-      console.error("Error during login request:", error);
-      setError("An error occurred during login. Please try again later.");
+      console.error('Error during login request:', error);
+      setError('An error occurred during login. Please try again later.');
     }
   };
 
@@ -78,9 +78,7 @@ const LoginPanel = () => {
           onChange={handleInputChange}
           required
         />
-        {error && <div className="error">{error}</div>}{" "}
-        {/* Wyświetlanie błędu
-        <a href="#">Zapomniałeś hasła?</a> */}
+        {error && <div className="error">{error}</div>}{' '}
         <Button type="submit">Zaloguj się</Button>
       </form>
     </div>

@@ -13,7 +13,7 @@ const UsersPanel = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:9192/getAllUsers');
-        const activeUsers = response.data.filter(user => !user.deleted); 
+        const activeUsers = response.data.filter((user) => !user.deleted);
         setUsers(activeUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -51,7 +51,7 @@ const UsersPanel = () => {
   const handleDeleteUser = async (userId) => {
     try {
       await axios.put(`http://localhost:9192/deleteUser/${userId}`);
-      setUsers(users.filter(user => user.id !== userId));
+      setUsers(users.filter((user) => user.id !== userId));
       alert('Użytkownik został usunięty');
     } catch (error) {
       console.error('Error deleting user:', error);
@@ -93,7 +93,10 @@ const UsersPanel = () => {
             <Button className="edit-button" onClick={() => openEditModal(user)}>
               Edytuj
             </Button>
-            <Button className="delete-button" onClick={() => handleDeleteUser(user.id)}>
+            <Button
+              className="delete-button"
+              onClick={() => handleDeleteUser(user.id)}
+            >
               Usuń
             </Button>
           </div>

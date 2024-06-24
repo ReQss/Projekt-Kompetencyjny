@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './item.css';
 import Modal from '../modal/DetailsModal';
 import Button from '../button/Button';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Item = ({ item, src }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -11,18 +11,11 @@ const Item = ({ item, src }) => {
   const [itemId, setItemId] = useState(item.id);
   const [rentHistoryDescription, setRentHistoryDescription] = useState('');
   const [owner, setOwner] = useState(null);
+  const userRole = localStorage.getItem('role');
+  const userId = localStorage.getItem('userId');
 
-  const {
-    id,
-    itemName,
-    description,
-    rentStatus,
-    ownerName,
-    ownerLastName,
-    building,
-    room,
-    ownerId,
-  } = item;
+  const { id, itemName, description, rentStatus, building, room, ownerId } =
+    item;
 
   const location = useLocation();
 
@@ -40,7 +33,6 @@ const Item = ({ item, src }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setOwner(data);
         } else {
           console.error('Błąd podczas pobierania danych użytkownika');
@@ -262,9 +254,10 @@ const Item = ({ item, src }) => {
         ) : (
           <>
             <Button onClick={openModal}>Detale</Button>
-            {rentStatus === 'unavailable' ? (
-              <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
-            ) : null}
+            {rentStatus === 'unavailable' &&
+              (userRole === 'ADMIN' || ownerId == userId) && (
+                <Button onClick={showGiveBackConfirmation1}> Zwróć </Button>
+              )}
           </>
         )}
 

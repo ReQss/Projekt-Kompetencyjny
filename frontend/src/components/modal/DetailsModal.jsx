@@ -1,10 +1,9 @@
-import React from "react";
-import "./detailsModal.css";
-import { Link } from "react-router-dom";
+import React from 'react';
+import './detailsModal.css';
 
 const Modal = ({ item, img, onClose }) => {
   const rentStatusText =
-    item.rentStatus === "available" ? "dostępny" : "niedostępny";
+    item.rentStatus === 'available' ? 'dostępny' : 'niedostępny';
 
   return (
     <div className="modal-overlay" onClick={onClose}>

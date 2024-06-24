@@ -1,1 +1,1 @@
-export { default as ItemsSection } from "./items-section/ItemsSection";
+export { default as ItemsSection } from './items-section/ItemsSection';

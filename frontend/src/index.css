@@ -17,9 +17,8 @@ body {
 }
 
 :root {
-  --primary-color: white; 
+  --primary-color: white;
   --font-family: 'Poppins', sans-serif;
-  /* --secondary-color: #759de6;  */
   --text-color: black;
   --border-color: rgb(226, 225, 225);
   --dark-border-color: rgb(202, 202, 202);
