@@ -202,8 +202,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `email`, `first_name`, `last_name`, `login`, `password`, `role`) VALUES
                                                                                                      (1, 'admin@admin.pl', 'adminfirstname', 'adminlastname', 'admin', '$2a$10$CIpkvA6yjTj4jV9PyGBiBup.0oqun3wyg8oSCReXttdlE6f8yXhEK', 'ADMIN'),
-                                                                                                     (2, '240666@edu.p.lodz.pl', 'jacob', 'kozlowski', '240666@edu.p.lodz.pl', '$2a$10$CIpkvA6yjTj4jV9PyGBiBup.0oqun3wyg8oSCReXttdlE6f8yXhEK', 'USER'),
-                                                                                                     (3, '240634@edu.p.lodz.pl', 'lukaszenko', 'ledzion', '240634@edu.p.lodz.pl', '$2a$10$CIpkvA6yjTj4jV9PyGBiBup.0oqun3wyg8oSCReXttdlE6f8yXhEK', 'USER');
+                                                                                                     (2, '240666@edu.p.lodz.pl', 'jacob', 'kozlowski', 'user1', '$2a$10$CIpkvA6yjTj4jV9PyGBiBup.0oqun3wyg8oSCReXttdlE6f8yXhEK', 'USER'),
+                                                                                                     (3, '240634@edu.p.lodz.pl', 'lukaszenko', 'ledzion', 'user2', '$2a$10$CIpkvA6yjTj4jV9PyGBiBup.0oqun3wyg8oSCReXttdlE6f8yXhEK', 'USER');
 
 --
 -- Indeksy dla zrzutów tabel
